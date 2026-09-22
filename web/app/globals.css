@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Theme: Teal #16564F · Mustard #E8B84B · Cream #FFF8F3 · White */
+body { @apply bg-cream text-teal font-body antialiased; }
+
+.card { @apply bg-cream rounded-2xl border border-line p-6 shadow-card; }
+.card-alt { @apply rounded-2xl border border-teal/15 bg-teal/[.05] p-6; }
+.chip { @apply inline-flex items-center gap-1 rounded-full bg-teal/[.07] px-3 py-1 text-xs font-semibold text-teal; }
+.chip-yellow { @apply bg-mustard text-teal; }
+.chip-teal { @apply bg-teal text-cream; }
+
+.btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold transition; }
+.btn-primary { @apply bg-teal text-cream hover:opacity-90; }
+.btn-accent { @apply bg-mustard text-teal hover:brightness-95; }
+.btn-ghost { @apply bg-cream border border-line text-teal hover:bg-teal/[.06]; }
+
+.nav-link { @apply text-sm font-semibold text-teal/70 hover:text-teal px-2 py-1; }
+.section-title { @apply text-2xl md:text-3xl font-bold tracking-tight text-teal; }
+.section-sub { @apply text-sm text-teal/70 mt-1; }
+.count-box { @apply rounded-2xl border border-line bg-cream p-4 text-center; }
+.count-box-alt { @apply rounded-2xl border border-teal bg-teal p-4 text-center text-cream; }
+.input { @apply w-full rounded-xl border border-line bg-cream px-4 py-2.5 text-sm font-medium text-teal outline-none placeholder:text-teal/40 focus:border-teal; }
+.label { @apply text-xs font-bold uppercase tracking-wide text-teal/70; }

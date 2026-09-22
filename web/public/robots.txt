@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://chhathmahaparv.org/sitemap.xml

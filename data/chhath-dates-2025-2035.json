@@ -1,0 +1,65 @@
+[
+  {
+    "year": 2025,
+    "type": "kartik",
+    "nahayKhay": "2025-10-25",
+    "kharna": "2025-10-26",
+    "sandhyaArghya": "2025-10-27",
+    "ushaArghya": "2025-10-28",
+    "source": "DrikPanchang"
+  },
+  {
+    "year": 2026,
+    "type": "chaiti",
+    "nahayKhay": "2026-03-22",
+    "kharna": "2026-03-23",
+    "sandhyaArghya": "2026-03-24",
+    "ushaArghya": "2026-03-25",
+    "source": "DrikPanchang"
+  },
+  {
+    "year": 2026,
+    "type": "kartik",
+    "nahayKhay": "2026-11-13",
+    "kharna": "2026-11-14",
+    "sandhyaArghya": "2026-11-15",
+    "ushaArghya": "2026-11-16",
+    "source": "DrikPanchang"
+  },
+  {
+    "year": 2027,
+    "type": "kartik",
+    "nahayKhay": "2027-11-02",
+    "kharna": "2027-11-03",
+    "sandhyaArghya": "2027-11-04",
+    "ushaArghya": "2027-11-05",
+    "source": "DrikPanchang - to be re-verified yearly"
+  },
+  {
+    "year": 2028,
+    "type": "kartik",
+    "nahayKhay": "2028-10-21",
+    "kharna": "2028-10-22",
+    "sandhyaArghya": "2028-10-23",
+    "ushaArghya": "2028-10-24",
+    "source": "DrikPanchang - to be re-verified yearly"
+  },
+  {
+    "year": 2029,
+    "type": "kartik",
+    "nahayKhay": "2029-11-09",
+    "kharna": "2029-11-10",
+    "sandhyaArghya": "2029-11-11",
+    "ushaArghya": "2029-11-12",
+    "source": "DrikPanchang - to be re-verified yearly"
+  },
+  {
+    "year": 2030,
+    "type": "kartik",
+    "nahayKhay": "2030-10-29",
+    "kharna": "2030-10-30",
+    "sandhyaArghya": "2030-10-31",
+    "ushaArghya": "2030-11-01",
+    "source": "DrikPanchang - to be re-verified yearly"
+  }
+]

@@ -1,0 +1,16 @@
+name: Add ghat
+description: Propose a new Chhath ghat
+body:
+  - type: input
+    attributes: { label: Ghat name }
+  - type: input
+    attributes: { label: City, Country + lat/lng }
+  - type: checkboxes
+    attributes:
+      label: Facilities (only these allowed)
+      options:
+        - label: Parking
+        - label: Lighting
+        - label: Police help
+        - label: First aid
+        - label: Drinking water

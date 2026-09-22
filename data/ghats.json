@@ -1,0 +1,134 @@
+[
+  {
+    "id": "patna-collectorate",
+    "name": "Collectorate Ghat, Patna",
+    "city": "Patna",
+    "country": "India",
+    "lat": 25.632,
+    "lng": 85.145,
+    "riverOrPond": "Ganga",
+    "facilities": { "parking": true, "lighting": true, "policeHelp": true, "firstAid": true, "drinkingWater": true },
+    "verified": true
+  },
+  {
+    "id": "delhi-ito-yamuna",
+    "name": "Yamuna Ghat, ITO",
+    "city": "New Delhi",
+    "country": "India",
+    "lat": 28.632,
+    "lng": 77.249,
+    "riverOrPond": "Yamuna",
+    "facilities": { "parking": true, "lighting": true, "policeHelp": true, "firstAid": false, "drinkingWater": true },
+    "verified": true
+  },
+  {
+    "id": "mumbai-juhu",
+    "name": "Juhu Beach Chhath Gathering",
+    "city": "Mumbai",
+    "country": "India",
+    "lat": 19.107,
+    "lng": 72.826,
+    "riverOrPond": "Arabian Sea",
+    "facilities": { "parking": true, "lighting": true, "policeHelp": true, "firstAid": true, "drinkingWater": false },
+    "verified": true
+  },
+  {
+    "id": "kolkata-hooghly",
+    "name": "Hooghly Ghat, Kolkata",
+    "city": "Kolkata",
+    "country": "India",
+    "lat": 22.585,
+    "lng": 88.346,
+    "riverOrPond": "Hooghly",
+    "facilities": { "parking": false, "lighting": true, "policeHelp": true, "firstAid": false, "drinkingWater": true },
+    "verified": true
+  },
+  {
+    "id": "varanasi-assi",
+    "name": "Assi Ghat Gathering",
+    "city": "Varanasi",
+    "country": "India",
+    "lat": 25.288,
+    "lng": 83.009,
+    "riverOrPond": "Ganga",
+    "facilities": { "parking": false, "lighting": true, "policeHelp": true, "firstAid": true, "drinkingWater": true },
+    "verified": true
+  },
+  {
+    "id": "bengaluru-ulsoor",
+    "name": "Ulsoor Lake Gathering",
+    "city": "Bengaluru",
+    "country": "India",
+    "lat": 12.981,
+    "lng": 77.62,
+    "riverOrPond": "Ulsoor Lake",
+    "facilities": { "parking": true, "lighting": true, "policeHelp": false, "firstAid": false, "drinkingWater": true },
+    "verified": false
+  },
+  {
+    "id": "janakpur-dhanushsagar",
+    "name": "Dhanush Sagar, Janakpur",
+    "city": "Janakpur",
+    "country": "Nepal",
+    "lat": 26.731,
+    "lng": 75.924,
+    "riverOrPond": "Dhanush Sagar Pond",
+    "facilities": { "parking": true, "lighting": true, "policeHelp": true, "firstAid": true, "drinkingWater": true },
+    "verified": true
+  },
+  {
+    "id": "kathmandu-kamPokhari",
+    "name": "Kamalpokhari Gathering",
+    "city": "Kathmandu",
+    "country": "Nepal",
+    "lat": 27.712,
+    "lng": 85.324,
+    "riverOrPond": "Kamalpokhari",
+    "facilities": { "parking": false, "lighting": true, "policeHelp": true, "firstAid": false, "drinkingWater": true },
+    "verified": false
+  },
+  {
+    "id": "newjersey-edison",
+    "name": "Edison Community Pond Gathering",
+    "city": "Edison, NJ",
+    "country": "USA",
+    "lat": 40.518,
+    "lng": -74.412,
+    "riverOrPond": "Community pond",
+    "facilities": { "parking": true, "lighting": false, "policeHelp": false, "firstAid": false, "drinkingWater": true },
+    "verified": false
+  },
+  {
+    "id": "london-southall",
+    "name": "Southall Community Gathering",
+    "city": "London",
+    "country": "UK",
+    "lat": 51.51,
+    "lng": -0.377,
+    "riverOrPond": "Community hall + tub",
+    "facilities": { "parking": true, "lighting": true, "policeHelp": false, "firstAid": false, "drinkingWater": true },
+    "verified": false
+  },
+  {
+    "id": "dubai-mamzar",
+    "name": "Al Mamzar Gathering",
+    "city": "Dubai",
+    "country": "UAE",
+    "lat": 25.318,
+    "lng": 55.296,
+    "riverOrPond": "Sea shore (designated)",
+    "facilities": { "parking": true, "lighting": true, "policeHelp": true, "firstAid": false, "drinkingWater": true },
+    "verified": false
+  },
+  {
+    "id": "toronto-brampton",
+    "name": "Brampton Community Gathering",
+    "city": "Toronto",
+    "country": "Canada",
+    "lat": 43.731,
+    "lng": -79.762,
+    "riverOrPond": "Community pond",
+    "facilities": { "parking": true, "lighting": false, "policeHelp": false, "firstAid": false, "drinkingWater": true },
+    "verified": false
+  }
+]

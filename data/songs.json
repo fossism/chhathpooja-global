@@ -1,0 +1,56 @@
+[
+  {
+    "id": "kosi-bharal",
+    "title": "Kosi Bharal",
+    "titleDevanagari": "कोसी भरल",
+    "meaning_en": "The kosi (earthen altar) is filled — invocation to Chhathi Maiya on Kharna night.",
+    "lyricsSnippet": "Kosi bharal Chhathi Maiya, geet gaila...",
+    "singerCredit": "Traditional folk",
+    "license": "CC-BY-SA (folk, public domain melody)"
+  },
+  {
+    "id": "surya-arghya",
+    "title": "Uga Ho Suraj Dev",
+    "titleDevanagari": "उगा हो सूरज देव",
+    "meaning_en": "Rise, O Sun God — awaiting Usha Arghya at dawn.",
+    "lyricsSnippet": "Uga ho Suraj Dev, arghya lebo...",
+    "singerCredit": "Traditional folk",
+    "license": "CC-BY-SA (folk, public domain melody)"
+  },
+  {
+    "id": "chhathi-maiya",
+    "title": "Jai Chhathi Maiya",
+    "titleDevanagari": "जय छठी मैया",
+    "meaning_en": "Praise to Chhathi Maiya, protector of children and family.",
+    "lyricsSnippet": "Jai Jai Chhathi Maiya, sabke bhagya jagaila...",
+    "singerCredit": "Traditional folk",
+    "license": "CC-BY-SA (folk, public domain melody)"
+  },
+  {
+    "id": "kellwa-ke-paat",
+    "title": "Kellwa Ke Paat Par",
+    "titleDevanagari": "केलवा के पात पर",
+    "meaning_en": "Offerings laid on banana leaves — the classic Sandhya Arghya song.",
+    "lyricsSnippet": "Kellwa ke paat par, uge Suraj Mal...",
+    "singerCredit": "Traditional folk",
+    "license": "CC-BY-SA (folk, public domain melody)"
+  },
+  {
+    "id": "paat-na",
+    "title": "Pahile Pahil Chhathi Maiya",
+    "titleDevanagari": "पहिले पहिल छठी मैया",
+    "meaning_en": "First salutations to Chhathi Maiya — sung while filling the daura.",
+    "lyricsSnippet": "Pahile pahil Chhathi Maiya ke, sat sat pranam...",
+    "singerCredit": "Traditional folk",
+    "license": "CC-BY-SA (folk, public domain melody)"
+  },
+  {
+    "id": "sooraj-saathe",
+    "title": "Suraj Sange Chhathi",
+    "titleDevanagari": "सूरज संगे छठी",
+    "meaning_en": "With the Sun, we worship Chhathi — evening vigil song.",
+    "lyricsSnippet": "Suraj sange Chhathi Maiya, deep jalaila...",
+    "singerCredit": "Traditional folk",
+    "license": "CC-BY-SA (folk, public domain melody)"
+  }
+]
