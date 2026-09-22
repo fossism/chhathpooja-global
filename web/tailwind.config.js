@@ -15,8 +15,10 @@ module.exports = {
         card: "0 1px 2px rgba(22,86,79,.06), 0 4px 16px rgba(22,86,79,.07)"
       },
       fontFamily: {
-        display: ["'Space Grotesk'", "system-ui", "sans-serif"],
-        body: ["'Space Grotesk'", "system-ui", "sans-serif"]
+        display: ["Archivo", "system-ui", "sans-serif"],
+        body: ["Archivo", "system-ui", "sans-serif"],
+        serif: ["Newsreader", "Georgia", "serif"],
+        mono: ["'Space Mono'", "monospace"]
       }
     }
   },
