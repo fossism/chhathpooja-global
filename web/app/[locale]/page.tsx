@@ -1,5 +1,6 @@
 import Countdown from "../../components/Countdown";
 import ArghyaFinder from "../../components/ArghyaFinder";
+import SunriseMark from "../../components/SunriseMark";
 import { getNextChhath, getGhats } from "../../lib/chhath";
 import { getMessages } from "../../lib/messages";
 
@@ -35,9 +36,9 @@ export default function Home({ params }: { params: { locale: string } }) {
               <span className="chip">MIT open-source</span>
             </div>
           </div>
-          <div className="grid gap-4">
-            <img src="/icon.svg" alt="" aria-hidden className="w-24 h-24 md:w-28 md:h-28" />
-            <div className="card">
+          <div className="grid gap-4 justify-items-center">
+            <SunriseMark />
+            <div className="card w-full">
               <Countdown target={next.sandhyaArghya} label={m.countdownTo} />
             </div>
           </div>

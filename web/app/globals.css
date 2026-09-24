@@ -51,3 +51,15 @@ body { @apply bg-cream text-teal antialiased; font-family: Archivo, system-ui, s
 .label { @apply text-xs font-bold uppercase tracking-wide text-teal/70; }
 
 blockquote.callout { @apply border-l-4 border-mustard pl-5 text-lg md:text-xl font-medium text-teal; }
+
+/* Sunrise hero mark — same size + staged wipe motion as bodhya.net hero */
+.sunrise-mark { display: flex; align-items: center; justify-content: center; }
+.sunrise-mark svg { width: clamp(132px, 16vw, 216px); height: auto; display: block; }
+@media (max-width: 900px) { .sunrise-mark svg { width: 104px; } }
+@keyframes sunSweepX { to { transform: scaleX(1); } }
+.sun-wipe { transform: scaleX(0); transform-origin: 0 0; }
+.sun-wipe--1 { animation: sunSweepX 760ms cubic-bezier(.4, 0, .2, 1) 300ms forwards; }
+.sun-wipe--2 { animation: sunSweepX 900ms cubic-bezier(.4, 0, .2, 1) 1450ms forwards; }
+@media (prefers-reduced-motion: reduce) {
+  .sun-wipe { animation: none !important; transform: scaleX(1) !important; }
+}
