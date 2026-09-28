@@ -1,6 +1,7 @@
 import Countdown from "../../components/Countdown";
 import ArghyaFinder from "../../components/ArghyaFinder";
 import SunriseMark from "../../components/SunriseMark";
+import Image from "next/image";
 import { getNextChhath, getGhats } from "../../lib/chhath";
 import { getMessages } from "../../lib/messages";
 
@@ -99,6 +100,20 @@ export default function Home({ params }: { params: { locale: string } }) {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* Mural — full-bleed colored rectangle, just below No. 04 */}
+      <section aria-label="Chhath mural" className="mural-breakout">
+        <figure className="mural-frame">
+          <Image
+            src="/chhath-mural.jpg"
+            alt="Chhath Mahaparv mural — vrtais offering Arghya in the river"
+            fill
+            priority={false}
+            sizes="100vw"
+          />
+          <figcaption>On the ghat — Chhath mural</figcaption>
+        </figure>
       </section>
 
       {/* No. 05 — Explore */}

@@ -52,6 +52,12 @@ body { @apply bg-cream text-teal antialiased; font-family: Archivo, system-ui, s
 
 blockquote.callout { @apply border-l-4 border-mustard pl-5 text-lg md:text-xl font-medium text-teal; }
 
+/* Mural banner — full-bleed rectangle like nadh.in slideshow, kept colored */
+.mural-breakout { @apply w-full bg-cream border-b border-line; }
+.mural-frame { @apply relative w-full overflow-hidden m-0; height: clamp(280px, 42vw, 520px); }
+.mural-frame img { @apply w-full h-full object-cover block; object-position: center 42%; }
+.mural-frame figcaption { @apply absolute bottom-3 right-4 text-[11px] md:text-xs tracking-wide bg-teal/80 text-cream px-2.5 py-1 rounded-full; font-family: 'Space Mono', monospace; }
+
 /* Sunrise hero mark — same size + staged wipe motion as bodhya.net hero */
 .sunrise-mark { display: flex; align-items: center; justify-content: center; }
 .sunrise-mark svg { width: clamp(132px, 16vw, 216px); height: auto; display: block; }
