@@ -16,6 +16,7 @@ export default function Vidhi() {
   const doneCount = Object.values(done).filter(Boolean).length;
 
   return (
+    <div className="shell py-10">
     <div className="grid gap-5">
       <div>
         <h1 className="section-title">Vidhi guide</h1>
@@ -51,6 +52,7 @@ export default function Vidhi() {
           </div>
         </div>
       ))}
+    </div>
     </div>
   );
 }

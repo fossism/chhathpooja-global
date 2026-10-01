@@ -26,7 +26,7 @@ export default function Home({ params }: { params: { locale: string } }) {
             <h1 className="headline text-4xl md:text-6xl mt-4 leading-[1.05]">
               Keeping <em>Chhath</em><br />alive, everywhere
             </h1>
-            <p className="text-teal/70 mt-4 max-w-md">{m.heroSubtitle} Exact dates, your city's Arghya time, vidhi checklist, ghat map and folk songs.</p>
+            <p className="text-teal/70 mt-4 max-w-md">{m.heroSubtitle}</p>
             <div className="flex flex-wrap gap-3 mt-6">
               <a href={`/${params.locale}/vidhi`} className="btn btn-primary">Start Vidhi</a>
               <a href={`/${params.locale}/ghats`} className="btn btn-ghost">Find ghats</a>

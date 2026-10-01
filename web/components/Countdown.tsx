@@ -11,7 +11,7 @@ export default function Countdown({ target, label }: { target: string; label: st
   }, []);
   if (!now) {
     return (
-      <div>
+      <div aria-live="polite" role="timer">
         <p className="label">{label} • {target}</p>
         <div className="grid grid-cols-4 gap-2 mt-3">
           {["Days", "Hours", "Mins", "Secs"].map((l) => (
@@ -32,7 +32,7 @@ export default function Countdown({ target, label }: { target: string; label: st
     { v: c.seconds, l: "Secs" }
   ];
   return (
-    <div>
+    <div aria-live="polite" role="timer">
       <p className="label">{label} • {target}</p>
       <div className="grid grid-cols-4 gap-2 mt-3">
         {boxes.map((b) => (

@@ -2,6 +2,7 @@ import songs from "../../../../data/songs.json";
 
 export default function Songs() {
   return (
+    <div className="shell py-10">
     <div className="grid gap-5">
       <div>
         <h1 className="section-title">Folk archive</h1>
@@ -20,6 +21,7 @@ export default function Songs() {
           </div>
         ))}
       </div>
+    </div>
     </div>
   );
 }

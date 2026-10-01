@@ -23,8 +23,10 @@ const LOCALES = [
 ];
 
 export default function LocaleLayout({ children, params }: { children: React.ReactNode; params: { locale: string } }) {
+  const locale = (locales as readonly string[]).includes(params.locale) ? params.locale : "en";
   return (
-    <>
+    <html lang={locale}>
+      <body>
       <header className="sticky top-0 z-20">
         <div className="bg-teal text-cream">
           <div className="shell flex items-center justify-between py-1.5 text-xs">
@@ -69,7 +71,8 @@ export default function LocaleLayout({ children, params }: { children: React.Rea
         </div>
       </header>
 
-      <main className="shell py-10">{children}</main>
+      {/* Inner pages own their own .shell container; home bands are full-bleed. */}
+      <main>{children}</main>
 
       <footer className="bg-cream border-t border-line">
         <div className="shell py-10 grid sm:grid-cols-2 md:grid-cols-4 gap-8">
@@ -113,6 +116,7 @@ export default function LocaleLayout({ children, params }: { children: React.Rea
           </div>
         </div>
       </footer>
-    </>
+      </body>
+    </html>
   );
 }

@@ -3,6 +3,7 @@ import { getAllDates } from "../../../lib/chhath";
 export default function Calendar() {
   const dates = getAllDates();
   return (
+    <div className="shell py-10">
     <div className="grid gap-5">
       <div>
         <h1 className="section-title">Chhath calendar 2025–2030</h1>
@@ -24,6 +25,7 @@ export default function Calendar() {
           </div>
         ))}
       </div>
+    </div>
     </div>
   );
 }

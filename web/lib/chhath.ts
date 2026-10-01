@@ -19,7 +19,10 @@ export function getNextChhath(now = new Date()): ChhathDates {
 }
 
 export function getCountdown(targetISO: string, now = new Date()) {
-  const diff = new Date(targetISO + "T18:00:00").getTime() - now.getTime();
+  // Sandhya Arghya happens at ~sunset in India. Pin the target to IST
+  // (+05:30) so a user in NJ/London/Dubai counts down to the same moment
+  // instead of 18:00 in their own local timezone.
+  const diff = new Date(targetISO + "T18:00:00+05:30").getTime() - now.getTime();
   const s = Math.max(0, Math.floor(diff / 1000));
   return {
     days: Math.floor(s / 86400),

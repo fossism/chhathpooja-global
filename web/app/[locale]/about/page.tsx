@@ -1,5 +1,6 @@
 export default function About({ params }: { params: { locale: string } }) {
   return (
+    <div className="shell py-10">
     <div className="grid gap-5">
       <div>
         <h1 className="section-title">About + contribute</h1>
@@ -32,6 +33,7 @@ export default function About({ params }: { params: { locale: string } }) {
           <a href={`/${params.locale}/wall`} className="btn btn-ghost text-sm">Share photo</a>
         </div>
       </div>
+    </div>
     </div>
   );
 }

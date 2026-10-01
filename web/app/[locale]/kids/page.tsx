@@ -11,6 +11,7 @@ export default function Kids() {
   const score = qs.filter((x, i) => quiz[i] === x.ans).length;
 
   return (
+    <div className="shell py-10">
     <div className="grid gap-5">
       <div>
         <h1 className="section-title">Kids mode</h1>
@@ -42,6 +43,7 @@ export default function Kids() {
           {score === 3 && <p className="text-sm font-bold mt-2 text-teal">Chhath champion!</p>}
         </div>
       </div>
+    </div>
     </div>
   );
 }

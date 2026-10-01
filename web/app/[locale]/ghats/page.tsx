@@ -16,6 +16,7 @@ export default function GhatsPage() {
   );
 
   return (
+    <div className="shell py-10">
     <div className="grid gap-5">
       <div>
         <h1 className="section-title">Ghat finder</h1>
@@ -63,6 +64,7 @@ export default function GhatsPage() {
           Submit for review
         </button>
       </div>
+    </div>
     </div>
   );
 }

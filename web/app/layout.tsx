@@ -7,10 +7,8 @@ export const metadata = {
   icons: { icon: "/icon.svg" }
 };
 
+// NOTE: <html>/<body> are rendered by app/[locale]/layout.tsx so the
+// lang attribute matches the active locale (en/hi/bho/mai/ne) for SSR.
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
-  );
+  return <>{children}</>;
 }
