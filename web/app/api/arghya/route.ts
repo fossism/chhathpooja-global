@@ -72,7 +72,11 @@ export async function GET(req: Request) {
       `&longitude=${encodeURIComponent(String(safeLon))}` +
       `&daily=sunrise,sunset&timezone=auto` +
       `&start_date=${encodeURIComponent(dateRaw)}&end_date=${encodeURIComponent(dateRaw)}`;
-    const r = await fetch(url, { next: { revalidate: 86400 } });
+    const r = await fetch(url, {
+      next: { revalidate: 86400 },
+      // Never hang the server on a slow upstream.
+      signal: AbortSignal.timeout(8000)
+    });
     if (!r.ok) return Response.json(fallback);
     const j = await r.json();
     const sunriseRaw: unknown = j.daily?.sunrise?.[0];
