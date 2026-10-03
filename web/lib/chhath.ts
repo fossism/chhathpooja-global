@@ -7,7 +7,8 @@ export type ChhathDates = {
 };
 
 export function getAllDates(): ChhathDates[] {
-  return dates as ChhathDates[];
+  // Return a copy so callers can sort/filter without mutating module state.
+  return [...(dates as ChhathDates[])];
 }
 
 export function getNextChhath(now = new Date()): ChhathDates {
@@ -18,11 +19,14 @@ export function getNextChhath(now = new Date()): ChhathDates {
   return sorted[sorted.length - 1];
 }
 
-export function getCountdown(targetISO: string, now = new Date()) {
+export function getCountdown(targetISO: string, now = new Date(), sunsetHHMM = "18:00") {
   // Sandhya Arghya happens at ~sunset in India. Pin the target to IST
   // (+05:30) so a user in NJ/London/Dubai counts down to the same moment
-  // instead of 18:00 in their own local timezone.
-  const diff = new Date(targetISO + "T18:00:00+05:30").getTime() - now.getTime();
+  // instead of sunset in their own local timezone.
+  // Pass the real sunset "HH:MM" when known (Arghya API); otherwise the
+  // 18:00 estimate is used and the UI must label it as estimate.
+  const time = /^([01]\d|2[0-3]):[0-5]\d$/.test(sunsetHHMM) ? sunsetHHMM : "18:00";
+  const diff = new Date(`${targetISO}T${time}:00+05:30`).getTime() - now.getTime();
   const s = Math.max(0, Math.floor(diff / 1000));
   return {
     days: Math.floor(s / 86400),
@@ -40,5 +44,5 @@ export type Ghat = {
 };
 
 export function getGhats(): Ghat[] {
-  return ghats as Ghat[];
+  return [...(ghats as Ghat[])];
 }
