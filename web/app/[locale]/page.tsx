@@ -48,13 +48,16 @@ export default function Home({ params }: { params: { locale: string } }) {
 
       {/* Mural — just below No. 01 hero */}
       <section aria-label="Chhath mural" className="mural-breakout">
-        <figure className="mural-frame">
+        <figure className="mural-frame" style={{ background: "#E4DAD4" }}>
           <Image
             src="/chhath-mural.jpg"
             alt="Chhath Mahaparv mural — vrtais offering Arghya in the river"
             fill
             priority
             sizes="100vw"
+            quality={65}
+            placeholder="blur"
+            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAAMABADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCQXI6Coprg/hVXJDUr8jmsPZpm6m4vQ//Z"
           />
           <figcaption>On the ghat — Chhath mural</figcaption>
         </figure>
@@ -120,21 +123,27 @@ export default function Home({ params }: { params: { locale: string } }) {
       <section className="band">
         <div className="shell">
           <span className="marker">No. 05<span className="marker-rule"></span>Explore</span>
-          <div className="grid md:grid-cols-3 gap-4 mt-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
             <div className="num-card">
               <span className="num-index">A</span>
+              <h3 className="font-bold text-lg mt-2">Chhath Sahayak</h3>
+              <p className="text-sm text-teal/70 mt-1">Offline guide — dates, vidhi, samagri, songs. No login.</p>
+              <a href={`/${params.locale}/ask`} className="btn btn-ghost mt-4 !py-2 text-sm">Ask →</a>
+            </div>
+            <div className="num-card">
+              <span className="num-index">B</span>
               <h3 className="font-bold text-lg mt-2">Folk archive</h3>
               <p className="text-sm text-teal/70 mt-1">Lyrics + meaning with singer credit. Community licensed.</p>
               <a href={`/${params.locale}/songs`} className="btn btn-ghost mt-4 !py-2 text-sm">Browse songs →</a>
             </div>
             <div className="num-card">
-              <span className="num-index">B</span>
+              <span className="num-index">C</span>
               <h3 className="font-bold text-lg mt-2">Vidhi checklist</h3>
               <p className="text-sm text-teal/70 mt-1">Tick steps as you complete them across the 4 days.</p>
               <a href={`/${params.locale}/vidhi`} className="btn btn-ghost mt-4 !py-2 text-sm">Open guide →</a>
             </div>
             <div className="num-card">
-              <span className="num-index">C</span>
+              <span className="num-index">D</span>
               <h3 className="font-bold text-lg mt-2">Kids mode</h3>
               <p className="text-sm text-teal/70 mt-1">The story + a 3-question quiz for the youngest vrati.</p>
               <a href={`/${params.locale}/kids`} className="btn btn-ghost mt-4 !py-2 text-sm">Start →</a>
