@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import samagri from "../../../../data/samagri.json";
 
 const VIDHI = [
@@ -9,8 +9,32 @@ const VIDHI = [
   { day: "ushaArghya", title: "Day 4 — Usha Arghya + Parana", steps: ["Reach before sunrise", "Offer arghya at sunrise", "Break fast with prasad", "Share prasad with all"] }
 ];
 
+const STORE_KEY = "chhath-vidhi-done-v1";
+
+function loadDone(): Record<string, boolean> {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (!raw) return {};
+    const j = JSON.parse(raw);
+    return typeof j === "object" && j !== null ? j : {};
+  } catch {
+    return {};
+  }
+}
+
 export default function Vidhi() {
   const [done, setDone] = useState<Record<string, boolean>>({});
+  // Persist checklist so a refresh at the ghat doesn't wipe progress.
+  useEffect(() => {
+    setDone(loadDone());
+  }, []);
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORE_KEY, JSON.stringify(done));
+    } catch {
+      // Private mode may block storage; checklist still works for the session.
+    }
+  }, [done]);
   const toggle = (k: string) => setDone((p) => ({ ...p, [k]: !p[k] }));
   const total = VIDHI.flatMap((v) => v.steps).length;
   const doneCount = Object.values(done).filter(Boolean).length;
@@ -20,7 +44,7 @@ export default function Vidhi() {
     <div className="grid gap-5">
       <div>
         <h1 className="section-title">Vidhi guide</h1>
-        <p className="section-sub">Tick steps as you complete them. {doneCount}/{total} done.</p>
+        <p className="section-sub">Tick steps as you complete them. {doneCount}/{total} done. Saved on this device.</p>
         <div className="mt-3 h-2.5 rounded-full bg-teal/20 overflow-hidden">
           <div className="h-full bg-teal" style={{ width: `${Math.round((doneCount / total) * 100)}%` }} />
         </div>
@@ -44,7 +68,7 @@ export default function Vidhi() {
               const k = `${v.day}-${i}`;
               return (
                 <label key={k} className="flex items-center gap-3 rounded-xl border border-line px-3 py-2.5 cursor-pointer hover:bg-cream">
-                  <input type="checkbox" checked={!!done[k]} onChange={() => toggle(k)} className="w-5 h-5 accent-[#5F5CE5]" />
+                  <input type="checkbox" checked={!!done[k]} onChange={() => toggle(k)} className="w-5 h-5 accent-teal" />
                   <span className={`text-sm ${done[k] ? "line-through text-teal/70" : "font-medium"}`}>{s}</span>
                 </label>
               );
@@ -52,6 +76,14 @@ export default function Vidhi() {
           </div>
         </div>
       ))}
+      {doneCount > 0 && (
+        <button
+          className="btn btn-ghost text-sm w-fit"
+          onClick={() => setDone({})}
+        >
+          Reset checklist
+        </button>
+      )}
     </div>
     </div>
   );
