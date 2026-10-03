@@ -46,7 +46,8 @@ export default function ArghyaFinder({ date }: { date: string }) {
       },
       () => {
         setError("Location blocked or unavailable. Pick a city instead.");
-      }
+      },
+      { maximumAge: 60000, timeout: 10000 }
     );
   }
 
@@ -74,6 +75,7 @@ export default function ArghyaFinder({ date }: { date: string }) {
         </button>
       </div>
       {error && <p role="alert" className="text-sm font-semibold text-red-700 mt-3">{error}</p>}
+      <p className="text-xs text-teal/60 mt-2">“Use my location” asks your browser once — coordinates are sent to Open-Meteo for this lookup only, never stored. You can always pick a city instead.</p>
       {res ? (
         <div>
           <div className="grid grid-cols-2 gap-2 mt-4">
