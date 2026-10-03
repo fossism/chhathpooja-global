@@ -46,6 +46,20 @@ export default function Home({ params }: { params: { locale: string } }) {
         </div>
       </section>
 
+      {/* Mural — just below No. 01 hero */}
+      <section aria-label="Chhath mural" className="mural-breakout">
+        <figure className="mural-frame">
+          <Image
+            src="/chhath-mural.jpg"
+            alt="Chhath Mahaparv mural — vrtais offering Arghya in the river"
+            fill
+            priority
+            sizes="100vw"
+          />
+          <figcaption>On the ghat — Chhath mural</figcaption>
+        </figure>
+      </section>
+
       {/* No. 02 — The 4 days */}
       <section className="band">
         <div className="shell">
@@ -100,20 +114,6 @@ export default function Home({ params }: { params: { locale: string } }) {
             ))}
           </div>
         </div>
-      </section>
-
-      {/* Mural — full-bleed colored rectangle, just below No. 04 */}
-      <section aria-label="Chhath mural" className="mural-breakout">
-        <figure className="mural-frame">
-          <Image
-            src="/chhath-mural.jpg"
-            alt="Chhath Mahaparv mural — vrtais offering Arghya in the river"
-            fill
-            priority={false}
-            sizes="100vw"
-          />
-          <figcaption>On the ghat — Chhath mural</figcaption>
-        </figure>
       </section>
 
       {/* No. 05 — Explore */}
