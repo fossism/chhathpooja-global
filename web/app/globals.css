@@ -1,16 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,400..600&family=Space+Mono:wght@400;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Fonts are self-hosted via next/font (see app/[locale]/layout.tsx) —
+   no Google Fonts @import, so no third-party request and no render block. */
 /* Theme: Teal #16564F · Mustard #E8B84B · Cream #FFF8F3 · White — Bodhya-style editorial */
-body { @apply bg-cream text-teal antialiased; font-family: Archivo, system-ui, sans-serif; }
+body { @apply bg-cream text-teal antialiased; font-family: var(--font-archivo), Archivo, system-ui, sans-serif; }
 
 .shell { @apply max-w-6xl mx-auto px-4 md:px-6; }
 
 /* Section marker: "No. 01 — Label" */
-.marker { font-family: 'Space Mono', monospace; @apply text-xs tracking-widest uppercase text-teal/60 inline-flex items-center gap-3; }
+.marker { font-family: var(--font-spacemono), 'Space Mono', monospace; @apply text-xs tracking-widest uppercase text-teal/60 inline-flex items-center gap-3; }
 .marker-rule { @apply inline-block h-px w-10 bg-teal/30; }
 .marker--on-dark { @apply text-cream/70; }
 .marker--on-dark .marker-rule { @apply bg-cream/30; }
@@ -22,12 +22,12 @@ body { @apply bg-cream text-teal antialiased; font-family: Archivo, system-ui, s
 
 /* Headlines with serif-italic accent word */
 .headline { @apply font-extrabold tracking-tight text-teal; }
-.headline em { font-family: Newsreader, Georgia, serif; font-style: italic; font-weight: 500; }
+.headline em { font-family: var(--font-newsreader), Newsreader, Georgia, serif; font-style: italic; font-weight: 500; }
 .headline--on-dark { @apply text-cream; }
 
 /* Flat numbered cards */
 .num-card { @apply bg-white rounded-lg border border-line p-6; }
-.num-index { font-family: 'Space Mono', monospace; @apply text-sm text-teal/50; }
+.num-index { font-family: var(--font-spacemono), 'Space Mono', monospace; @apply text-sm text-teal/50; }
 
 /* Legacy class names reused across pages, restyled flat */
 .card { @apply bg-white rounded-lg border border-line p-6; }
@@ -43,7 +43,7 @@ body { @apply bg-cream text-teal antialiased; font-family: Archivo, system-ui, s
 
 .nav-link { @apply text-sm font-semibold text-teal/70 hover:text-teal px-2 py-1; }
 .section-title { @apply text-2xl md:text-3xl font-extrabold tracking-tight text-teal; }
-.section-title em { font-family: Newsreader, Georgia, serif; font-style: italic; font-weight: 500; }
+.section-title em { font-family: var(--font-newsreader), Newsreader, Georgia, serif; font-style: italic; font-weight: 500; }
 .section-sub { @apply text-sm text-teal/70 mt-1; }
 .count-box { @apply rounded-lg border border-line bg-cream p-4 text-center; }
 .count-box-alt { @apply rounded-lg border border-teal bg-teal p-4 text-center text-cream; }
