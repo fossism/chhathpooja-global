@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import SunCompass from "./SunCompass";
 
 const CITIES = [
   { name: "Patna", lat: 25.5941, lon: 85.1376 },
@@ -89,7 +90,10 @@ export default function ArghyaFinder({ date }: { date: string }) {
             </div>
           </div>
           {res.fallback && (
-            <p className="text-xs text-teal/70 mt-2">{res.note ?? "Estimate — confirm with local Panchang."}</p>
+            <p role="note" className="text-xs font-bold mt-2 rounded-lg border border-mustard bg-mustard/20 px-3 py-2">⚠ Estimate — {res.note ?? "Confirm with local Panchang."}</p>
+          )}
+          {Number.isFinite(Number(res.lat)) && res.date && (
+            <SunCompass lat={Number(res.lat)} date={String(res.date)} />
           )}
         </div>
       ) : (
