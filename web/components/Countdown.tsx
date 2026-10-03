@@ -11,9 +11,9 @@ export default function Countdown({ target, label }: { target: string; label: st
   }, []);
   if (!now) {
     return (
-      <div aria-live="polite" role="timer">
+      <div role="timer" aria-label={`${label} ${target}`}>
         <p className="label">{label} • {target}</p>
-        <div className="grid grid-cols-4 gap-2 mt-3">
+        <div className="grid grid-cols-4 gap-2 mt-3" aria-hidden="true">
           {["Days", "Hours", "Mins", "Secs"].map((l) => (
             <div key={l} className="count-box">
               <p className="text-2xl md:text-3xl font-bold tabular-nums">--</p>
@@ -32,9 +32,12 @@ export default function Countdown({ target, label }: { target: string; label: st
     { v: c.seconds, l: "Secs" }
   ];
   return (
-    <div aria-live="polite" role="timer">
+    <div role="timer" aria-label={`${label} ${target}`}>
       <p className="label">{label} • {target}</p>
-      <div className="grid grid-cols-4 gap-2 mt-3">
+      {/* Seconds tick visually but are hidden from screen readers; the
+          polite live region below announces days/hours/mins only, so it
+          doesn't spam every second. */}
+      <div className="grid grid-cols-4 gap-2 mt-3" aria-hidden="true">
         {boxes.map((b) => (
           <div key={b.l} className="count-box">
             <p className="text-2xl md:text-3xl font-bold tabular-nums">{String(b.v).padStart(2, "0")}</p>
@@ -42,6 +45,9 @@ export default function Countdown({ target, label }: { target: string; label: st
           </div>
         ))}
       </div>
+      <p className="sr-only" aria-live="polite">
+        {c.days} days, {c.hours} hours, {c.minutes} minutes remaining
+      </p>
     </div>
   );
 }
