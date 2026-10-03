@@ -30,14 +30,17 @@ export default function GhatsPage() {
   const [form, setForm] = useState({ name: "", city: "", country: "" });
   const [mine, setMine] = useState<Mine[]>([]);
   const [formError, setFormError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
+  const [sending, setSending] = useState(false);
 
   const qSafe = sanitize(q, MAX_Q).toLowerCase();
   const all = [...mine, ...seed].filter((g) =>
     (g.name + g.city + g.country).toLowerCase().includes(qSafe)
   );
 
-  function handleSubmit() {
+  async function handleSubmit() {
     setFormError(null);
+    setNotice(null);
     const name = sanitize(form.name, MAX_NAME);
     const city = sanitize(form.city, MAX_CITY);
     const country = sanitize(form.country || "India", MAX_COUNTRY);
@@ -48,18 +51,31 @@ export default function GhatsPage() {
     // Local preview only — never marked verified. Real publish requires
     // authenticated POST + server-side moderation (see supabase/schema.sql).
     // Default all facilities to false so we don't imply unverified amenities.
-    setMine([
-      {
-        id: `local-${Date.now()}`,
-        name, city, country,
-        riverOrPond: "Community spot",
-        verified: false,
-        pending: true,
-        facilities: { parking: false, lighting: false, policeHelp: false, firstAid: false, drinkingWater: false }
-      },
-      ...mine
-    ]);
+    const entry: Mine = {
+      id: `local-${Date.now()}`,
+      name, city, country,
+      riverOrPond: "Community spot",
+      verified: false,
+      pending: true,
+      facilities: { parking: false, lighting: false, policeHelp: false, firstAid: false, drinkingWater: false }
+    };
+    setMine([entry, ...mine]);
     setForm({ name: "", city: "", country: "" });
+    // Best-effort backend queue: works offline-first even with no Supabase.
+    setSending(true);
+    try {
+      const r = await fetch("/api/ghats", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, city, country })
+      });
+      const j = await r.json().catch(() => null);
+      setNotice(j?.note ?? (r.ok ? "Submitted." : "Saved as local preview."));
+    } catch {
+      setNotice("Saved as local preview (offline). It will sync when you submit with connection.");
+    } finally {
+      setSending(false);
+    }
   }
 
   return (
@@ -104,11 +120,13 @@ export default function GhatsPage() {
           <input value={form.country} onChange={(e) => setForm({ ...form, country: e.target.value })} placeholder="Country" maxLength={MAX_COUNTRY} className="input" />
         </div>
         {formError && <p role="alert" className="text-sm font-semibold text-red-700 mt-2">{formError}</p>}
+        {notice && <p role="status" className="text-sm font-medium text-teal mt-2">{notice}</p>}
         <button
           className="btn btn-primary mt-3"
+          disabled={sending}
           onClick={handleSubmit}
         >
-          Submit for review
+          {sending ? "Submitting…" : "Submit for review"}
         </button>
       </div>
     </div>
