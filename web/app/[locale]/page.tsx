@@ -18,11 +18,11 @@ export default function Home({ params }: { params: { locale: string } }) {
 
   return (
     <div>
-      {/* No. 01 — Hero */}
+      {/* Hero */}
       <section className="band">
         <div className="shell grid md:grid-cols-2 gap-10 items-center">
           <div>
-            <span className="marker">No. 01<span className="marker-rule"></span>The Mahaparv</span>
+            <span className="marker">The Mahaparv</span>
             <h1 className="headline text-4xl md:text-6xl mt-4 leading-[1.05]">
               Keeping <em>Chhath</em><br />alive, everywhere
             </h1>
@@ -46,7 +46,7 @@ export default function Home({ params }: { params: { locale: string } }) {
         </div>
       </section>
 
-      {/* Mural — just below No. 01 hero */}
+      {/* Mural — just below hero */}
       <section aria-label="Chhath mural" className="mural-breakout">
         <figure className="mural-frame" style={{ background: "#E4DAD4" }}>
           <Image
@@ -63,10 +63,9 @@ export default function Home({ params }: { params: { locale: string } }) {
         </figure>
       </section>
 
-      {/* No. 02 — The 4 days */}
+      {/* The 4 days */}
       <section className="band">
         <div className="shell">
-          <span className="marker">No. 02</span>
           <h2 className="section-title mt-3">The 4 days</h2>
           <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4 mt-6">
             {days.map((d) => (
@@ -81,11 +80,10 @@ export default function Home({ params }: { params: { locale: string } }) {
         </div>
       </section>
 
-      {/* No. 03 — Arghya time */}
+      {/* Arghya time */}
       <section className="band">
         <div className="shell grid md:grid-cols-2 gap-10">
           <div>
-            <span className="marker">No. 03</span>
             <h2 className="section-title mt-3">Arghya time, <em>your</em> city</h2>
             <p className="section-sub mt-2 max-w-md">Sunset is Sandhya Arghya, next sunrise is Usha Arghya. For {next.sandhyaArghya} — from Patna to New Jersey.</p>
             <blockquote className="callout mt-6">The sun never asks who you are — everyone shares prasad.</blockquote>
@@ -96,11 +94,11 @@ export default function Home({ params }: { params: { locale: string } }) {
         </div>
       </section>
 
-      {/* No. 04 — Teal band: community in numbers */}
+      {/* Teal band: community in numbers */}
       <section className="band-teal">
         <div className="shell grid md:grid-cols-2 gap-10 items-center">
           <div>
-            <span className="marker marker--on-dark">No. 04<span className="marker-rule"></span>On the ground</span>
+            <span className="marker marker--on-dark">On the ground</span>
             <h2 className="headline headline--on-dark text-3xl md:text-5xl mt-4">One parv,<br />every ghat on earth</h2>
             <p className="text-cream/70 mt-4 max-w-md">Crowdsourced ghats, photos from the diaspora, and songs your nani sang — all open data.</p>
             <div className="flex flex-wrap gap-3 mt-6">
@@ -119,10 +117,10 @@ export default function Home({ params }: { params: { locale: string } }) {
         </div>
       </section>
 
-      {/* No. 05 — Explore */}
+      {/* Explore */}
       <section className="band">
         <div className="shell">
-          <span className="marker">No. 05<span className="marker-rule"></span>Explore</span>
+          <span className="marker">Explore</span>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
             <div className="num-card">
               <span className="num-index">A</span>
@@ -156,7 +154,7 @@ export default function Home({ params }: { params: { locale: string } }) {
       {/* Mustard CTA band */}
       <section className="band-mustard">
         <div className="shell">
-          <span className="marker">No. 06 — Build it with us</span>
+          <span className="marker">Build it with us</span>
           <h2 className="headline text-3xl md:text-5xl mt-3">Do Chhath anywhere.<br />Pin it for everyone.</h2>
           <p className="mt-3 max-w-xl font-medium">Add your ghat, share a wall photo, translate one line. No code needed.</p>
           <div className="flex flex-wrap gap-3 mt-6">
