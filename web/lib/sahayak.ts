@@ -64,7 +64,7 @@ export function askSahayak(raw: string): Answer {
   if (has("song", "geet", "lyric", "kelwa", "uga ho", "kosi", "chhathi maiya", "music", "gaana")) {
     const list = (songs as any[]).map((x) => `${x.title} (${x.titleDevanagari}) — ${x.meaning_en}`).join(" | ");
     return {
-      text: `Folk archive (${(songs as any[]).length} songs): ${list} Open the Songs page and press Listen on any card to hear it read aloud.`,
+      text: `Folk archive (${(songs as any[]).length} songs): ${list} Open the Songs page and press play — albums stream continuously, even while you browse.`,
       sources: ["songs.json"],
       followUp: ["What samagri do I need?", "When is next Chhath?"]
     };

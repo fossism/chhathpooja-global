@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Archivo, Newsreader, Space_Mono } from "next/font/google";
 import { locales } from "../../i18n";
 import SwRegister from "../../components/SwRegister";
+import MusicProvider from "../../components/MusicProvider";
+import MiniPlayer from "../../components/MiniPlayer";
 
 // Self-hosted fonts (next/font) — no runtime request to Google Fonts,
 // so no third-party IP leak and no render-blocking @import in CSS.
@@ -81,6 +83,7 @@ export default function LocaleLayout({ children, params }: { children: React.Rea
   return (
     <html lang={locale} className={`${archivo.variable} ${newsreader.variable} ${spaceMono.variable}`}>
       <body>
+      <MusicProvider>
       <SwRegister />
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-mustard focus:text-teal focus:px-4 focus:py-2 focus:font-bold">Skip to content</a>
       <header className="sticky top-0 z-20">
@@ -128,7 +131,7 @@ export default function LocaleLayout({ children, params }: { children: React.Rea
       </header>
 
       {/* Inner pages own their own .shell container; home bands are full-bleed. */}
-      <main id="main">{children}</main>
+      <main id="main" className="pb-16">{children}</main>
 
       <footer className="bg-cream border-t border-line">
         <div className="shell py-10 grid sm:grid-cols-2 md:grid-cols-4 gap-8">
@@ -173,6 +176,8 @@ export default function LocaleLayout({ children, params }: { children: React.Rea
           </div>
         </div>
       </footer>
+      <MiniPlayer />
+      </MusicProvider>
       </body>
     </html>
   );

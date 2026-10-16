@@ -4,12 +4,13 @@ const nextConfig = {
     const csp = [
       "default-src 'self'",
       // Next.js dev needs unsafe-inline/unsafe-eval; prod serializes the same policy.
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.youtube.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com data:",
-      // Local marker icons + OSM tiles + mural images. No unpkg/imgur/etc.
-      "img-src 'self' data: blob: https://*.tile.openstreetmap.org https://tile.openstreetmap.org",
-      "connect-src 'self' https://api.open-meteo.com",
+      // Local marker icons + OSM tiles + mural images + YouTube artwork. No unpkg/imgur/etc.
+      "img-src 'self' data: blob: https://*.tile.openstreetmap.org https://tile.openstreetmap.org https://i.ytimg.com",
+      "connect-src 'self' https://api.open-meteo.com https://www.youtube.com https://i.ytimg.com",
+      "frame-src 'self' https://www.youtube.com",
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "form-action 'self'"
