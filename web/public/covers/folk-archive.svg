@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Album art — the rising sun over the river, framed by banana leaves">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0F3F3A"/>
+      <stop offset="0.55" stop-color="#1E5C52"/>
+      <stop offset="1" stop-color="#E8B84B"/>
+    </linearGradient>
+    <linearGradient id="sun" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFE9B8"/>
+      <stop offset="1" stop-color="#E8873D"/>
+    </linearGradient>
+    <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#16564F"/>
+      <stop offset="1" stop-color="#0B332F"/>
+    </linearGradient>
+    <linearGradient id="leafA" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2E7D6F"/>
+      <stop offset="1" stop-color="#16564F"/>
+    </linearGradient>
+    <linearGradient id="leafB" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3E9B84"/>
+      <stop offset="1" stop-color="#1E5C52"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Sky -->
+  <rect width="1200" height="675" fill="url(#sky)"/>
+
+  <!-- Morning stars -->
+  <g fill="#FFF8F3" opacity="0.8">
+    <circle cx="120" cy="80" r="3"/><circle cx="230" cy="150" r="2"/><circle cx="340" cy="60" r="2.5"/>
+    <circle cx="520" cy="120" r="2"/><circle cx="690" cy="70" r="3"/><circle cx="860" cy="140" r="2"/>
+    <circle cx="1010" cy="90" r="2.5"/><circle cx="1120" cy="170" r="2"/><circle cx="960" cy="220" r="2"/>
+  </g>
+
+  <!-- Sun rays -->
+  <g stroke="#F3CA6A" stroke-width="6" stroke-linecap="round" opacity="0.75">
+    <line x1="600" y1="215" x2="600" y2="150"/>
+    <line x1="432" y1="262" x2="386" y2="216"/>
+    <line x1="768" y1="262" x2="814" y2="216"/>
+    <line x1="370" y1="380" x2="304" y2="380"/>
+    <line x1="830" y1="380" x2="896" y2="380"/>
+    <line x1="432" y1="498" x2="386" y2="544"/>
+    <line x1="768" y1="498" x2="814" y2="544"/>
+  </g>
+
+  <!-- Rising sun, half dipped in the river -->
+  <circle cx="600" cy="430" r="150" fill="url(#sun)"/>
+
+  <!-- River -->
+  <path d="M0 470 Q 100 452 200 470 T 400 470 T 600 470 T 800 470 T 1000 470 T 1200 470 V 675 H 0 Z" fill="url(#water)"/>
+  <g stroke="#FFF8F3" stroke-width="4" stroke-linecap="round" opacity="0.28" fill="none">
+    <path d="M120 540 q 60 -14 120 0"/>
+    <path d="M360 585 q 70 -16 140 0"/>
+    <path d="M640 540 q 60 -14 120 0"/>
+    <path d="M880 590 q 70 -16 140 0"/>
+    <path d="M480 640 q 80 -16 160 0"/>
+  </g>
+  <!-- Sun reflection -->
+  <g stroke="#F3CA6A" stroke-width="8" stroke-linecap="round" opacity="0.5">
+    <line x1="560" y1="510" x2="640" y2="510"/>
+    <line x1="580" y1="545" x2="620" y2="545"/>
+    <line x1="590" y1="580" x2="610" y2="580"/>
+  </g>
+
+  <!-- Banana leaves framing the ghat -->
+  <path d="M0 675 C 60 560 210 505 330 520 C 250 570 140 630 80 675 Z" fill="url(#leafA)"/>
+  <path d="M0 675 C 120 640 250 620 340 645 C 250 665 130 672 60 675 Z" fill="url(#leafB)"/>
+  <path d="M1200 675 C 1140 560 990 505 870 520 C 950 570 1060 630 1120 675 Z" fill="url(#leafB)"/>
+  <path d="M1200 675 C 1080 640 950 620 860 645 C 950 665 1070 672 1140 675 Z" fill="url(#leafA)"/>
+
+  <!-- Soop (winnowing basket) with prasad -->
+  <g transform="translate(600 620)">
+    <ellipse cx="0" cy="0" rx="120" ry="30" fill="#8A5A2B"/>
+    <ellipse cx="0" cy="-6" rx="120" ry="30" fill="#B07A3C"/>
+    <ellipse cx="0" cy="-6" rx="96" ry="22" fill="#C98F4B"/>
+    <circle cx="-44" cy="-10" r="14" fill="#E8873D"/>
+    <circle cx="-12" cy="-16" r="13" fill="#E8B84B"/>
+    <circle cx="22" cy="-12" r="14" fill="#C8552E"/>
+    <circle cx="56" cy="-8" r="12" fill="#E8B84B"/>
+  </g>
+</svg>

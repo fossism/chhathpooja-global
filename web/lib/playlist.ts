@@ -5,15 +5,15 @@ export type Track = {
   kind: "youtube" | "tts"; youtubeId?: string;
   lyric?: string; meaning?: string; thumb?: string;
 };
-export type AlbumT = { id: string; title: string; subtitle: string; tracks: Track[] };
+export type AlbumT = { id: string; title: string; subtitle: string; cover?: string; tracks: Track[] };
 
 type RawTrack = { id: string; title: string; artist: string; youtubeId?: string; lyric?: string; meaning?: string };
-type RawAlbum = { id: string; title: string; subtitle: string; tracks: RawTrack[] };
+type RawAlbum = { id: string; title: string; subtitle: string; cover?: string; tracks: RawTrack[] };
 
 // Plain module (no "use client") so server pages can count/render statically
 // while client components use the same track list for playback.
 export const ALBUMS: AlbumT[] = (raw as { albums: RawAlbum[] }).albums.map((a) => ({
-  id: a.id, title: a.title, subtitle: a.subtitle,
+  id: a.id, title: a.title, subtitle: a.subtitle, cover: a.cover,
   tracks: a.tracks.map((t) => ({
     uid: `${a.id}:${t.id}`,
     title: t.title, artist: t.artist, album: a.title,

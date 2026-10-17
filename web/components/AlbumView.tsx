@@ -11,7 +11,8 @@ function fmt(s: number): string {
 function AlbumCard({ albumId }: { albumId: string }) {
   const album = ALBUMS.find((a) => a.id === albumId)!;
   const { playTracks, current, playing, toggle, queue, order, pos, playTracks: pt } = usePlayer();
-  const cover = album.tracks.find((t) => t.thumb)?.thumb;
+  // Explicit album cover wins; otherwise fall back to the first track's artwork.
+  const cover = album.cover ?? album.tracks.find((t) => t.thumb)?.thumb;
 
   function playAt(i: number) {
     const cur = queue[order[pos] ?? -1];

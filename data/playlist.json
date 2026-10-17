@@ -54,6 +54,7 @@
       "id": "folk",
       "title": "Folk Archive • Listen Aloud",
       "subtitle": "Traditional lyrics read aloud offline — no internet needed",
+      "cover": "/covers/folk-archive.svg",
       "tracks": [
         { "id": "kosi-bharal", "title": "Kosi Bharal (कोसी भरल)", "artist": "Traditional folk", "lyric": "Kosi bharal Chhathi Maiya, geet gaila...", "meaning": "The kosi (earthen altar) is filled — invocation to Chhathi Maiya on Kharna night." },
         { "id": "surya-arghya", "title": "Uga Ho Suraj Dev (उगा हो सूरज देव)", "artist": "Traditional folk", "lyric": "Uga ho Suraj Dev, arghya lebo...", "meaning": "Rise, O Sun God — awaiting Usha Arghya at dawn." },
