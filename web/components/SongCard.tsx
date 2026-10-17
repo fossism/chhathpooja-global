@@ -1,10 +1,16 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Song card with listen-aloud (Web Speech API, free, no audio files).
 // hi-IN voice reads Devanagari + romanized lyrics; stop anytime.
 export default function SongCard({ s }: { s: any }) {
   const [speaking, setSpeaking] = useState(false);
+  // Must not be derived during render: the server has no `window`, so
+  // rendering the button conditionally caused a hydration mismatch.
+  const [supported, setSupported] = useState(false);
+  useEffect(() => {
+    setSupported("speechSynthesis" in window);
+  }, []);
 
   function toggle() {
     if (!("speechSynthesis" in window)) return;
@@ -22,8 +28,6 @@ export default function SongCard({ s }: { s: any }) {
     window.speechSynthesis.speak(u);
     setSpeaking(true);
   }
-
-  const supported = typeof window !== "undefined" && "speechSynthesis" in window;
 
   return (
     <div className="card">

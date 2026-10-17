@@ -9,7 +9,7 @@ function fmt(s: number): string {
 
 export default function MiniPlayer() {
   const {
-    current, playing, shuffle, repeat, progress, duration,
+    current, playing, waiting, shuffle, repeat, progress, duration,
     queue, order, pos, videoOpen, setVideoOpen, queueOpen, setQueueOpen,
     toggle, next, prev, toggleShuffle, cycleRepeat, seek, playTracks
   } = usePlayer();
@@ -63,13 +63,13 @@ export default function MiniPlayer() {
             <div className="min-w-0 flex-1 leading-tight">
               <p className="text-sm font-bold truncate">{current.title}</p>
               <p className="text-[11px] text-cream/70 truncate">
-                {current.artist}{current.kind === "tts" ? " • folk listen-aloud" : ` • ${fmt(duration)}`}
+                {current.artist}{waiting ? " • starting…" : current.kind === "tts" ? " • folk listen-aloud" : duration ? ` • ${fmt(duration)}` : ""}
               </p>
             </div>
             <button onClick={toggleShuffle} aria-label="Shuffle" aria-pressed={shuffle} className={`text-sm px-1.5 ${shuffle ? "text-mustard" : "text-cream/60"}`}>🔀</button>
             <button onClick={prev} aria-label="Previous" className="text-lg px-1">⏮</button>
-            <button onClick={toggle} aria-label={playing ? "Pause" : "Play"} className="w-9 h-9 rounded-full bg-mustard text-teal font-bold shrink-0">
-              {playing ? "❚❚" : "▶"}
+            <button onClick={toggle} aria-label={waiting ? "Starting" : playing ? "Pause" : "Play"} className="w-9 h-9 rounded-full bg-mustard text-teal font-bold shrink-0">
+              {waiting ? "…" : playing ? "❚❚" : "▶"}
             </button>
             <button onClick={next} aria-label="Next" className="text-lg px-1">⏭</button>
             <button onClick={cycleRepeat} aria-label="Repeat" className={`text-xs font-bold px-1.5 ${repeat !== "off" ? "text-mustard" : "text-cream/60"}`}>

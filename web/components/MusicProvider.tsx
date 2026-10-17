@@ -5,7 +5,7 @@ import { type Track } from "../lib/playlist";
 declare global { interface Window { YT?: any; onYouTubeIframeAPIReady?: () => void; } }
 
 type Ctx = {
-  current: Track | null; playing: boolean;
+  current: Track | null; playing: boolean; waiting: boolean;
   shuffle: boolean; repeat: "off" | "all" | "one";
   progress: number; duration: number;
   queue: Track[]; order: number[]; pos: number;
@@ -14,6 +14,8 @@ type Ctx = {
   playTracks: (tracks: Track[], start?: number) => void;
   toggle: () => void; next: () => void; prev: () => void;
   toggleShuffle: () => void; cycleRepeat: () => void; seek: (frac: number) => void;
+  /** Create the hidden YouTube player ahead of time so the first tap starts fast. */
+  warm: () => void;
 };
 
 const MusicCtx = createContext<Ctx | null>(null);
@@ -37,6 +39,7 @@ export default function MusicProvider({ children }: { children: React.ReactNode 
   const [order, setOrder] = useState<number[]>([]);
   const [pos, setPos] = useState(0);
   const [playing, setPlaying] = useState(false);
+  const [waiting, setWaiting] = useState(false);
   const [shuffle, setShuffle] = useState(false);
   const [repeat, setRepeat] = useState<"off" | "all" | "one">("all");
   const [progress, setProgress] = useState(0);
@@ -44,152 +47,227 @@ export default function MusicProvider({ children }: { children: React.ReactNode 
   const [videoOpen, setVideoOpen] = useState(false);
   const [queueOpen, setQueueOpen] = useState(false);
   const [apiReady, setApiReady] = useState(false);
+  const [epoch, setEpoch] = useState(0);
 
   const playerRef = useRef<any>(null);
   const divRef = useRef<HTMLDivElement>(null);
   const creatingRef = useRef(false);
-  const stateRef = useRef({ queue, order, pos, repeat, playing });
-  stateRef.current = { queue, order, pos, repeat, playing };
+  const readyRef = useRef(false);        // YT player fired onReady
+  const pendingRef = useRef<string | null>(null); // videoId waiting for the player
+  const errorRef = useRef(0);            // consecutive unplayable videos
+  // Exact values for the in-flight play request — never read lagging state
+  // right after setState, which is what made tracks repeat or never start.
+  const requestRef = useRef<{ queue: Track[]; order: number[]; pos: number }>({ queue: [], order: [], pos: 0 });
+
+  const stateRef = useRef({ queue, order, pos, repeat, playing, shuffle, epoch });
+  stateRef.current = { queue, order, pos, repeat, playing, shuffle, epoch };
 
   const current: Track | null = queue.length ? queue[order[pos] ?? 0] ?? null : null;
 
-  // Load YouTube IFrame API once.
+  // Load the YouTube IFrame API exactly once. Robust to remounts/HMR:
+  // the callback is chained, and a short poll covers the case where the
+  // script tag already exists but YT never signaled us.
   useEffect(() => {
     if (window.YT?.Player) { setApiReady(true); return; }
-    if (document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) return;
-    const tag = document.createElement("script");
-    tag.src = "https://www.youtube.com/iframe_api";
-    document.head.appendChild(tag);
-    window.onYouTubeIframeAPIReady = () => setApiReady(true);
+    let iv = 0;
+    const markReady = () => { setApiReady(true); if (iv) window.clearInterval(iv); };
+    const prev = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = () => { try { prev?.(); } catch { /* noop */ } markReady(); };
+    if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      document.head.appendChild(tag);
+    }
+    iv = window.setInterval(() => { if (window.YT?.Player) markReady(); }, 400);
+    return () => { if (iv) window.clearInterval(iv); };
   }, []);
 
   const stopSpeech = useCallback(() => {
     if ("speechSynthesis" in window) window.speechSynthesis.cancel();
   }, []);
 
-  // Advance on natural end. Stored in ref so YT callbacks + speech callbacks
-  // always see fresh state.
-  const advanceRef = useRef<(auto: boolean) => void>(() => {});
-  advanceRef.current = (auto: boolean) => {
-    const s = stateRef.current;
-    if (!s.queue.length) return;
-    if (auto && s.repeat === "one") {
-      playAtRef.current(s.pos);
-      return;
-    }
-    const nextPos = s.pos + 1;
-    if (nextPos < s.order.length) {
-      playAtRef.current(nextPos);
-    } else if (s.repeat === "all" || !auto) {
-      playAtRef.current(0);
-    } else {
-      setPlaying(false);
-    }
-  };
-
-  const playAtRef = useRef<(p: number) => void>(() => {});
-  playAtRef.current = (p: number) => {
+  const goTo = useCallback((p: number) => {
     const s = stateRef.current;
     const t = s.queue[s.order[p]];
     if (!t) return;
     setPos(p);
+    requestRef.current = { queue: s.queue, order: s.order, pos: p };
+    setEpoch((e) => e + 1);
+  }, []);
+
+  const advance = useCallback((auto: boolean) => {
+    const s = stateRef.current;
+    if (!s.queue.length || !s.order.length) return;
+    if (auto && s.repeat === "one") { goTo(s.pos); return; }
+    const np = s.pos + 1;
+    if (np < s.order.length) goTo(np);
+    else if (s.repeat === "all" || !auto) goTo(0);
+    else setPlaying(false);
+  }, [goTo]);
+
+  // Create the hidden player once the API is available. It stays parked but
+  // alive, so every later track change is a single loadVideoById call — no
+  // iframe cold-start in the middle of the queue.
+  const ensurePlayer = useCallback(() => {
+    if (playerRef.current || creatingRef.current) return;
+    if (!apiReady || !window.YT?.Player || !divRef.current) return;
+    creatingRef.current = true;
+    try {
+      playerRef.current = new window.YT.Player(divRef.current, {
+        height: "180",
+        width: "320",
+        playerVars: { rel: 0, playsinline: 1 },
+        events: {
+          onReady: (e: any) => {
+            readyRef.current = true;
+            const pending = pendingRef.current;
+            pendingRef.current = null;
+            // The player starts cued, not playing — this is the call that was
+            // missing before, so the first selected track never actually ran.
+            if (pending) { try { e.target.loadVideoById(pending); } catch { /* noop */ } }
+          },
+          onStateChange: (e: any) => {
+            if (e.data === 1) { setPlaying(true); setWaiting(false); errorRef.current = 0; }  // playing
+            else if (e.data === 2) setPlaying(false);                                        // paused
+            else if (e.data === 0) advance(true);                                            // ended
+            else if (e.data === 5) setWaiting(false);                                        // cued
+          },
+          onError: () => {
+            // Removed / embed-blocked video: don't stall the queue, skip ahead.
+            setWaiting(false);
+            setPlaying(false);
+            errorRef.current += 1;
+            if (errorRef.current <= 5) window.setTimeout(() => advance(true), 60);
+          }
+        }
+      });
+    } catch {
+      playerRef.current = null;
+    }
+    creatingRef.current = false;
+  }, [apiReady, advance]);
+
+  const warm = useCallback(() => ensurePlayer(), [ensurePlayer]);
+
+  // Start one track. Everything is driven from here — no retry timers.
+  const startTrack = useCallback((t: Track) => {
     setProgress(0);
     setDuration(0);
     if (t.kind === "tts") {
-      playerRef.current?.pauseVideo?.();
+      try { playerRef.current?.pauseVideo?.(); } catch { /* noop */ }
       stopSpeech();
-      if (!("speechSynthesis" in window)) { setPlaying(false); return; }
+      if (!("speechSynthesis" in window)) { setPlaying(false); setWaiting(false); return; }
       const u = new SpeechSynthesisUtterance(`${t.title}. ${t.lyric ?? ""} ${t.meaning ?? ""}`);
       u.lang = "hi-IN";
       u.rate = 0.9;
-      u.onend = () => { if (stateRef.current.playing) advanceRef.current(true); };
-      u.onerror = () => setPlaying(false);
+      // Guard against a cancelled utterance firing onend and skipping a track.
+      const myEpoch = stateRef.current.epoch;
+      u.onend = () => { if (stateRef.current.epoch === myEpoch && stateRef.current.playing) advance(true); };
+      u.onerror = () => { setPlaying(false); setWaiting(false); };
       window.speechSynthesis.speak(u);
       setPlaying(true);
-    } else {
-      stopSpeech();
-      const start = () => {
-        try {
-          playerRef.current?.loadVideoById?.(t.youtubeId);
-          setPlaying(true);
-        } catch { setPlaying(false); }
-      };
-      if (playerRef.current?.loadVideoById) {
-        start();
-      } else if (apiReady && !creatingRef.current) {
-        creatingRef.current = true;
-        try {
-          playerRef.current = new window.YT.Player(divRef.current, {
-            height: "180", width: "320",
-            videoId: t.youtubeId,
-            playerVars: { rel: 0 },
-            events: {
-              onStateChange: (e: any) => {
-                if (e.data === window.YT.PlayerState.ENDED) advanceRef.current(true);
-                else if (e.data === window.YT.PlayerState.PLAYING) setPlaying(true);
-                else if (e.data === window.YT.PlayerState.PAUSED) setPlaying(false);
-              }
-            }
-          });
-          setPlaying(true);
-        } catch { setPlaying(false); }
-        creatingRef.current = false;
-      } else {
-        // API not ready yet — retry shortly (user gesture already happened).
-        setTimeout(() => playAtRef.current(p), 800);
-      }
+      setWaiting(false);
+      return;
     }
-  };
+    stopSpeech();
+    if (playerRef.current && readyRef.current) {
+      try {
+        playerRef.current.loadVideoById(t.youtubeId);
+        setPlaying(true);
+        setWaiting(false);
+      } catch { /* noop */ }
+      return;
+    }
+    // Player still spinning up: remember the track; onReady starts it.
+    pendingRef.current = t.youtubeId ?? null;
+    setWaiting(true);
+    ensurePlayer();
+    // Never hang on "starting…" forever if YouTube is unreachable.
+    window.setTimeout(() => {
+      if (!readyRef.current && pendingRef.current === t.youtubeId) {
+        pendingRef.current = null;
+        setWaiting(false);
+        setPlaying(false);
+      }
+    }, 12000);
+  }, [ensurePlayer, stopSpeech]);
 
-  useEffect(() => () => { stopSpeech(); try { playerRef.current?.destroy?.(); } catch { /* noop */ } }, [stopSpeech]);
+  // React to play requests only after state committed, so playback always
+  // uses the exact queue/order that was requested.
+  useEffect(() => {
+    if (epoch === 0) return;
+    const req = requestRef.current;
+    const t = req.queue[req.order[req.pos]];
+    if (t) startTrack(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [epoch]);
+
+  useEffect(() => () => {
+    stopSpeech();
+    try { playerRef.current?.destroy?.(); } catch { /* noop */ }
+  }, [stopSpeech]);
 
   const playTracks = useCallback((tracks: Track[], start = 0) => {
     if (!tracks.length) return;
-    stopSpeech();
+    errorRef.current = 0;
+    const sh = stateRef.current.shuffle;
+    const s = Math.min(Math.max(start, 0), tracks.length - 1);
+    const o = sh ? shuffledOrder(tracks.length, s) : tracks.map((_, i) => i);
+    const p = sh ? 0 : s;
     setQueue(tracks);
-    setOrder(shuffle ? shuffledOrder(tracks.length, start) : tracks.map((_, i) => i));
-    // Defer so stateRef catches queue/order before playAt reads them.
-    setTimeout(() => playAtRef.current(shuffle ? 0 : start), 0);
-    if (shuffle) setPos(0); else setPos(start);
-  }, [shuffle, stopSpeech]);
+    setOrder(o);
+    setPos(p);
+    requestRef.current = { queue: tracks, order: o, pos: p };
+    setEpoch((e) => e + 1);
+  }, []);
 
   const toggle = useCallback(() => {
-    const t = stateRef.current.queue[stateRef.current.order[stateRef.current.pos]];
+    const s = stateRef.current;
+    const t = s.queue[s.order[s.pos]];
     if (!t) return;
     if (t.kind === "tts") {
       if (!("speechSynthesis" in window)) return;
-      if (stateRef.current.playing) {
-        window.speechSynthesis.pause();
-        setPlaying(false);
-      } else {
-        window.speechSynthesis.resume();
-        setPlaying(true);
+      if (window.speechSynthesis.paused) { window.speechSynthesis.resume(); setPlaying(true); }
+      else if (window.speechSynthesis.speaking) { window.speechSynthesis.pause(); setPlaying(false); }
+      else {
+        // Finished or cancelled — restart this track.
+        requestRef.current = { queue: s.queue, order: s.order, pos: s.pos };
+        setEpoch((e) => e + 1);
       }
       return;
     }
+    const p = playerRef.current;
+    if (!p || !readyRef.current) {
+      requestRef.current = { queue: s.queue, order: s.order, pos: s.pos };
+      setEpoch((e) => e + 1);
+      return;
+    }
     try {
-      if (stateRef.current.playing) playerRef.current?.pauseVideo?.();
-      else playerRef.current?.playVideo?.();
+      const st = p.getPlayerState();
+      // Ask the player itself instead of trusting UI state (cued/buffering
+      // tracks used to look "playing" while silent).
+      if (st === 1 || st === 3) { p.pauseVideo(); setPlaying(false); }
+      else { p.playVideo(); setPlaying(true); }
     } catch { /* noop */ }
   }, []);
 
-  const next = useCallback(() => advanceRef.current(false), []);
+  const next = useCallback(() => advance(false), [advance]);
   const prev = useCallback(() => {
     const s = stateRef.current;
-    playAtRef.current(s.pos > 0 ? s.pos - 1 : s.order.length - 1);
-  }, []);
+    if (!s.order.length) return;
+    goTo(s.pos > 0 ? s.pos - 1 : s.order.length - 1);
+  }, [goTo]);
 
   const toggleShuffle = useCallback(() => {
-    setShuffle((v) => {
-      const nv = !v;
-      const s = stateRef.current;
-      if (s.queue.length) {
-        const curIdx = s.order[s.pos] ?? 0;
-        setOrder(nv ? shuffledOrder(s.queue.length, curIdx) : s.queue.map((_, i) => i));
-        setPos(nv ? 0 : curIdx);
-      }
-      return nv;
-    });
+    const nv = !stateRef.current.shuffle;
+    setShuffle(nv);
+    const s = stateRef.current;
+    if (s.queue.length) {
+      const curIdx = s.order[s.pos] ?? 0;
+      setOrder(nv ? shuffledOrder(s.queue.length, curIdx) : s.queue.map((_, i) => i));
+      setPos(nv ? 0 : curIdx);
+      // No epoch bump — shuffle must not interrupt the current track.
+    }
   }, []);
 
   const cycleRepeat = useCallback(() => {
@@ -198,22 +276,24 @@ export default function MusicProvider({ children }: { children: React.ReactNode 
 
   const seek = useCallback((frac: number) => {
     try {
-      const d = playerRef.current?.getDuration?.();
-      if (d) playerRef.current.seekTo(frac * d, true);
+      const p = playerRef.current;
+      const d = p?.getDuration?.() ?? 0;
+      if (d) p.seekTo(frac * d, true);
     } catch { /* noop */ }
   }, []);
 
   // Progress ticker for YouTube tracks.
   useEffect(() => {
     if (!playing || !current || current.kind !== "youtube") return;
-    const t = setInterval(() => {
+    const t = window.setInterval(() => {
       try {
-        const d = playerRef.current?.getDuration?.() ?? 0;
-        const c = playerRef.current?.getCurrentTime?.() ?? 0;
-        if (d > 0) { setDuration(d); setProgress(c / d); }
+        const p = playerRef.current;
+        const d = p?.getDuration?.() ?? 0;
+        const c = p?.getCurrentTime?.() ?? 0;
+        if (d > 0) { setDuration(d); setProgress(Math.min(1, c / d)); }
       } catch { /* noop */ }
     }, 500);
-    return () => clearInterval(t);
+    return () => window.clearInterval(t);
   }, [playing, current]);
 
   // Lock-screen / headset controls.
@@ -232,11 +312,11 @@ export default function MusicProvider({ children }: { children: React.ReactNode 
   }, [current, toggle, prev, next]);
 
   const value = useMemo<Ctx>(() => ({
-    current, playing, shuffle, repeat, progress, duration,
+    current, playing, waiting, shuffle, repeat, progress, duration,
     queue, order, pos,
     videoOpen, setVideoOpen, queueOpen, setQueueOpen,
-    playTracks, toggle, next, prev, toggleShuffle, cycleRepeat, seek
-  }), [current, playing, shuffle, repeat, progress, duration, queue, order, pos, videoOpen, queueOpen, playTracks, toggle, next, prev, toggleShuffle, cycleRepeat, seek]);
+    playTracks, toggle, next, prev, toggleShuffle, cycleRepeat, seek, warm
+  }), [current, playing, waiting, shuffle, repeat, progress, duration, queue, order, pos, videoOpen, queueOpen, playTracks, toggle, next, prev, toggleShuffle, cycleRepeat, seek, warm]);
 
   return (
     <MusicCtx.Provider value={value}>

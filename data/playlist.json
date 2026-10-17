@@ -1,28 +1,28 @@
 {
-  "note": "Every youtubeId verified alive via YouTube oEmbed (Oct 2026). Playback streams from YouTube (rights holders monetize there) — nothing hosted in this repo. Jukebox videos contain 8–10 songs each, so ~60 songs play from 27 tracks. To add a song: append {id,title,artist,youtubeId} and rebuild.",
+  "note": "Every youtubeId is verified TWO ways: (1) oEmbed says the video exists, (2) a real embedded player loads it (error-150 check). T-Series / Aadishakti / Maa-Amman uploads of these songs are embed-blocked ('This video is unavailable', YouTube error 150) — do NOT add them, they will never play. Jukebox videos contain 10-15 songs each. To add a song: append {id,title,artist,youtubeId} and re-run the embed check.",
   "albums": [
     {
-      "id": "sharda-classics",
-      "title": "Sharda Sinha Classics",
-      "subtitle": "The Voice of Chhath • T-Series Bhakti Sagar",
+      "id": "kelwa-classics",
+      "title": "Kelwa Ke Paat Par — Chhath Classics",
+      "subtitle": "The anthem in three voices • verified embed-playable",
       "tracks": [
-        { "id": "kelwa-new", "title": "Kelwa Ke Paat Par (New Version)", "artist": "Sharda Sinha", "youtubeId": "knZ8b5YnQiY" },
-        { "id": "kartik-ijoriya", "title": "Kartik Maas Ijoriya", "artist": "Sharda Sinha", "youtubeId": "UwqtDSb0pLI" },
-        { "id": "kelwa-full", "title": "Kelwa Ke Paat Par (Full Song)", "artist": "Sharda Sinha", "youtubeId": "-mpGoG0nWPo" },
-        { "id": "nonstop-sharda", "title": "Non-Stop Chhath Pooja Geet (Jukebox)", "artist": "Sharda Sinha", "youtubeId": "GMQGZjFn6-4" },
-        { "id": "bhakti-ras", "title": "Bhakti Ras — Sadabahar Superhit Geet", "artist": "Sharda Sinha", "youtubeId": "MNsbDT3fhUs" }
+        { "id": "kelwa-trad", "title": "Kelwa Ke Paat Par (पारम्परिक)", "artist": "Madhu Pandey • traditional", "youtubeId": "QzPHuipyjcE" },
+        { "id": "kelwa-vs", "title": "Kelwa Ke Paat Par", "artist": "Devi Kumar • VS Music", "youtubeId": "7JtlmOE_ylI" },
+        { "id": "kelwa-stage", "title": "Kelwa Ke Paat Par (Stage)", "artist": "Durga Boss", "youtubeId": "rdJVSLY4hIk" },
+        { "id": "kartik-mona", "title": "Kartik Mahina Hola Chhathi Maai", "artist": "Mona Singh", "youtubeId": "qfbCSaGZ-08" },
+        { "id": "daura-tham", "title": "Tani Se Daura Tham Ke Chala", "artist": "Ragini Mishra", "youtubeId": "v8W8oaN83x8" }
       ]
     },
     {
-      "id": "anuradha",
-      "title": "Anuradha Paudwal Special",
-      "subtitle": "Uga Ho Suraj Dev and more • T-Series",
+      "id": "uga-usha",
+      "title": "Uga Ho Suruj Dev — Usha Arghya",
+      "subtitle": "Morning offerings • Dimpal Bhumi, Kalpana • Sharda jukebox",
       "tracks": [
-        { "id": "uga-hey", "title": "Uga Hey Suraj Dev", "artist": "Anuradha Paudwal", "youtubeId": "Up0VABP0lo8" },
-        { "id": "uga-full", "title": "Uga Hai Suraj Dev (Full Video Song)", "artist": "Anuradha Paudwal", "youtubeId": "8MzoVsjL4QU" },
-        { "id": "uga-ts", "title": "Uga Hai Suraj Dev", "artist": "Anuradha Paudwal", "youtubeId": "6e6Hp6R5SVU" },
-        { "id": "ke-geet", "title": "Chhath Pooja Ke Geet (Jukebox)", "artist": "Anuradha Paudwal, Sharda Sinha", "youtubeId": "dIunnrgd3ks" },
-        { "id": "nonstop-2019", "title": "Non-Stop Chhath Pooja Geet 2019", "artist": "Anuradha Paudwal, Sharda Sinha, Devi", "youtubeId": "B4qzjtlTakA" }
+        { "id": "uga-dimpal", "title": "Uga Ho Suruj Dev", "artist": "Dimpal Bhumi", "youtubeId": "Hr0wkUIfLmA" },
+        { "id": "uga-2025", "title": "Uga He Suruj Dev (2025)", "artist": "Jyoti", "youtubeId": "gqTpjBHeh_k" },
+        { "id": "uga-dj", "title": "Uga Ho Suruj Dev (DJ Mix)", "artist": "Kalpana", "youtubeId": "MWVza2jIqyI" },
+        { "id": "nimiya-daar", "title": "Nimiya Ke Daar Maiya", "artist": "Dimpal Bhumi", "youtubeId": "b9u43LEmyD0" },
+        { "id": "bhakti-ras", "title": "Bhakti Ras — Sharda Sinha Jukebox", "artist": "Sharda Sinha • Saregama", "youtubeId": "MNsbDT3fhUs" }
       ]
     },
     {
@@ -30,24 +30,22 @@
       "title": "New Bhojpuri Stars",
       "subtitle": "Khesari • Pawan Singh • 2025 hits",
       "tracks": [
-        { "id": "ghate-chali", "title": "Chhath Ghate Chali", "artist": "Khesari Lal Yadav, Antra Singh Priyanka", "youtubeId": "fCuHD3YBQKY" },
         { "id": "jeetadi", "title": "Jeetadi Chhathi Maai (2025)", "artist": "Khesari Lal Yadav", "youtubeId": "D1xJmHEeoCc" },
         { "id": "ganga-kinare", "title": "Chala Ganga Kinare", "artist": "Khesari Lal Yadav, Karishma Kakkar", "youtubeId": "38mTaX7LkgY" },
         { "id": "piyariya", "title": "Pari Khatir Piyari Piya", "artist": "Khesari Lal Yadav, Neelam Giri, Shilpi Raj", "youtubeId": "UlLpWuzD568" },
-        { "id": "piyari-pahir", "title": "Piyari Pahir La", "artist": "Pawan Singh, Shivani Singh", "youtubeId": "4JdNlcumkoM" },
-        { "id": "kelwa-2025", "title": "Kelwa Ke Paat Par (2025)", "artist": "T-Series Hamaar Bhojpuri", "youtubeId": "yK_ZGoRsE-c" },
+        { "id": "patna-ghat", "title": "Patna Ke Ghat", "artist": "Pawan Singh, Pooja N", "youtubeId": "vU1lXf7gG9g" },
         { "id": "top10", "title": "Top 10 Chhath Songs (Jukebox)", "artist": "Pawan Singh, Khesari Lal, Anu Dubey", "youtubeId": "9aLD92Od5SE" }
       ]
     },
     {
       "id": "ghat-voices",
       "title": "Voices of the Ghat",
-      "subtitle": "Folk-rooted renditions",
+      "subtitle": "Folk-rooted renditions • plus a Top-15 jukebox",
       "tracks": [
         { "id": "bolo-jai", "title": "Bolo Jai Chhathi Maiya", "artist": "Bandana Dubey", "youtubeId": "W3dL5MkYGFM" },
         { "id": "malini", "title": "Hey Chhathi Maiya (Malini Awasthi Spl)", "artist": "Malini Awasthi", "youtubeId": "mXveZxtgVco" },
         { "id": "mahila-geet", "title": "Superhit Chhath Geet", "artist": "Wave Bhojpuri Music", "youtubeId": "oBriY2sNA2g" },
-        { "id": "daura-tham", "title": "Tani Se Daura Tham Ke Chala", "artist": "Ragini Mishra", "youtubeId": "v8W8oaN83x8" }
+        { "id": "top15", "title": "Top 15 Chhath Geet Collection (Jukebox)", "artist": "Pawan Singh & more", "youtubeId": "2KHk_4DOi7E" }
       ]
     },
     {

@@ -1,4 +1,5 @@
 "use client";
+import { useEffect } from "react";
 import { ALBUMS, type Track } from "../lib/playlist";
 import { usePlayer } from "./MusicProvider";
 
@@ -10,7 +11,7 @@ function fmt(s: number): string {
 
 function AlbumCard({ albumId }: { albumId: string }) {
   const album = ALBUMS.find((a) => a.id === albumId)!;
-  const { playTracks, current, playing, toggle, queue, order, pos, playTracks: pt } = usePlayer();
+  const { playTracks, current, playing, toggle, queue, order, pos, warm, playTracks: pt } = usePlayer();
   // Explicit album cover wins; otherwise fall back to the first track's artwork.
   const cover = album.cover ?? album.tracks.find((t) => t.thumb)?.thumb;
 
@@ -25,7 +26,7 @@ function AlbumCard({ albumId }: { albumId: string }) {
   }
 
   return (
-    <div className="num-card !p-0 overflow-hidden">
+    <div className="num-card !p-0 overflow-hidden" onPointerEnter={warm}>
       <button onClick={() => playTracks(album.tracks, 0)} className="block w-full text-left" aria-label={`Play album ${album.title}`}>
         {cover
           ? <img src={cover} alt="" loading="lazy" className="w-full aspect-video object-cover" />
@@ -69,6 +70,24 @@ function AlbumCard({ albumId }: { albumId: string }) {
 }
 
 export default function AlbumView() {
+  const { warm } = usePlayer();
+  // Pre-create the hidden YouTube player while the visitor browses, so the
+  // first tap on a song starts playing instantly instead of cold-starting
+  // an iframe. Idle time only — never blocks the page.
+  useEffect(() => {
+    const ric = (window as any).requestIdleCallback as
+      | ((cb: () => void, opts?: { timeout: number }) => number)
+      | undefined;
+    const cic = (window as any).cancelIdleCallback as ((id: number) => void) | undefined;
+    let id: number;
+    if (ric) id = ric(() => warm(), { timeout: 3000 });
+    else id = window.setTimeout(warm, 2500);
+    return () => {
+      if (ric && cic) cic(id);
+      else window.clearTimeout(id);
+    };
+  }, [warm]);
+
   return (
     <div className="grid md:grid-cols-2 gap-4">
       {ALBUMS.map((a) => (

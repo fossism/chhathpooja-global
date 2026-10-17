@@ -15,7 +15,7 @@ export default function Songs() {
           {ALBUMS.length} albums • {totalTracks} tracks — classics, jukeboxes and folk listen-aloud.
           Press play: music keeps going while you browse, with shuffle, repeat and queue.
         </p>
-        <p className="text-xs text-teal/60 mt-1">Videos stream from the artists' official YouTube channels. Jukebox videos hold 8–10 songs each.</p>
+        <p className="text-xs text-teal/60 mt-1">Every video is checked to play inside embeds (some uploads block it). Jukebox tracks hold 10–15 songs each, so there is more music here than the track count suggests.</p>
       </div>
       <AlbumView />
       <div>
