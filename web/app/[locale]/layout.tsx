@@ -43,6 +43,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   const m = META[locale] ?? META.en;
   const base = "https://chhathmahaparv.org";
   return {
+    metadataBase: new URL(base),
     title: m.title,
     description: m.description,
     alternates: {
@@ -54,7 +55,15 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       description: m.description,
       url: `${base}/${locale}`,
       siteName: "ChhathMahaparv.org",
-      locale
+      locale,
+      type: "website",
+      images: [{ url: `${base}/og.jpg`, width: 1200, height: 630, alt: "Chhath Mahaparv — vrtais offering Arghya at the ghat" }]
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: m.title,
+      description: m.description,
+      images: [`${base}/og.jpg`]
     }
   };
 }
