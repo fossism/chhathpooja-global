@@ -1,19 +1,10 @@
 // Offline support: keep the festival shell working at the ghat with no signal.
-//
-// Rules (learned the hard way):
-//  1. Only cache real successes. The old worker cached any response — including
-//     a 404/error HTML page for an image URL — and then served it cache-first
-//     forever, so the mural/album art stayed invisible even after a fix.
-//  2. Never touch /_next/image (query-string URLs) or /api/* — those must
-//     always hit the network so a redeploy is visible immediately.
-//  3. Bump CACHE whenever this policy changes: activate() deletes old caches,
-//     which is what heals already-poisoned browsers.
-const CACHE = "chhath-v3";
+const CACHE = "chhath-v4";
 const CORE = ["/en", "/en/vidhi", "/en/ghats", "/en/calendar", "/icon.svg", "/manifest.json"];
 
 // Same-origin paths that are safe to serve cache-first.
 const CACHEABLE = [
-  /^\/_next\/static\//,                 // content-hashed JS/CSS — immutable
+  /^\/_next\/static\/(?!.*(hot-update|webpack))/, // immutable content-hashed JS/CSS in prod only
   /^\/icon(-192|-512)?\.(png|svg)$/,
   /^\/maskable-512\.png$/,
   /^\/manifest\.json$/,
@@ -45,7 +36,6 @@ async function cacheFirst(req) {
   const hit = await caches.match(req);
   if (hit) return hit;
   const res = await fetch(req);
-  // Store only genuine, complete, same-origin successes — never error pages.
   if (res && res.ok && res.type === "basic") {
     const copy = res.clone();
     caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {});
@@ -57,9 +47,15 @@ self.addEventListener("fetch", (e) => {
   const req = e.request;
   if (req.method !== "GET") return;
   const url = new URL(req.url);
-  // Cross-origin (map tiles, fonts, YouTube thumbnails): the browser handles
-  // these directly — privacy and freshness.
+
+  // Cross-origin: handled directly by browser
   if (url.origin !== location.origin) return;
+
+  // On localhost/127.0.0.1, always bypass cache so Webpack dev chunks are never poisoned
+  if (url.hostname === "localhost" || url.hostname === "127.0.0.1") return;
+
+  // Never intercept or cache HMR or development hot-updates
+  if (url.pathname.includes("hot-update") || url.pathname.includes("webpack")) return;
 
   // Navigations: network first, cached /en shell when offline.
   if (req.mode === "navigate") {
@@ -68,8 +64,7 @@ self.addEventListener("fetch", (e) => {
     return;
   }
 
-  // Only known-safe static assets are served from cache. Everything else
-  // (/_next/image, /api/*, sw.js, …) goes straight to the network.
+  // Only known-safe static assets are served from cache
   if (CACHEABLE.some((re) => re.test(url.pathname))) {
     // @ts-ignore
     e.respondWith(cacheFirst(req));

@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  transpilePackages: ["leaflet", "react-leaflet"],
   async headers() {
     const csp = [
       "default-src 'self'",
