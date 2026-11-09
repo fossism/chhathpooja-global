@@ -10,10 +10,10 @@ export default function Home({ params }: { params: { locale: string } }) {
   const m = getMessages(params.locale);
   const ghats = getGhats();
   const days = [
-    { n: "01", t: "Nahay-Khay", date: next.nahayKhay, s: "Holy bath, clean home, one simple meal." },
-    { n: "02", t: "Kharna", date: next.kharna, s: "Day fast, evening kheer-roti prasad." },
-    { n: "03", t: "Sandhya Arghya", date: next.sandhyaArghya, s: "Sunset offering with soop-daura." },
-    { n: "04", t: "Usha Arghya", date: next.ushaArghya, s: "Sunrise offering, then Parana." }
+    { n: "01", t: "Nahay-Khay", date: next.nahayKhay, s: "Holy bath, clean home, one simple meal.", img: "/images/vidhi/nahay-khay.jpg" },
+    { n: "02", t: "Kharna", date: next.kharna, s: "Day fast, evening kheer-roti prasad.", img: "/images/vidhi/kharna.jpg" },
+    { n: "03", t: "Sandhya Arghya", date: next.sandhyaArghya, s: "Sunset offering with soop-daura.", img: "/images/vidhi/sandhya-arghya.jpg" },
+    { n: "04", t: "Usha Arghya", date: next.ushaArghya, s: "Sunrise offering, then Parana.", img: "/images/vidhi/usha-arghya.jpg" }
   ];
 
   return (
@@ -66,15 +66,50 @@ export default function Home({ params }: { params: { locale: string } }) {
       {/* The 4 days */}
       <section className="band">
         <div className="shell">
-          <h2 className="section-title mt-3">The 4 days</h2>
-          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+          <div className="flex items-end justify-between mb-2">
+            <div>
+              <span className="marker">The Rituals</span>
+              <h2 className="section-title mt-2">The 4 sacred days</h2>
+            </div>
+            <a href={`/${params.locale}/vidhi`} className="hidden sm:inline-flex btn btn-ghost text-xs !py-1.5 !px-4">
+              Full Vidhi guide →
+            </a>
+          </div>
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-5 mt-6">
             {days.map((d) => (
-              <div key={d.t} className="num-card">
-                <span className="num-index">{d.n}</span>
-                <h3 className="font-bold text-lg mt-2">{d.t}</h3>
-                <p className="text-xs font-semibold text-teal/60 mt-0.5">{d.date}</p>
-                <p className="text-sm text-teal/70 mt-2">{d.s}</p>
-              </div>
+              <a
+                key={d.t}
+                href={`/${params.locale}/vidhi`}
+                className="num-card !p-0 overflow-hidden flex flex-col group hover:shadow-lg transition border-line bg-white"
+              >
+                <div className="relative w-full h-44 overflow-hidden bg-teal/10">
+                  <Image
+                    src={d.img}
+                    alt={d.t}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 25vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
+                  <span className="absolute top-2.5 left-2.5 chip chip-yellow text-[11px] font-bold">
+                    Day {d.n}
+                  </span>
+                  <p className="absolute bottom-2 left-3 right-3 text-xs font-semibold text-white/90">
+                    {d.date}
+                  </p>
+                </div>
+                <div className="p-4 flex flex-col justify-between flex-1">
+                  <div>
+                    <h3 className="font-bold text-base text-teal group-hover:text-mustard transition">
+                      {d.t}
+                    </h3>
+                    <p className="text-xs text-teal/70 mt-1 leading-relaxed">{d.s}</p>
+                  </div>
+                  <span className="text-xs font-bold text-teal mt-3 inline-flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                    View Vidhi →
+                  </span>
+                </div>
+              </a>
             ))}
           </div>
         </div>

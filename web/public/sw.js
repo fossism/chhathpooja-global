@@ -8,7 +8,7 @@
 //     always hit the network so a redeploy is visible immediately.
 //  3. Bump CACHE whenever this policy changes: activate() deletes old caches,
 //     which is what heals already-poisoned browsers.
-const CACHE = "chhath-v2";
+const CACHE = "chhath-v3";
 const CORE = ["/en", "/en/vidhi", "/en/ghats", "/en/calendar", "/icon.svg", "/manifest.json"];
 
 // Same-origin paths that are safe to serve cache-first.
@@ -19,6 +19,7 @@ const CACHEABLE = [
   /^\/manifest\.json$/,
   /^\/leaflet\//,                       // map marker icons
   /^\/covers\//,                        // album art
+  /^\/images\//,                        // vidhi and ritual images
   /^\/chhath-mural\.jpg$/               // homepage mural
 ];
 

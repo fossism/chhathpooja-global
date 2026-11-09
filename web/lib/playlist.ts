@@ -1,26 +1,68 @@
 import raw from "../../data/playlist.json";
 
 export type Track = {
-  uid: string; title: string; artist: string; album: string;
-  kind: "youtube" | "tts"; youtubeId?: string;
-  lyric?: string; meaning?: string; thumb?: string;
+  uid: string;
+  id: string;
+  title: string;
+  titleDevanagari?: string;
+  artist: string;
+  album?: string;
+  category: string;
+  kind: "youtube" | "tts";
+  youtubeId?: string;
+  lyric?: string;
+  meaning?: string;
+  thumb?: string;
 };
-export type AlbumT = { id: string; title: string; subtitle: string; cover?: string; tracks: Track[] };
 
-type RawTrack = { id: string; title: string; artist: string; youtubeId?: string; lyric?: string; meaning?: string };
-type RawAlbum = { id: string; title: string; subtitle: string; cover?: string; tracks: RawTrack[] };
+export type AlbumT = {
+  id: string;
+  title: string;
+  subtitle: string;
+  cover?: string;
+  tracks: Track[];
+};
 
-// Plain module (no "use client") so server pages can count/render statically
-// while client components use the same track list for playback.
-export const ALBUMS: AlbumT[] = (raw as { albums: RawAlbum[] }).albums.map((a) => ({
-  id: a.id, title: a.title, subtitle: a.subtitle, cover: a.cover,
-  tracks: a.tracks.map((t) => ({
-    uid: `${a.id}:${t.id}`,
-    title: t.title, artist: t.artist, album: a.title,
-    kind: t.youtubeId ? "youtube" : "tts",
-    youtubeId: t.youtubeId, lyric: t.lyric, meaning: t.meaning,
-    thumb: t.youtubeId ? `https://i.ytimg.com/vi/${t.youtubeId}/hqdefault.jpg` : undefined
-  }))
+type RawSong = {
+  id: string;
+  title: string;
+  titleDevanagari?: string;
+  artist: string;
+  category: string;
+  youtubeId?: string;
+  lyric?: string;
+  meaning?: string;
+};
+
+const rawSongs: RawSong[] = (raw as { songs?: RawSong[] }).songs ?? [];
+
+export const ALL_TRACKS: Track[] = rawSongs.map((s) => ({
+  uid: s.id,
+  id: s.id,
+  title: s.title,
+  titleDevanagari: s.titleDevanagari,
+  artist: s.artist,
+  album: s.category,
+  category: s.category,
+  kind: s.youtubeId ? "youtube" : "tts",
+  youtubeId: s.youtubeId,
+  lyric: s.lyric,
+  meaning: s.meaning,
+  thumb: s.youtubeId
+    ? `https://i.ytimg.com/vi/${s.youtubeId}/hqdefault.jpg`
+    : undefined
 }));
 
-export const ALL_TRACKS: Track[] = ALBUMS.flatMap((a) => a.tracks);
+// Backwards-compatible ALBUMS grouped by distinct category
+export const ALBUMS: AlbumT[] = Array.from(
+  new Set(ALL_TRACKS.map((t) => t.category))
+).map((cat) => {
+  const tracks = ALL_TRACKS.filter((t) => t.category === cat);
+  return {
+    id: cat.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+    title: cat,
+    subtitle: `${tracks.length} songs • pure Chhath devotion`,
+    cover: tracks.find((t) => t.thumb)?.thumb,
+    tracks
+  };
+});
