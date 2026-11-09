@@ -4,6 +4,7 @@ import { locales } from "../../i18n";
 import SwRegister from "../../components/SwRegister";
 import MusicProvider from "../../components/MusicProvider";
 import MiniPlayer from "../../components/MiniPlayer";
+import Navbar from "../../components/Navbar";
 
 // Self-hosted fonts (next/font) — no runtime request to Google Fonts,
 // so no third-party IP leak and no render-blocking @import in CSS.
@@ -68,17 +69,6 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   };
 }
 
-const NAV = [
-  { href: "calendar", label: "Calendar" },
-  { href: "vidhi", label: "Vidhi" },
-  { href: "ghats", label: "Ghats" },
-  { href: "ask", label: "Ask" },
-  { href: "wall", label: "Wall" },
-  { href: "songs", label: "Songs" },
-  { href: "kids", label: "Kids" },
-  { href: "about", label: "About" }
-];
-
 const LOCALES = [
   { code: "en", label: "EN" },
   { code: "hi", label: "हिं" },
@@ -95,49 +85,7 @@ export default function LocaleLayout({ children, params }: { children: React.Rea
       <MusicProvider>
       <SwRegister />
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-mustard focus:text-teal focus:px-4 focus:py-2 focus:font-bold">Skip to content</a>
-      <header className="sticky top-0 z-20">
-        <div className="bg-teal text-cream">
-          <div className="shell flex items-center justify-between py-1.5 text-xs">
-            <span className="font-semibold tracking-wide">Kartik Chhath · Nov 13–16, 2026 — Global</span>
-            <a href={`/${params.locale}/about`} className="font-bold hover:underline">Contribute →</a>
-          </div>
-        </div>
-        <div className="bg-cream/95 backdrop-blur border-b border-line">
-          <div className="shell flex items-center justify-between gap-3 py-3">
-            <a href={`/${params.locale}`} className="flex items-center gap-2.5">
-              <img src="/icon.svg" alt="ChhathMahaparv — home" className="w-9 h-9" />
-              <span className="leading-tight">
-                <span className="block font-extrabold tracking-tight">ChhathMahaparv</span>
-                <span className="block text-xs text-teal/70 font-medium">Global open-source hub</span>
-              </span>
-            </a>
-            <nav className="hidden md:flex items-center gap-1" aria-label="Primary">
-              {NAV.map((n) => (
-                <a key={n.href} href={`/${params.locale}/${n.href}`} className="nav-link">{n.label}</a>
-              ))}
-              <a href={`/${params.locale}/vidhi`} className="btn btn-primary !py-2 !px-5 ml-2">Start Vidhi</a>
-            </nav>
-            <div className="flex md:hidden items-center gap-1">
-              {LOCALES.map((l) => (
-                <a
-                  key={l.code}
-                  href={`/${l.code}`}
-                  className={`rounded-full px-2 py-1 text-xs font-bold ${params.locale === l.code ? "bg-teal text-cream" : "text-teal/70"}`}
-                >
-                  {l.label}
-                </a>
-              ))}
-            </div>
-          </div>
-          <div className="md:hidden border-t border-line overflow-x-auto">
-            <div className="shell flex gap-1 py-2">
-              {NAV.map((n) => (
-                <a key={n.href} href={`/${params.locale}/${n.href}`} className="nav-link whitespace-nowrap">{n.label}</a>
-              ))}
-            </div>
-          </div>
-        </div>
-      </header>
+      <Navbar locale={locale} />
 
       {/* Inner pages own their own .shell container; home bands are full-bleed. */}
       <main id="main" className="pb-16">{children}</main>

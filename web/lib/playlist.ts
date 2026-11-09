@@ -34,7 +34,18 @@ type RawSong = {
   meaning?: string;
 };
 
-const rawSongs: RawSong[] = (raw as { songs?: RawSong[] }).songs ?? [];
+const rawData = raw as any;
+
+const rawSongs: RawSong[] = Array.isArray(rawData?.songs)
+  ? rawData.songs
+  : Array.isArray(rawData?.albums)
+  ? rawData.albums.flatMap((a: any) =>
+      (a.tracks || []).map((t: any) => ({
+        ...t,
+        category: a.title
+      }))
+    )
+  : [];
 
 export const ALL_TRACKS: Track[] = rawSongs.map((s) => ({
   uid: s.id,
@@ -42,8 +53,8 @@ export const ALL_TRACKS: Track[] = rawSongs.map((s) => ({
   title: s.title,
   titleDevanagari: s.titleDevanagari,
   artist: s.artist,
-  album: s.category,
-  category: s.category,
+  album: s.category || "Folk",
+  category: s.category || "Folk",
   kind: s.youtubeId ? "youtube" : "tts",
   youtubeId: s.youtubeId,
   lyric: s.lyric,
@@ -53,7 +64,6 @@ export const ALL_TRACKS: Track[] = rawSongs.map((s) => ({
     : undefined
 }));
 
-// Backwards-compatible ALBUMS grouped by distinct category
 export const ALBUMS: AlbumT[] = Array.from(
   new Set(ALL_TRACKS.map((t) => t.category))
 ).map((cat) => {

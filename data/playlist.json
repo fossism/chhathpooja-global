@@ -148,5 +148,64 @@
       "meaning": "Devotional harmony worshipping Surya and Chhathi in the twilight waters.",
       "lyric": "Suraj sange Chhathi Maiya deep jalaila, charo dishi gungunaila..."
     }
+  ],
+  "albums": [
+    {
+      "id": "sandhya-arghya",
+      "title": "Sandhya Arghya Specials",
+      "subtitle": "Classic sunset offerings",
+      "tracks": [
+        { "id": "kelwa-ke-paat", "title": "Kelwa Ke Paat Par", "artist": "Madhu Pandey • Traditional", "youtubeId": "QzPHuipyjcE" }
+      ]
+    },
+    {
+      "id": "usha-arghya",
+      "title": "Usha Arghya Specials",
+      "subtitle": "Dawn sunrise invocations",
+      "tracks": [
+        { "id": "uga-ho-suruj-dev", "title": "Uga Ho Suruj Dev", "artist": "Dimpal Bhumi", "youtubeId": "Hr0wkUIfLmA" },
+        { "id": "bolo-jai-chhathi-maiya", "title": "Bolo Jai Chhathi Maiya", "artist": "Bandana Dubey", "youtubeId": "W3dL5MkYGFM" }
+      ]
+    },
+    {
+      "id": "sacred-classical",
+      "title": "Sacred Classical Masters",
+      "subtitle": "Sharda Sinha & Malini Awasthi",
+      "tracks": [
+        { "id": "sharda-bhakti-ras", "title": "Chhath Bhakti Ras", "artist": "Padma Bhushan Sharda Sinha", "youtubeId": "MNsbDT3fhUs" },
+        { "id": "malini-chhathi-maiya", "title": "Hey Chhathi Maiya", "artist": "Malini Awasthi", "youtubeId": "mXveZxtgVco" }
+      ]
+    },
+    {
+      "id": "ghat-procession",
+      "title": "Ghat Procession",
+      "subtitle": "Carrying the Daura to the sacred river",
+      "tracks": [
+        { "id": "tani-daura-tham", "title": "Tani Se Daura Tham Ke Chala", "artist": "Ragini Mishra", "youtubeId": "v8W8oaN83x8" },
+        { "id": "chala-ganga-kinare", "title": "Chala Ganga Kinare", "artist": "Khesari Lal Yadav & Karishma Kakkar", "youtubeId": "38mTaX7LkgY" },
+        { "id": "patna-ke-ghat", "title": "Patna Ke Ghat", "artist": "Pawan Singh", "youtubeId": "vU1lXf7gG9g" }
+      ]
+    },
+    {
+      "id": "festive-celebration",
+      "title": "Festive Celebration",
+      "subtitle": "Joyous celebrations and preparations",
+      "tracks": [
+        { "id": "kartik-mahina", "title": "Kartik Mahina Hola Chhathi Maai", "artist": "Mona Singh", "youtubeId": "qfbCSaGZ-08" },
+        { "id": "jeetadi-chhathi-maai", "title": "Jeetadi Chhathi Maai", "artist": "Khesari Lal Yadav", "youtubeId": "D1xJmHEeoCc" },
+        { "id": "pari-khatir-piyari", "title": "Pari Khatir Piyari Piya", "artist": "Khesari Lal Yadav & Shilpi Raj", "youtubeId": "UlLpWuzD568" },
+        { "id": "nimiya-ke-daar", "title": "Nimiya Ke Daar Maiya", "artist": "Dimpal Bhumi", "youtubeId": "b9u43LEmyD0" }
+      ]
+    },
+    {
+      "id": "folk-acoustic",
+      "title": "Folk Acoustic Archive",
+      "subtitle": "Traditional chants and lyrics",
+      "tracks": [
+        { "id": "kosi-bharal", "title": "Kosi Bharal", "artist": "Traditional Folk (Acoustic)", "lyric": "Kosi bharal Chhathi Maiya geet gaila...", "meaning": "Invocation during the night vigil." },
+        { "id": "pahile-pahil-folk", "title": "Pahile Pahil Chhathi Maiya", "artist": "Traditional Folk (Acoustic)", "lyric": "Pahile pahil Chhathi Maiya ke...", "meaning": "First salutation to Chhathi Maiya." },
+        { "id": "suraj-sange-chhathi", "title": "Suraj Sange Chhathi", "artist": "Traditional Folk (Acoustic)", "lyric": "Suraj sange Chhathi Maiya deep jalaila...", "meaning": "Devotional harmony worshipping Surya and Chhathi." }
+      ]
+    }
   ]
 }
