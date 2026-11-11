@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { usePlayer } from "./MusicProvider";
 
@@ -151,7 +152,7 @@ export default function Navbar({ locale }: { locale: string }) {
 
           <div className="flex items-center gap-4 text-[11px] shrink-0">
             {current && playing && (
-              <a
+              <Link
                 href={`/${locale}/songs`}
                 className="hidden sm:inline-flex items-center gap-1.5 text-mustard hover:text-amber-300 font-bold transition"
               >
@@ -161,15 +162,15 @@ export default function Navbar({ locale }: { locale: string }) {
                   <span className="w-0.5 h-1.5 bg-mustard animate-pulse [animation-delay:300ms]" />
                 </span>
                 <span className="truncate max-w-[140px]">{current.title}</span>
-              </a>
+              </Link>
             )}
-            <a
+            <Link
               href={`/${locale}/about`}
               className="font-bold text-cream/80 hover:text-mustard transition flex items-center gap-1"
             >
               <span>Contribute</span>
               <span>→</span>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -184,7 +185,7 @@ export default function Navbar({ locale }: { locale: string }) {
       >
         <div className="shell flex items-center justify-between gap-4">
           {/* Logo / Brand */}
-          <a
+          <Link
             href={`/${locale}`}
             className="flex items-center gap-2.5 group cursor-pointer shrink-0"
           >
@@ -204,7 +205,7 @@ export default function Navbar({ locale }: { locale: string }) {
                 Global Open-Source Hub
               </span>
             </div>
-          </a>
+          </Link>
 
           {/* Desktop Floating Pill Dock */}
           <nav
@@ -216,7 +217,7 @@ export default function Navbar({ locale }: { locale: string }) {
               const isSongAndPlaying = item.href === "songs" && current && playing;
 
               return (
-                <a
+                <Link
                   key={item.href}
                   href={`/${locale}/${item.href}`}
                   className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs transition duration-200 ${
@@ -236,7 +237,7 @@ export default function Navbar({ locale }: { locale: string }) {
                       <span className="w-0.5 h-1.5 bg-mustard rounded-full animate-bounce [animation-delay:300ms]" />
                     </span>
                   )}
-                </a>
+                </Link>
               );
             })}
           </nav>
@@ -262,7 +263,7 @@ export default function Navbar({ locale }: { locale: string }) {
                     Language
                   </div>
                   {LOCALES.map((l) => (
-                    <a
+                    <Link
                       key={l.code}
                       href={getLocaleUrl(l.code)}
                       className={`flex items-center justify-between px-3 py-1.5 text-xs transition ${
@@ -273,20 +274,20 @@ export default function Navbar({ locale }: { locale: string }) {
                     >
                       <span>{l.name}</span>
                       <span className="text-[10px] font-mono text-teal/50">{l.label}</span>
-                    </a>
+                    </Link>
                   ))}
                 </div>
               )}
             </div>
 
             {/* Quick Primary Button */}
-            <a
+            <Link
               href={`/${locale}/vidhi`}
               className="btn btn-primary !py-2 !px-4 text-xs font-bold rounded-full shadow-sm hover:scale-105 active:scale-95 transition hidden sm:inline-flex items-center gap-1.5"
             >
               <span>🪔</span>
               <span>Start Vidhi</span>
-            </a>
+            </Link>
 
             {/* Mobile Hamburger Toggle Button */}
             <button
@@ -316,9 +317,10 @@ export default function Navbar({ locale }: { locale: string }) {
               {NAV_ITEMS.map((item) => {
                 const active = isCurrentActive(item.href);
                 return (
-                  <a
+                  <Link
                     key={item.href}
                     href={`/${locale}/${item.href}`}
+                    onClick={() => setMobileMenuOpen(false)}
                     className={`flex items-center gap-2.5 p-3 rounded-xl border transition ${
                       active
                         ? "bg-teal text-cream border-teal shadow-sm font-bold"
@@ -338,7 +340,7 @@ export default function Navbar({ locale }: { locale: string }) {
                         {item.hindi}
                       </div>
                     </div>
-                  </a>
+                  </Link>
                 );
               })}
             </div>
@@ -350,9 +352,10 @@ export default function Navbar({ locale }: { locale: string }) {
               </span>
               <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
                 {LOCALES.map((l) => (
-                  <a
+                  <Link
                     key={l.code}
                     href={getLocaleUrl(l.code)}
+                    onClick={() => setMobileMenuOpen(false)}
                     className={`px-3 py-1.5 rounded-full text-xs font-bold transition whitespace-nowrap ${
                       locale === l.code
                         ? "bg-teal text-cream shadow-sm"
@@ -360,25 +363,27 @@ export default function Navbar({ locale }: { locale: string }) {
                     }`}
                   >
                     {l.name} ({l.label})
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
 
             {/* Mobile Quick CTA */}
             <div className="mt-4 pt-3 border-t border-line flex gap-2">
-              <a
+              <Link
                 href={`/${locale}/vidhi`}
-                className="btn btn-primary flex-1 !py-2.5 text-xs font-bold rounded-xl"
+                onClick={() => setMobileMenuOpen(false)}
+                className="btn btn-primary flex-1 !py-2.5 text-xs font-bold rounded-xl text-center"
               >
                 🪔 Start Vidhi Guide
-              </a>
-              <a
+              </Link>
+              <Link
                 href={`/${locale}/songs`}
-                className="btn btn-accent flex-1 !py-2.5 text-xs font-bold rounded-xl"
+                onClick={() => setMobileMenuOpen(false)}
+                className="btn btn-accent flex-1 !py-2.5 text-xs font-bold rounded-xl text-center"
               >
                 🎵 Chhath Geet
-              </a>
+              </Link>
             </div>
           </div>
         )}

@@ -2,6 +2,7 @@ import Countdown from "../../components/Countdown";
 import ArghyaFinder from "../../components/ArghyaFinder";
 import SunriseMark from "../../components/SunriseMark";
 import Image from "next/image";
+import Link from "next/link";
 import { getNextChhath, getGhats } from "../../lib/chhath";
 import { getMessages } from "../../lib/messages";
 
@@ -28,8 +29,8 @@ export default function Home({ params }: { params: { locale: string } }) {
             </h1>
             <p className="text-teal/70 mt-4 max-w-md">{m.heroSubtitle}</p>
             <div className="flex flex-wrap gap-3 mt-6">
-              <a href={`/${params.locale}/vidhi`} className="btn btn-primary">Start Vidhi</a>
-              <a href={`/${params.locale}/ghats`} className="btn btn-ghost">Find ghats</a>
+              <Link href={`/${params.locale}/vidhi`} className="btn btn-primary">Start Vidhi</Link>
+              <Link href={`/${params.locale}/ghats`} className="btn btn-ghost">Find ghats</Link>
             </div>
             <div className="flex flex-wrap gap-2 mt-6 text-xs">
               <span className="chip">Nov 13–16, 2026</span>
@@ -71,13 +72,13 @@ export default function Home({ params }: { params: { locale: string } }) {
               <span className="marker">The Rituals</span>
               <h2 className="section-title mt-2">The 4 sacred days</h2>
             </div>
-            <a href={`/${params.locale}/vidhi`} className="hidden sm:inline-flex btn btn-ghost text-xs !py-1.5 !px-4">
+            <Link href={`/${params.locale}/vidhi`} className="hidden sm:inline-flex btn btn-ghost text-xs !py-1.5 !px-4">
               Full Vidhi guide →
-            </a>
+            </Link>
           </div>
           <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-5 mt-6">
             {days.map((d) => (
-              <a
+              <Link
                 key={d.t}
                 href={`/${params.locale}/vidhi`}
                 className="num-card !p-0 overflow-hidden flex flex-col group hover:shadow-lg transition border-line bg-white"
@@ -109,7 +110,7 @@ export default function Home({ params }: { params: { locale: string } }) {
                     View Vidhi →
                   </span>
                 </div>
-              </a>
+              </Link>
             ))}
           </div>
         </div>
@@ -137,8 +138,8 @@ export default function Home({ params }: { params: { locale: string } }) {
             <h2 className="headline headline--on-dark text-3xl md:text-5xl mt-4">One parv,<br />every ghat on earth</h2>
             <p className="text-cream/70 mt-4 max-w-md">Crowdsourced ghats, photos from the diaspora, and songs your nani sang — all open data.</p>
             <div className="flex flex-wrap gap-3 mt-6">
-              <a href={`/${params.locale}/ghats`} className="btn btn--on-dark">Open ghat map</a>
-              <a href={`/${params.locale}/wall`} className="btn btn-accent">See global wall</a>
+              <Link href={`/${params.locale}/ghats`} className="btn btn--on-dark">Open ghat map</Link>
+              <Link href={`/${params.locale}/wall`} className="btn btn-accent">See global wall</Link>
             </div>
           </div>
           <div className="grid grid-cols-3 gap-4">
@@ -161,25 +162,25 @@ export default function Home({ params }: { params: { locale: string } }) {
               <span className="num-index">A</span>
               <h3 className="font-bold text-lg mt-2">Chhath Sahayak</h3>
               <p className="text-sm text-teal/70 mt-1">Offline guide — dates, vidhi, samagri, songs. No login.</p>
-              <a href={`/${params.locale}/ask`} className="btn btn-ghost mt-4 !py-2 text-sm">Ask →</a>
+              <Link href={`/${params.locale}/ask`} className="btn btn-ghost mt-4 !py-2 text-sm">Ask →</Link>
             </div>
             <div className="num-card">
               <span className="num-index">B</span>
               <h3 className="font-bold text-lg mt-2">Folk archive</h3>
               <p className="text-sm text-teal/70 mt-1">Lyrics + meaning with singer credit. Community licensed.</p>
-              <a href={`/${params.locale}/songs`} className="btn btn-ghost mt-4 !py-2 text-sm">Browse songs →</a>
+              <Link href={`/${params.locale}/songs`} className="btn btn-ghost mt-4 !py-2 text-sm">Browse songs →</Link>
             </div>
             <div className="num-card">
               <span className="num-index">C</span>
               <h3 className="font-bold text-lg mt-2">Vidhi checklist</h3>
               <p className="text-sm text-teal/70 mt-1">Tick steps as you complete them across the 4 days.</p>
-              <a href={`/${params.locale}/vidhi`} className="btn btn-ghost mt-4 !py-2 text-sm">Open guide →</a>
+              <Link href={`/${params.locale}/vidhi`} className="btn btn-ghost mt-4 !py-2 text-sm">Open guide →</Link>
             </div>
             <div className="num-card">
               <span className="num-index">D</span>
               <h3 className="font-bold text-lg mt-2">Kids mode</h3>
               <p className="text-sm text-teal/70 mt-1">The story + a 3-question quiz for the youngest vrati.</p>
-              <a href={`/${params.locale}/kids`} className="btn btn-ghost mt-4 !py-2 text-sm">Start →</a>
+              <Link href={`/${params.locale}/kids`} className="btn btn-ghost mt-4 !py-2 text-sm">Start →</Link>
             </div>
           </div>
           <p className="text-xs text-teal/60 mt-6">{m.disclaimer}</p>
@@ -193,8 +194,8 @@ export default function Home({ params }: { params: { locale: string } }) {
           <h2 className="headline text-3xl md:text-5xl mt-3">Do Chhath anywhere.<br />Pin it for everyone.</h2>
           <p className="mt-3 max-w-xl font-medium">Add your ghat, share a wall photo, translate one line. No code needed.</p>
           <div className="flex flex-wrap gap-3 mt-6">
-            <a href={`/${params.locale}/ghats`} className="btn btn-primary">Add your ghat</a>
-            <a href={`/${params.locale}/about`} className="btn btn-ghost !border-teal/40">Ways to contribute →</a>
+            <Link href={`/${params.locale}/ghats`} className="btn btn-primary">Add your ghat</Link>
+            <Link href={`/${params.locale}/about`} className="btn btn-ghost !border-teal/40">Ways to contribute →</Link>
           </div>
         </div>
       </section>

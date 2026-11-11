@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Archivo, Newsreader, Space_Mono } from "next/font/google";
 import { locales } from "../../i18n";
 import SwRegister from "../../components/SwRegister";
@@ -117,30 +118,30 @@ export default function LocaleLayout({ children, params }: { children: React.Rea
           </div>
           <nav className="text-sm" aria-label="Site">
             <p className="label mb-2">Site</p>
-            <a className="block py-0.5 hover:underline" href={`/${params.locale}/ask`}>Chhath Sahayak</a>
-            <a className="block py-0.5 hover:underline" href={`/${params.locale}/vidhi`}>Vidhi guide</a>
-            <a className="block py-0.5 hover:underline" href={`/${params.locale}/calendar`}>Calendar</a>
-            <a className="block py-0.5 hover:underline" href={`/${params.locale}/songs`}>Folk archive</a>
-            <a className="block py-0.5 hover:underline" href={`/${params.locale}/kids`}>Kids mode</a>
+            <Link className="block py-0.5 hover:underline" href={`/${params.locale}/ask`}>Chhath Sahayak</Link>
+            <Link className="block py-0.5 hover:underline" href={`/${params.locale}/vidhi`}>Vidhi guide</Link>
+            <Link className="block py-0.5 hover:underline" href={`/${params.locale}/calendar`}>Calendar</Link>
+            <Link className="block py-0.5 hover:underline" href={`/${params.locale}/songs`}>Folk archive</Link>
+            <Link className="block py-0.5 hover:underline" href={`/${params.locale}/kids`}>Kids mode</Link>
           </nav>
           <nav className="text-sm" aria-label="Community">
             <p className="label mb-2">Community</p>
-            <a className="block py-0.5 hover:underline" href={`/${params.locale}/ghats`}>Ghat finder</a>
-            <a className="block py-0.5 hover:underline" href={`/${params.locale}/wall`}>Global wall</a>
-            <a className="block py-0.5 hover:underline" href={`/${params.locale}/about`}>Contribute</a>
+            <Link className="block py-0.5 hover:underline" href={`/${params.locale}/ghats`}>Ghat finder</Link>
+            <Link className="block py-0.5 hover:underline" href={`/${params.locale}/wall`}>Global wall</Link>
+            <Link className="block py-0.5 hover:underline" href={`/${params.locale}/about`}>Contribute</Link>
           </nav>
           <div className="text-sm">
             <p className="label mb-2">Note</p>
             <p className="text-teal/70">Sunrise/sunset via Open-Meteo, indicative. Confirm with local Panchang.</p>
             <div className="flex gap-1 mt-3">
               {LOCALES.map((l) => (
-                <a
+                <Link
                   key={l.code}
                   href={`/${l.code}`}
                   className={`rounded-full px-2 py-1 text-xs font-bold ${params.locale === l.code ? "bg-teal text-cream" : "text-teal/70 hover:text-teal"}`}
                 >
                   {l.label}
-                </a>
+                </Link>
               ))}
             </div>
           </div>

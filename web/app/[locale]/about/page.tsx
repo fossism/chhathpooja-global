@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function About({ params }: { params: { locale: string } }) {
   return (
     <div className="shell py-10">
@@ -29,8 +31,8 @@ export default function About({ params }: { params: { locale: string } }) {
           ))}
         </div>
         <div className="flex gap-2 mt-4">
-          <a href={`/${params.locale}/ghats`} className="btn btn-primary text-sm">Add ghat</a>
-          <a href={`/${params.locale}/wall`} className="btn btn-ghost text-sm">Share photo</a>
+          <Link href={`/${params.locale}/ghats`} className="btn btn-primary text-sm">Add ghat</Link>
+          <Link href={`/${params.locale}/wall`} className="btn btn-ghost text-sm">Share photo</Link>
         </div>
       </div>
     </div>

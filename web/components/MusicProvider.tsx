@@ -36,6 +36,16 @@ function shuffledOrder(n: number, first: number): number[] {
   return [first, ...rest];
 }
 
+function loadYoutubeApi() {
+  if (typeof window === "undefined" || window.YT?.Player) return;
+  if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
+    const tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    tag.async = true;
+    document.head.appendChild(tag);
+  }
+}
+
 export default function MusicProvider({ children }: { children: React.ReactNode }) {
   const [queue, setQueue] = useState<Track[]>(ALL_TRACKS);
   const [order, setOrder] = useState<number[]>(() => shuffledOrder(ALL_TRACKS.length, 0));
@@ -65,19 +75,25 @@ export default function MusicProvider({ children }: { children: React.ReactNode 
 
   const current: Track | null = queue.length ? queue[order[pos] ?? 0] ?? null : null;
 
-  // Load the YouTube IFrame API exactly once.
+  // Defer YouTube IFrame API loading until page is painted and browser is idle
   useEffect(() => {
     if (window.YT?.Player) { setApiReady(true); return; }
     let iv = 0;
     const markReady = () => { setApiReady(true); if (iv) window.clearInterval(iv); };
     const prev = window.onYouTubeIframeAPIReady;
     window.onYouTubeIframeAPIReady = () => { try { prev?.(); } catch { /* noop */ } markReady(); };
-    if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
-      const tag = document.createElement("script");
-      tag.src = "https://www.youtube.com/iframe_api";
-      document.head.appendChild(tag);
+
+    const deferLoad = () => {
+      loadYoutubeApi();
+      iv = window.setInterval(() => { if (window.YT?.Player) markReady(); }, 300);
+    };
+
+    if ("requestIdleCallback" in window) {
+      (window as any).requestIdleCallback(deferLoad, { timeout: 2500 });
+    } else {
+      setTimeout(deferLoad, 1500);
     }
-    iv = window.setInterval(() => { if (window.YT?.Player) markReady(); }, 400);
+
     return () => { if (iv) window.clearInterval(iv); };
   }, []);
 
@@ -177,6 +193,7 @@ export default function MusicProvider({ children }: { children: React.ReactNode 
       return;
     }
     stopSpeech();
+    loadYoutubeApi();
     if (playerRef.current && readyRef.current) {
       try {
         playerRef.current.loadVideoById(t.youtubeId);
