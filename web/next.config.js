@@ -9,6 +9,12 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384]
   },
   transpilePackages: ["leaflet", "react-leaflet"],
+  webpack: (config, { dev }) => {
+    if (dev) {
+      config.cache = false;
+    }
+    return config;
+  },
   async headers() {
     const csp = [
       "default-src 'self'",
