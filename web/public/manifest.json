@@ -1,1 +1,34 @@
-{"background_color":"#FFF8F3","description":"Dates, city Arghya time, vidhi, ghats, songs for Chhath Mahaparv.","display":"standalone","icons":[{"sizes":"192x192","src":"/icon-192.png","type":"image/png"},{"sizes":"512x512","src":"/icon-512.png","type":"image/png"},{"purpose":"maskable","sizes":"512x512","src":"/maskable-512.png","type":"image/png"},{"sizes":"any","src":"/icon.svg","type":"image/svg+xml"}],"id":"/en","name":"ChhathMahaparv — Global Hub","scope":"/","short_name":"Chhath","start_url":"/en","theme_color":"#16564F"}
+{
+  "background_color": "#FFF8F3",
+  "description": "Dates, city Arghya time, vidhi, ghats, songs for Chhath Mahaparv.",
+  "display": "standalone",
+  "icons": [
+    {
+      "sizes": "192x192",
+      "src": "/icon-192.png",
+      "type": "image/png"
+    },
+    {
+      "sizes": "512x512",
+      "src": "/icon-512.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "maskable",
+      "sizes": "512x512",
+      "src": "/maskable-512.png",
+      "type": "image/png"
+    },
+    {
+      "sizes": "any",
+      "src": "/icon.svg",
+      "type": "image/svg+xml"
+    }
+  ],
+  "id": "/en",
+  "name": "ChhathMahaparv — Keeping Chhath alive, anywhere on earth",
+  "scope": "/",
+  "short_name": "Chhath Mahaparv",
+  "start_url": "/en",
+  "theme_color": "#16564F"
+}

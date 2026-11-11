@@ -1,10 +1,17 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "ChhathMahaparv.org — Global Hub",
+  title: "ChhathMahaparv — Keeping Chhath alive, anywhere on earth",
   description: "Dates, city-wise Arghya time, vidhi, ghats, songs for Chhath Mahaparv.",
   manifest: "/manifest.json",
-  icons: { icon: "/icon.svg" }
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" }
+    ],
+    shortcut: "/icon.svg",
+    apple: "/icon-192.png"
+  }
 };
 
 // NOTE: <html>/<body> are rendered by app/[locale]/layout.tsx so the

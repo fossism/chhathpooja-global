@@ -1,4 +1,4 @@
-# ChhathMahaparv.org (chhathpooja-global) — Keeping Chhath Alive Everywhere
+# Chhath Mahaparv (chhathpooja-global) — Keeping Chhath Alive Everywhere
 
 A free, community-owned, ad-free, open-source digital sanctuary built for the **150+ million devotees** celebrating Chhath across Bihar, Jharkhand, Eastern Uttar Pradesh, the Terai of Nepal, and the global diaspora from London and New Jersey to Dubai, Toronto, and Sydney.
 
@@ -75,7 +75,7 @@ All sacred items used in Chhath carry deep spiritual, ecological, and Ayurvedic 
 
 Celebrating away from home? Here is how diaspora families do it worldwide:
 - **No Natural River or Ghat?**: Set up an inflatable eco-pool or large clean tub on your balcony, terrace, or backyard. Fill it with water, add a few drops of Gangajal, and stand inside facing the sun.
-- **Can't See the Horizon?**: Use the built-in **Sun Compass** on ChhathMahaparv.org to know the exact astronomical azimuth angle of the sunrise and sunset.
+- **Can't See the Horizon?**: Use the built-in **Sun Compass** on Chhath Mahaparv to know the exact astronomical azimuth angle of the sunrise and sunset.
 - **Working Devotees**: Plan your leave 1 month in advance. Fasting during Kharna and Sandhya Arghya can be coordinated with weekend festival timings.
 
 ---

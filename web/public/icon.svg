@@ -1,1 +1,75 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="52" r="26" fill="#E8B84B" stroke="#16564F" stroke-width="5"/><g stroke="#16564F" stroke-width="5" stroke-linecap="round"><line x1="50" y1="6" x2="50" y2="18"/><line x1="50" y1="86" x2="50" y2="74"/><line x1="6" y1="52" x2="18" y2="52"/><line x1="94" y1="52" x2="82" y2="52"/><line x1="19" y1="21" x2="27" y2="29"/><line x1="81" y1="21" x2="73" y2="29"/></g><path d="M28 84 Q50 76 72 84" fill="none" stroke="#16564F" stroke-width="5" stroke-linecap="round"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <!-- Outer Solar Flare Radial Glow -->
+    <radialGradient id="solarGlow" cx="50%" cy="48%" r="50%">
+      <stop offset="0%" stop-color="#FFF9C4" stop-opacity="1" />
+      <stop offset="45%" stop-color="#FFD54F" stop-opacity="0.9" />
+      <stop offset="75%" stop-color="#FF9800" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#FF5722" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Intense Bright Natural Sun Core -->
+    <radialGradient id="sunCore" cx="47%" cy="45%" r="53%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="20%" stop-color="#FFF59D" />
+      <stop offset="48%" stop-color="#FFCA28" />
+      <stop offset="78%" stop-color="#FF9800" />
+      <stop offset="100%" stop-color="#E65100" />
+    </radialGradient>
+
+    <!-- Radiant Ray Gradient -->
+    <linearGradient id="rayGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="35%" stop-color="#FFE082" />
+      <stop offset="100%" stop-color="#F57C00" />
+    </linearGradient>
+
+    <!-- Sacred Golden Water Ripple -->
+    <linearGradient id="waterGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#004D40" stop-opacity="0.1" />
+      <stop offset="30%" stop-color="#FFD54F" stop-opacity="0.9" />
+      <stop offset="70%" stop-color="#FFB300" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#004D40" stop-opacity="0.1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Ambient Golden Glow -->
+  <circle cx="50" cy="48" r="48" fill="url(#solarGlow)" />
+
+  <!-- 16 Large Radiant Solar Flares / Rays (Enlarged Sun) -->
+  <g>
+    <!-- Cardinal Rays (Peak length) -->
+    <polygon points="50,1 54,23 46,23" fill="url(#rayGrad)" />
+    <polygon points="50,95 54,73 46,73" fill="url(#rayGrad)" />
+    <polygon points="1,48 23,44 23,52" fill="url(#rayGrad)" />
+    <polygon points="99,48 77,44 77,52" fill="url(#rayGrad)" />
+
+    <!-- Diagonal Major Rays -->
+    <polygon points="15,13 34,26 28,32" fill="url(#rayGrad)" />
+    <polygon points="85,13 72,32 66,26" fill="url(#rayGrad)" />
+    <polygon points="15,83 28,64 34,70" fill="url(#rayGrad)" />
+    <polygon points="85,83 66,70 72,64" fill="url(#rayGrad)" />
+
+    <!-- Intermediate Rays -->
+    <polygon points="32,6 42,23 37,26" fill="url(#rayGrad)" opacity="0.92" />
+    <polygon points="68,6 63,26 58,23" fill="url(#rayGrad)" opacity="0.92" />
+    <polygon points="94,30 77,36 75,42" fill="url(#rayGrad)" opacity="0.92" />
+    <polygon points="94,66 75,54 77,60" fill="url(#rayGrad)" opacity="0.92" />
+    <polygon points="68,90 58,73 63,70" fill="url(#rayGrad)" opacity="0.92" />
+    <polygon points="32,90 37,70 42,73" fill="url(#rayGrad)" opacity="0.92" />
+    <polygon points="6,66 23,60 25,54" fill="url(#rayGrad)" opacity="0.92" />
+    <polygon points="6,30 25,42 23,36" fill="url(#rayGrad)" opacity="0.92" />
+  </g>
+
+  <!-- Large Central Radiant Sun Disc (Enlarged) -->
+  <circle cx="50" cy="48" r="30" fill="url(#sunCore)" stroke="#FFFDE7" stroke-width="2.5" />
+
+  <!-- Inner Solar Luminance Highlights -->
+  <circle cx="48" cy="45" r="22" fill="#FFFFFF" opacity="0.25" />
+  <circle cx="46" cy="43" r="14" fill="#FFFFFF" opacity="0.4" />
+  <circle cx="44" cy="41" r="7" fill="#FFFFFF" opacity="0.65" />
+
+  <!-- Sacred Water Ripple Arc at Horizon (Arghya motif) -->
+  <path d="M 16 78 Q 50 67 84 78 Q 50 83 16 78 Z" fill="url(#waterGrad)" />
+  <path d="M 24 85 Q 50 77 76 85 Q 50 90 24 85 Z" fill="url(#waterGrad)" opacity="0.8" />
+</svg>

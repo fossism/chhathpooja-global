@@ -190,19 +190,14 @@ export default function Navbar({ locale }: { locale: string }) {
             className="flex items-center gap-2.5 group cursor-pointer shrink-0"
           >
             <div className="relative w-9 h-9 rounded-xl overflow-hidden shadow-sm group-hover:scale-105 transition-transform duration-300 ring-2 ring-mustard/40 bg-white p-0.5">
-              <img src="/icon.svg" alt="ChhathMahaparv" className="w-full h-full object-contain" />
+              <img src="/icon.svg" alt="Chhath Mahaparv" className="w-full h-full object-contain" />
             </div>
             <div className="leading-tight">
-              <div className="flex items-center gap-1">
-                <span className="font-extrabold tracking-tight text-teal text-base sm:text-lg group-hover:text-teal/80 transition">
-                  ChhathMahaparv
-                </span>
-                <span className="text-[10px] chip !py-0 !px-1.5 bg-mustard/20 text-teal font-mono border-mustard/30 hidden sm:inline-block">
-                  .org
-                </span>
-              </div>
+              <span className="font-extrabold tracking-tight text-teal text-base sm:text-lg group-hover:text-mustard transition block">
+                Chhath Mahaparv
+              </span>
               <span className="block text-[11px] text-teal/65 font-medium">
-                Global Open-Source Hub
+                The Global Mahaparv
               </span>
             </div>
           </Link>

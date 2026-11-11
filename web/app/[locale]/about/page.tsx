@@ -17,7 +17,7 @@ export default function About({ params }: { params: { locale: string } }) {
               Keeping Chhath alive, <em>anywhere</em> on earth
             </h1>
             <p className="section-sub text-base sm:text-lg mt-4 leading-relaxed text-teal/80">
-              ChhathMahaparv (<code>chhathpooja-global</code>) is a community-owned, ad-free, 
+              Chhath Mahaparv (<code>chhathpooja-global</code>) is a community-owned, ad-free, 
               open-source digital sanctuary built for over 150 million devotees across Bihar, 
               Jharkhand, Eastern UP, Nepal, and the worldwide diaspora from London and New Jersey to Dubai and Sydney.
             </p>
@@ -66,7 +66,7 @@ export default function About({ params }: { params: { locale: string } }) {
                 intimidated by strict rules without understanding the loving essence behind them.
               </p>
               <p className="text-teal/80 text-sm sm:text-base leading-relaxed mt-3">
-                <strong>ChhathMahaparv</strong> was built to solve this once and for all: putting every date, 
+                <strong>Chhath Mahaparv</strong> was built to solve this once and for all: putting every date, 
                 ghat location, audio song, vidhi step, and samagri list into a single, lightning-fast, offline-capable 
                 home that anyone can access without logins, paywalls, or advertisements.
               </p>
@@ -378,7 +378,7 @@ export default function About({ params }: { params: { locale: string } }) {
           <div>
             <span className="marker">Community Owned</span>
             <h2 className="section-title mt-2">
-              How you can contribute to ChhathMahaparv
+              How you can contribute to Chhath Mahaparv
             </h2>
             <p className="section-sub mt-2 max-w-2xl">
               This website is written in Next.js 14, TypeScript, and Tailwind CSS. 

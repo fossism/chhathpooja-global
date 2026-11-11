@@ -148,7 +148,8 @@ export default function Songs() {
   };
 
   const handleCopyShare = (t: Track) => {
-    const shareText = `🎵 Listening to "${t.title}" (${t.artist}) on ChhathMahaparv: https://chhathmahaparv.org/en/songs?track=${t.id}`;
+    const origin = typeof window !== "undefined" ? window.location.origin : "https://chhathmahaparv.org";
+    const shareText = `🎵 Listening to "${t.title}" (${t.artist}) on Chhath Mahaparv: ${origin}/en/songs?track=${t.id}`;
     if (navigator.clipboard) {
       navigator.clipboard.writeText(shareText);
       setCopiedId(t.uid);

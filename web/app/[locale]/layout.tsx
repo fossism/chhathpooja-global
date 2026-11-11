@@ -38,23 +38,23 @@ export async function generateStaticParams() {
 
 const META: Record<string, { title: string; description: string }> = {
   en: {
-    title: "ChhathMahaparv.org — Dates, Arghya Time, Vidhi, Ghats",
+    title: "ChhathMahaparv — Keeping Chhath alive, anywhere on earth",
     description: "Kartik Chhath dates, city-wise Sandhya/Usha Arghya time, 4-day vidhi guide, ghat finder and folk songs."
   },
   hi: {
-    title: "छठ महापर्व — तिथियां, अर्घ्य समय, विधि, घाट",
+    title: "छठ महापर्व — देश-विदेश में छठ की पावन परंपरा",
     description: "कार्तिक छठ तिथियां, शहर-वार संध्या/उषा अर्घ्य समय, 4-दिवसीय विधि, घाट खोज और लोकगीत।"
   },
   bho: {
-    title: "छठ महापरब — तिथि, अरघ समय, बिधि, घाट",
+    title: "छठ महापरब — देश-दुनिया में छठ के पावन परंपरा",
     description: "कातिक छठ तिथि, शहर अनुसार साँझ/भोर अरघ समय, 4 दिन के बिधि, घाट खोज आ लोकगीत।"
   },
   mai: {
-    title: "छठ महापर्व — तिथि, अर्घ्य समय, विधि, घाट",
+    title: "छठ महापर्व — देश-विदेश में छठक पावन परंपरा",
     description: "कातिक छठ तिथि, शहर अनुसार साँझ/भोर अर्घ्य समय, 4 दिनक विधि, घाट खोज आ लोकगीत।"
   },
   ne: {
-    title: "छठ महापर्व — मिति, अर्घ्य समय, विधि, घाट",
+    title: "छठ महापर्व — संसारभर छठको पावन परम्परा",
     description: "कात्तिक छठ मिति, शहर अनुसार साँझ/बिहान अर्घ्य समय, ४-दिने विधि, घाट खोज र लोकगीत।"
   }
 };
@@ -67,6 +67,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     metadataBase: new URL(base),
     title: m.title,
     description: m.description,
+    icons: {
+      icon: [
+        { url: "/icon.svg", type: "image/svg+xml" },
+        { url: "/icon-192.png", sizes: "192x192", type: "image/png" }
+      ],
+      shortcut: "/icon.svg",
+      apple: "/icon-192.png"
+    },
     alternates: {
       canonical: `${base}/${locale}`,
       languages: Object.fromEntries(locales.map((l) => [l, `${base}/${l}`]))
@@ -75,7 +83,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       title: m.title,
       description: m.description,
       url: `${base}/${locale}`,
-      siteName: "ChhathMahaparv.org",
+      siteName: "Chhath Mahaparv",
       locale,
       type: "website",
       images: [{ url: `${base}/og.jpg`, width: 1200, height: 630, alt: "Chhath Mahaparv — vrtais offering Arghya at the ghat" }]
@@ -113,8 +121,8 @@ export default function LocaleLayout({ children, params }: { children: React.Rea
       <footer className="bg-cream border-t border-line">
         <div className="shell py-10 grid sm:grid-cols-2 md:grid-cols-4 gap-8">
           <div>
-            <img src="/icon.svg" alt="ChhathMahaparv" className="w-10 h-10" />
-            <p className="text-sm text-teal/70 mt-3">ChhathMahaparv — keeping the Mahaparv alive everywhere. MIT open-source.</p>
+            <img src="/icon.svg" alt="Chhath Mahaparv" className="w-10 h-10" />
+            <p className="text-sm text-teal/70 mt-3">Chhath Mahaparv — keeping the Mahaparv alive everywhere. MIT open-source.</p>
           </div>
           <nav className="text-sm" aria-label="Site">
             <p className="label mb-2">Site</p>
@@ -148,7 +156,7 @@ export default function LocaleLayout({ children, params }: { children: React.Rea
         </div>
         <div className="border-t border-line">
           <div className="shell py-4 flex flex-wrap gap-x-4 gap-y-1 text-xs text-teal/70">
-            <span>© 2026 ChhathMahaparv contributors</span>
+            <span>© 2026 Chhath Mahaparv contributors</span>
             <span>Jai Surya Dev • Jai Chhathi Maiya</span>
           </div>
         </div>
