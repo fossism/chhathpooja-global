@@ -1,6 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  cleanDistDir: true,
   transpilePackages: ["leaflet", "react-leaflet"],
+  webpack: (config, { dev }) => {
+    if (dev) {
+      // Use memory cache during development to permanently prevent disk-based chunk hash desync
+      config.cache = {
+        type: "memory"
+      };
+    }
+    return config;
+  },
   async headers() {
     const csp = [
       "default-src 'self'",
