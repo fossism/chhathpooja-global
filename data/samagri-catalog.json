@@ -1,0 +1,98 @@
+[
+  {
+    "id": "soop",
+    "name": "Bamboo Soop (Winnowing Tray)",
+    "hindi": "बाँस का सूप",
+    "bhojpuri": "बाँस के सुपवा",
+    "category": "Sacred Vessels & Baskets",
+    "daysUsed": ["Sandhya Arghya", "Usha Arghya"],
+    "image": "/images/samagri/soop.jpg",
+    "significance": "Bamboo is an eco-friendly natural grass that grows without cultivation, symbolizing fertility, humility, and unbroken purity. The winnowing tray separates pure grains from chaff, representing spiritual discernment. In Chhath, the vrati holds the offerings facing the sun in this handwoven tray.",
+    "howToUse": "Cleaned thoroughly with water, marked with auspicious orange sindoor and turmeric paste on the front rim. Filled with thekua, whole coconut, bananas, seasonal fruits, and an earthen diya in the center before stepping into the river.",
+    "beginnerHack": "In regions abroad where raw bamboo soop is hard to acquire (e.g. UK, USA), a pure brass or bronze winnowing platter (Pital ka Soop) is traditionally sanctioned and reusable."
+  },
+  {
+    "id": "daura",
+    "name": "Bamboo Daura (Sacred Tokri)",
+    "hindi": "बाँस का दउरा / टोकरा",
+    "bhojpuri": "बाँस के दउरा",
+    "category": "Sacred Vessels & Baskets",
+    "daysUsed": ["Sandhya Arghya", "Usha Arghya"],
+    "image": "/images/samagri/daura.jpg",
+    "significance": "A deep circular bamboo basket handcrafted by traditional village artisans. Carrying the Daura on the head from home to the ghat is an act of deep surrender and seva (selfless service) performed by family members, symbolizing carrying the prayers of the entire household.",
+    "howToUse": "Lined with a fresh yellow or red ritual cloth. Both morning and evening soops, extra thekua batches, and delicate seasonal fruits are placed inside, sealed with a bamboo lid or cloth covering, and carried to the riverbank on the head.",
+    "beginnerHack": "If walking a long distance in metro cities, carry it reverently on the head while departing the home and entering the ghat, even if vehicular transport is used in between."
+  },
+  {
+    "id": "thekua",
+    "name": "Thekua & Khajuria Prasad",
+    "hindi": "ठेकुआ और खजूरिया प्रसाद",
+    "bhojpuri": "ठेकुआ / खजुरिया",
+    "category": "Divine Prasad",
+    "daysUsed": ["Kharna", "Sandhya Arghya", "Usha Arghya"],
+    "image": "/images/samagri/thekua.jpg",
+    "significance": "The quintessential holy Mahaprasad of Chhath. Prepared exclusively with stone-ground whole wheat flour, dark organic jaggery (gud), crushed green cardamom, dried coconut slivers, and deep-fried in pure desi cow ghee. Pressed on carved wooden saanchas (moulds) showing sun ray and peepal leaf motifs.",
+    "howToUse": "Prepared on Day 3 in a rigorously sanitized kitchen dedicated only to Chhath prasad. Only family members who have bathed and worn clean clothes touch the dough. It is placed directly in the soop for Arghya.",
+    "beginnerHack": "If you don't have a traditional wooden mould, gently press the dough balls with a clean fork or the back of a wicker strainer to create auspicious textured patterns."
+  },
+  {
+    "id": "sugarcane-kosi",
+    "name": "Sugarcane Canopy & Kosi Elephant",
+    "hindi": "पातेदार गन्ना और कोसी हाथी",
+    "bhojpuri": "पातदार ईख आ कोसी",
+    "category": "Hearth & Elements",
+    "daysUsed": ["Sandhya Arghya", "Usha Arghya"],
+    "image": "/images/samagri/sugarcane-kosi.jpg",
+    "significance": "Tall sugarcane stalks with their lush green leaves intact symbolize the sweetness of nature and bumper agrarian harvest. Five stalks tied at the crown form a sacred pyramidal tent (Chhatri). Beneath it sits a terracotta elephant (Mitti ka Haathi) with 24 clay diyas lit through the night, fulfilling family vows (Mannat).",
+    "howToUse": "Erected at home in the courtyard on Kharna night, and carried to the riverbank on Sandhya Arghya night. The 24 lamps are filled with pure mustard or sesame oil, and families keep vigil singing traditional geet.",
+    "beginnerHack": "For apartment dwellers or beginners, a mini-Kosi setup with 5 clean sugarcane pieces or stalks tied in a living room corner or balcony creates the exact same devotional vibration."
+  },
+  {
+    "id": "fruits-botanicals",
+    "name": "Dabh Nimbu, Coconut & Sacred Harvest",
+    "hindi": "डाभ नींबू, जटा नारियल और मौसमी फल",
+    "bhojpuri": "टाभ नींबू, नारियल आ सुथनी",
+    "category": "Earth's Harvest & Roots",
+    "daysUsed": ["Sandhya Arghya", "Usha Arghya"],
+    "image": "/images/samagri/fruits-botanicals.jpg",
+    "significance": "Dabh Nimbu (giant thick-skinned wild pomelo) represents the bitter-sweet immunity of the change of seasons. The whole fibrous coconut represents the human ego offered with its water to the cosmos. Sacred roots like Suthani (purple tuber), sweet potato (Shakarkand), water chest-nut (Singhara), and whole turmeric and ginger plants honor the fertility of soil.",
+    "howToUse": "Arranged symmetrically inside the bamboo soop. The root plants (raw ginger and turmeric) are kept with green stems intact to signify living life force and vitality.",
+    "beginnerHack": "Any fresh, seasonal, chemical-free local fruits available in your country (apples, pears, oranges, pomegranates) can be offered alongside coconut."
+  },
+  {
+    "id": "mitti-chulha",
+    "name": "Earthen Chulha & Sacred Bronze Vessels",
+    "hindi": "मिट्टी का चूल्हा और कांसा-पीतल बर्तन",
+    "bhojpuri": "माटी के चूल्हा",
+    "category": "Hearth & Elements",
+    "daysUsed": ["Kharna", "Sandhya Arghya"],
+    "image": "/images/samagri/mitti-chulha.jpg",
+    "significance": "A handcrafted virgin clay hearth made from river clay and dried in sunlight. Fired exclusively with dry mango wood (Aam ki lakdi), which emits antiseptic smoke and pure flame. The earthen vessel honors the Prithvi (Earth) element.",
+    "howToUse": "Used on Day 2 (Kharna) to boil cow milk, newly harvested Arwa rice, and jaggery into divine Rasiya kheer, as well as pure ghee rotis.",
+    "beginnerHack": "In modern apartments or overseas locations where wood fire is prohibited by smoke detectors, an electric induction cooker or virgin stove used exclusively for puja is accepted."
+  },
+  {
+    "id": "sindoor-akshat",
+    "name": "Matiya Sindoor & Akshat",
+    "hindi": "नारंगी मटिया सिन्दूर और अक्षत",
+    "bhojpuri": "नारंगी सिन्दूर आ अछत",
+    "category": "Sacred Adornments",
+    "daysUsed": ["Nahay-Khay", "Kharna", "Sandhya Arghya", "Usha Arghya"],
+    "image": "/images/samagri/sindoor-akshat.jpg",
+    "significance": "Unlike red synthetic vermilion, traditional Chhath sindoor is natural bright saffron-orange (Matiya Sindoor), derived from natural minerals and turmeric. Applied in a long, continuous line from the bridge of the nose upwards to the hair parting, it represents the blazing path of the sun (Suryanadi) and long life.",
+    "howToUse": "Offered to the Soop, Daura, and clay elephant first. After completing Usha Arghya, married women apply it to each other in joyous sisterhood on the ghat bank.",
+    "beginnerHack": "Ensure you purchase lead-free organic herbal Matiya Sindoor, readily available in Indian grocery stores under the label 'Chhath Puja Orange Sindoor'."
+  },
+  {
+    "id": "arghya-patra",
+    "name": "Copper Kalash & Arghya Patra",
+    "hindi": "तांबे का लोटा और अर्घ्य पात्र",
+    "bhojpuri": "तांबा के लोटा",
+    "category": "Sacred Vessels & Baskets",
+    "daysUsed": ["Sandhya Arghya", "Usha Arghya"],
+    "image": "/images/samagri/arghya-patra.jpg",
+    "significance": "Copper is the sacred metal of Lord Surya in Vedic astrology. Offering water and raw cow milk through copper charges the stream with solar bio-photons. Looking at the sun through the water stream balances the pineal gland and retinal optic nerves.",
+    "howToUse": "Filled with pure Gangajal, clean fresh water, and a few drops of raw cow milk with red flowers and unbroken akshat. Poured slowly in an unbroken stream over the edge of the bamboo soop into the river.",
+    "beginnerHack": "If you don't possess a dedicated copper arghya patra, any clean brass (pital) tumbler or bronze vessel can be purified and used."
+  }
+]
