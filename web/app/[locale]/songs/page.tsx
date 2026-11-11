@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { ALL_TRACKS, type Track } from "../../../lib/playlist";
 import { usePlayer } from "../../../components/MusicProvider";
 
 function fmt(s: number): string {
-  if (!s) return "0:00";
+  if (!s || isNaN(s)) return "0:00";
   const m = Math.floor(s / 60);
   return `${m}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
 }
@@ -32,14 +32,39 @@ export default function Songs() {
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [expandedLyricId, setExpandedLyricId] = useState<string | null>(null);
+  const [customTracks, setCustomTracks] = useState<Track[]>([]);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [customUrl, setCustomUrl] = useState("");
+  const [customTitle, setCustomTitle] = useState("");
+  const [customArtist, setCustomArtist] = useState("");
+  const [addError, setAddError] = useState("");
+  const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  const categories = useMemo(() => {
-    const list = Array.from(new Set(ALL_TRACKS.map((t) => t.category)));
-    return ["all", ...list];
+  // Load custom saved songs from localStorage on mount
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("chhath_custom_songs");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) setCustomTracks(parsed);
+      }
+    } catch {
+      /* ignore storage errors */
+    }
   }, []);
 
+  // Merge default tracks with custom tracks
+  const combinedTracks = useMemo(() => {
+    return [...customTracks, ...ALL_TRACKS];
+  }, [customTracks]);
+
+  const categories = useMemo(() => {
+    const list = Array.from(new Set(combinedTracks.map((t) => t.category)));
+    return ["all", ...list];
+  }, [combinedTracks]);
+
   const filteredTracks = useMemo(() => {
-    return ALL_TRACKS.filter((t) => {
+    return combinedTracks.filter((t) => {
       const matchCat = activeCategory === "all" || t.category === activeCategory;
       const q = search.trim().toLowerCase();
       const matchSearch =
@@ -51,126 +76,283 @@ export default function Songs() {
         (t.lyric && t.lyric.toLowerCase().includes(q));
       return matchCat && matchSearch;
     });
-  }, [search, activeCategory]);
+  }, [combinedTracks, search, activeCategory]);
 
   const handlePlaySong = (t: Track) => {
-    const idx = ALL_TRACKS.findIndex((item) => item.uid === t.uid);
+    const idx = combinedTracks.findIndex((item) => item.uid === t.uid);
     if (idx >= 0) {
       if (current?.uid === t.uid) {
         toggle();
       } else {
-        playTracks(ALL_TRACKS, idx);
+        playTracks(combinedTracks, idx);
       }
     }
   };
 
   const handleShufflePlay = () => {
-    playRandom(filteredTracks.length ? filteredTracks : ALL_TRACKS);
+    playRandom(filteredTracks.length ? filteredTracks : combinedTracks);
+  };
+
+  const handlePlayJukebox = () => {
+    const jukes = combinedTracks.filter((t) => t.category === "Non-Stop Jukebox");
+    if (jukes.length > 0) {
+      playTracks(jukes, 0);
+    } else {
+      handleShufflePlay();
+    }
+  };
+
+  const extractYoutubeId = (url: string): string | null => {
+    const trimmed = url.trim();
+    if (/^[a-zA-Z0-9_-]{11}$/.test(trimmed)) return trimmed;
+    const match = trimmed.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+    return match ? match[1] : null;
+  };
+
+  const handleAddCustomSong = (e: React.FormEvent) => {
+    e.preventDefault();
+    setAddError("");
+    const ytid = extractYoutubeId(customUrl);
+    if (!ytid) {
+      setAddError("Please paste a valid YouTube video URL or 11-character video ID.");
+      return;
+    }
+    const newTrack: Track = {
+      uid: `custom-${ytid}-${Date.now()}`,
+      id: `custom-${ytid}`,
+      title: customTitle.trim() || `Chhath Geet (${ytid})`,
+      artist: customArtist.trim() || "Community Added",
+      category: "Added by You",
+      kind: "youtube",
+      youtubeId: ytid,
+      thumb: `https://i.ytimg.com/vi/${ytid}/hqdefault.jpg`,
+      meaning: "Custom YouTube track added to your local playlist."
+    };
+
+    const updated = [newTrack, ...customTracks];
+    setCustomTracks(updated);
+    try {
+      localStorage.setItem("chhath_custom_songs", JSON.stringify(updated));
+    } catch {
+      /* ignore */
+    }
+
+    // Immediately play the added song
+    playTracks([newTrack, ...combinedTracks], 0);
+
+    // Reset modal
+    setCustomUrl("");
+    setCustomTitle("");
+    setCustomArtist("");
+    setShowAddModal(false);
+  };
+
+  const handleCopyShare = (t: Track) => {
+    const shareText = `🎵 Listening to "${t.title}" (${t.artist}) on ChhathMahaparv: https://chhathmahaparv.org/en/songs?track=${t.id}`;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(shareText);
+      setCopiedId(t.uid);
+      setTimeout(() => setCopiedId(null), 2500);
+    }
   };
 
   return (
-    <div className="shell py-8 md:py-12 pb-32">
-      {/* Page Header */}
-      <div className="mb-8">
-        <span className="marker">Sacred Melodies of the Mahaparv</span>
-        <h1 className="section-title mt-2">
-          Chhath <em>Folk Songs</em> & Geet
-        </h1>
-        <p className="section-sub text-base max-w-2xl mt-1">
-          A pure, deduplicated collection of timeless Chhath songs — from Sharda Sinha's classical renditions to folk
-          ghat anthems. Click <strong>Shuffle & Play</strong> to stream songs randomly without duplicate tracks.
-        </p>
+    <div className="shell py-8 md:py-12 pb-36 space-y-10">
+      {/* ========================================================================= */}
+      {/* HERO BANNER: SACRED DUSK & DAWN CHHATH ATMOSPHERE                         */}
+      {/* ========================================================================= */}
+      <section className="relative overflow-hidden rounded-3xl border-2 border-mustard/60 bg-gradient-to-br from-[#062420] via-[#0f3c36] to-[#1a5a52] text-cream p-6 sm:p-8 md:p-10 shadow-[0_20px_50px_rgba(22,86,79,0.35)]">
+        {/* Ambient Glowing Orbs */}
+        <div
+          className="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-mustard/20 blur-3xl pointer-events-none"
+          aria-hidden="true"
+        />
+        <div
+          className="absolute -bottom-24 -left-24 w-80 h-80 rounded-full bg-teal-400/15 blur-3xl pointer-events-none"
+          aria-hidden="true"
+        />
 
-        {/* Global Action Bar */}
-        <div className="mt-6 flex flex-wrap items-center gap-3">
-          <button
-            onClick={handleShufflePlay}
-            className="btn btn-primary !py-2.5 !px-5 text-sm flex items-center gap-2 shadow hover:scale-[1.02] active:scale-[0.98] transition"
-          >
-            <span className="text-base">🎲</span>
-            <span>Shuffle & Play Random</span>
-          </button>
+        {/* Sacred Sun Motif in Background */}
+        <svg
+          className="absolute right-0 top-0 w-80 h-80 opacity-10 pointer-events-none translate-x-1/4 -translate-y-1/4"
+          viewBox="0 0 200 200"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <circle cx="100" cy="100" r="40" stroke="#E8B84B" strokeWidth="2" />
+          <circle cx="100" cy="100" r="65" stroke="#E8B84B" strokeWidth="1.5" strokeDasharray="4 4" />
+          <circle cx="100" cy="100" r="90" stroke="#E8B84B" strokeWidth="1" />
+          {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((deg) => (
+            <line
+              key={deg}
+              x1="100"
+              y1="10"
+              x2="100"
+              y2="30"
+              stroke="#E8B84B"
+              strokeWidth="2"
+              transform={`rotate(${deg} 100 100)`}
+            />
+          ))}
+        </svg>
 
-          <button
-            onClick={toggleShuffle}
-            className={`btn !py-2.5 !px-4 text-xs font-bold transition flex items-center gap-2 border ${
-              shuffle
-                ? "bg-mustard/20 border-mustard text-teal font-extrabold"
-                : "bg-white border-line text-teal/70 hover:text-teal"
-            }`}
-            title="When active, the next song is chosen randomly"
-          >
-            <span>🔀</span>
-            <span>Random Play: {shuffle ? "ACTIVE" : "OFF"}</span>
-          </button>
+        <div className="relative z-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-mustard/20 border border-mustard/40 text-mustard text-xs font-bold uppercase tracking-wider mb-4">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-mustard opacity-90"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-mustard"></span>
+            </span>
+            पवित्र छठ महापर्व संगीत संगम • 24×7 Divine Melodies
+          </div>
 
-          <div className="ml-auto text-xs font-semibold text-teal/60 hidden sm:flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-            <span>{ALL_TRACKS.length} Unique Songs • 0 Duplicates</span>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white leading-tight">
+            Chhath <em>Folk Songs</em> & Bhakti Dhun
+          </h1>
+          <p className="text-cream/80 text-sm sm:text-base mt-2 max-w-2xl leading-relaxed">
+            From Padma Bhushan Sharda Sinha’s immortal hymns to joyous ghat processions, Arghya anthems, and non-stop jukeboxes. Powered by YouTube official embeds — ad-free in-app listening, verified clean, zero buffering.
+          </p>
+
+          {/* Quick Stats Badges */}
+          <div className="flex flex-wrap items-center gap-2 mt-4 text-xs font-mono text-cream/70">
+            <span className="px-2.5 py-1 rounded-lg bg-black/40 border border-cream/15">
+              🎵 {combinedTracks.length} Curated Songs
+            </span>
+            <span className="px-2.5 py-1 rounded-lg bg-black/40 border border-cream/15">
+              👑 Sharda Sinha Classics
+            </span>
+            <span className="px-2.5 py-1 rounded-lg bg-black/40 border border-cream/15">
+              🌅 Sunset & Sunrise Arghya
+            </span>
+            <span className="px-2.5 py-1 rounded-lg bg-black/40 border border-cream/15">
+              📻 Non-Stop Jukeboxes
+            </span>
+          </div>
+
+          {/* Master Toolbar CTAs */}
+          <div className="flex flex-wrap items-center gap-3 mt-6 pt-6 border-t border-cream/15">
+            <button
+              onClick={handleShufflePlay}
+              className="inline-flex items-center gap-2 rounded-full bg-mustard px-5 py-2.5 text-xs sm:text-sm font-extrabold text-[#092521] hover:brightness-105 active:scale-95 transition shadow-lg"
+            >
+              <span className="text-base">🔀</span>
+              <span>Instant Shuffle & Play</span>
+            </button>
+
+            <button
+              onClick={handlePlayJukebox}
+              className="inline-flex items-center gap-2 rounded-full bg-black/45 border border-mustard/40 px-4 py-2.5 text-xs sm:text-sm font-bold text-cream hover:bg-black/60 active:scale-95 transition"
+            >
+              <span>📻</span>
+              <span>Play Mega Jukebox</span>
+            </button>
+
+            <button
+              onClick={() => setShowAddModal(true)}
+              className="inline-flex items-center gap-2 rounded-full bg-black/45 border border-cream/30 px-4 py-2.5 text-xs sm:text-sm font-bold text-cream hover:border-mustard/60 transition"
+            >
+              <span>➕</span>
+              <span>Play from YouTube Link</span>
+            </button>
+
+            <button
+              onClick={toggleShuffle}
+              className={`ml-auto text-xs font-mono font-bold px-3 py-1.5 rounded-full border transition ${
+                shuffle
+                  ? "bg-mustard/20 border-mustard text-mustard"
+                  : "bg-black/30 border-cream/20 text-cream/60"
+              }`}
+              title="Toggle Random Shuffle Mode"
+            >
+              {shuffle ? "🔀 Shuffle: ON" : "🔁 Sequential"}
+            </button>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Now Playing Studio Card */}
+      {/* ========================================================================= */}
+      {/* NOW STREAMING: HIGH-END AESTHETIC AUDIO DECK                              */}
+      {/* ========================================================================= */}
       {current && (
-        <div className="card mb-10 !p-0 overflow-hidden border-teal/30 shadow-card bg-white">
-          <div className="p-6 md:p-8 bg-gradient-to-br from-cream via-white to-mustard/10 border-b border-line">
-            <div className="grid md:grid-cols-12 gap-6 items-center">
-              {/* Artwork / Visualizer */}
-              <div className="md:col-span-4 flex flex-col items-center justify-center">
-                <div className="relative w-44 h-32 sm:w-56 sm:h-40 rounded-xl overflow-hidden shadow-lg border-2 border-white bg-teal/10 group">
-                  {current.thumb ? (
-                    <img
-                      src={current.thumb}
-                      alt={current.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-mustard/40 to-teal/30 flex items-center justify-center text-5xl">
-                      🪕
-                    </div>
-                  )}
-
-                  {/* Sound Wave Animation if playing */}
-                  {playing && (
-                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center gap-1.5 backdrop-blur-[1px]">
-                      <span className="w-1.5 h-8 bg-mustard rounded-full animate-bounce [animation-delay:0ms]" />
-                      <span className="w-1.5 h-12 bg-cream rounded-full animate-bounce [animation-delay:150ms]" />
-                      <span className="w-1.5 h-6 bg-mustard rounded-full animate-bounce [animation-delay:300ms]" />
-                      <span className="w-1.5 h-10 bg-cream rounded-full animate-bounce [animation-delay:450ms]" />
-                    </div>
-                  )}
-
-                  <span className="absolute top-2 left-2 chip chip-yellow text-[10px] font-extrabold uppercase">
-                    {current.category}
-                  </span>
-                </div>
-              </div>
-
-              {/* Player Details & Controls */}
-              <div className="md:col-span-8 space-y-4">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <span className="label text-[11px] text-teal/60">Now Streaming</span>
-                    <div className="flex flex-wrap items-baseline gap-2 mt-0.5">
-                      <h2 className="text-xl sm:text-2xl font-extrabold text-teal">
-                        {current.title}
-                      </h2>
-                      {current.titleDevanagari && (
-                        <span className="text-base sm:text-lg font-medium text-mustard">
-                          {current.titleDevanagari}
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-xs sm:text-sm text-teal/70 mt-1 font-medium">
-                      {current.artist}
-                    </p>
+        <section
+          aria-label="Current Track Player"
+          className="relative overflow-hidden rounded-2xl border-2 border-teal/40 bg-white p-6 md:p-8 shadow-card"
+        >
+          <div className="grid md:grid-cols-12 gap-6 items-center">
+            {/* Artwork with Vinyl Glow / Sound Wave */}
+            <div className="md:col-span-4 flex flex-col items-center justify-center">
+              <div className="relative w-48 h-36 sm:w-60 sm:h-44 rounded-2xl overflow-hidden shadow-xl border-4 border-white bg-[#0b2925] group">
+                {current.thumb ? (
+                  <img
+                    src={current.thumb}
+                    alt={current.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-mustard/30 to-teal/40 flex items-center justify-center text-5xl">
+                    🪕
                   </div>
+                )}
+
+                {/* Animated Equalizer Waveform overlay when playing */}
+                {playing && (
+                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center gap-1.5 backdrop-blur-[1px]">
+                    <span className="w-1.5 h-6 bg-mustard rounded-full animate-bounce [animation-delay:0ms]" />
+                    <span className="w-1.5 h-12 bg-white rounded-full animate-bounce [animation-delay:150ms]" />
+                    <span className="w-1.5 h-8 bg-mustard rounded-full animate-bounce [animation-delay:300ms]" />
+                    <span className="w-1.5 h-14 bg-white rounded-full animate-bounce [animation-delay:450ms]" />
+                    <span className="w-1.5 h-7 bg-mustard rounded-full animate-bounce [animation-delay:200ms]" />
+                  </div>
+                )}
+
+                <span className="absolute top-2.5 left-2.5 chip chip-yellow text-[10px] font-black uppercase shadow">
+                  {current.category}
+                </span>
+              </div>
+            </div>
+
+            {/* Track Info & Scrubber & Playback Controls */}
+            <div className="md:col-span-8 space-y-4">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-mustard opacity-90"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-mustard"></span>
+                    </span>
+                    <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-teal/70">
+                      Now Streaming
+                    </span>
+                  </div>
+
+                  <div className="flex flex-wrap items-baseline gap-2 mt-1">
+                    <h2 className="text-2xl sm:text-3xl font-black text-teal tracking-tight">
+                      {current.title}
+                    </h2>
+                    {current.titleDevanagari && (
+                      <span className="text-lg sm:text-xl font-medium text-mustard">
+                        {current.titleDevanagari}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs sm:text-sm font-semibold text-teal/70 mt-1">
+                    🎙️ {current.artist}
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => handleCopyShare(current)}
+                    className="p-2 rounded-lg border border-line hover:border-teal text-teal/70 text-xs transition"
+                    title="Share this song"
+                  >
+                    {copiedId === current.uid ? "✓ Copied" : "🔗 Share"}
+                  </button>
 
                   {current.kind === "youtube" && (
                     <button
                       onClick={() => setVideoOpen(!videoOpen)}
-                      className={`btn !py-1.5 !px-3 text-xs border transition ${
+                      className={`px-3 py-1.5 rounded-lg text-xs font-bold border transition ${
                         videoOpen
                           ? "bg-teal text-cream border-teal"
                           : "bg-white text-teal/70 border-line hover:border-teal"
@@ -181,111 +363,101 @@ export default function Songs() {
                     </button>
                   )}
                 </div>
+              </div>
 
-                {/* Scrubber / Progress Bar */}
-                <div className="space-y-1.5">
+              {/* Scrubber Bar */}
+              <div className="space-y-1.5">
+                <div
+                  className="h-2.5 rounded-full bg-line cursor-pointer overflow-hidden relative group"
+                  onClick={(e) => {
+                    const r = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
+                    seek((e.clientX - r.left) / r.width);
+                  }}
+                  role="slider"
+                  aria-label="Seek track"
+                  aria-valuenow={Math.round(progress * 100)}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  tabIndex={0}
+                >
                   <div
-                    className="h-2 rounded-full bg-line cursor-pointer overflow-hidden relative group"
-                    onClick={(e) => {
-                      const r = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
-                      seek((e.clientX - r.left) / r.width);
-                    }}
-                    role="slider"
-                    aria-label="Seek track"
-                    aria-valuenow={Math.round(progress * 100)}
-                    aria-valuemin={0}
-                    aria-valuemax={100}
-                    tabIndex={0}
-                  >
-                    <div
-                      className="h-full bg-teal group-hover:bg-teal/80 transition-all rounded-full"
-                      style={{ width: `${Math.round(progress * 100)}%` }}
-                    />
-                  </div>
-                  <div className="flex items-center justify-between text-[11px] font-mono text-teal/60">
-                    <span>{fmt(progress * duration)}</span>
-                    <span>{duration ? fmt(duration) : waiting ? "Connecting…" : "--:--"}</span>
-                  </div>
+                    className="h-full bg-gradient-to-r from-teal via-mustard to-amber-500 rounded-full transition-all"
+                    style={{ width: `${Math.round(progress * 100)}%` }}
+                  />
                 </div>
-
-                {/* Studio Playback Buttons */}
-                <div className="flex flex-wrap items-center gap-3 pt-1">
-                  <button
-                    onClick={prev}
-                    className="btn btn-ghost !p-2.5 text-base"
-                    aria-label="Previous Song"
-                    title="Previous Song"
-                  >
-                    ⏮
-                  </button>
-
-                  <button
-                    onClick={toggle}
-                    className="btn btn-accent !py-2.5 !px-6 text-sm font-extrabold flex items-center gap-2 shadow hover:scale-105 active:scale-95 transition"
-                  >
-                    <span>{waiting ? "…" : playing ? "❚❚ Pause" : "▶ Play"}</span>
-                  </button>
-
-                  <button
-                    onClick={nextRandom}
-                    className="btn btn-primary !py-2.5 !px-5 text-xs font-bold flex items-center gap-1.5 shadow"
-                    title="Jump to a new random song"
-                  >
-                    <span>Next Random ⏭</span>
-                  </button>
-
-                  <button
-                    onClick={toggleShuffle}
-                    className={`btn !py-2 !px-3 text-xs border transition ${
-                      shuffle
-                        ? "bg-mustard/20 border-mustard text-teal font-bold"
-                        : "bg-white border-line text-teal/60"
-                    }`}
-                  >
-                    {shuffle ? "🔀 Random: ON" : "🔁 Sequential"}
-                  </button>
+                <div className="flex items-center justify-between text-xs font-mono text-teal/60">
+                  <span>{fmt(progress * duration)}</span>
+                  <span>{duration ? fmt(duration) : waiting ? "Connecting stream…" : "--:--"}</span>
                 </div>
               </div>
+
+              {/* Master Controls */}
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                <button
+                  onClick={prev}
+                  className="p-3 rounded-full bg-cream hover:bg-mustard/20 text-teal transition text-sm font-bold"
+                  aria-label="Previous Track"
+                  title="Previous Song"
+                >
+                  ⏮
+                </button>
+
+                <button
+                  onClick={toggle}
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-mustard px-7 py-3 text-sm font-black text-[#0b2925] shadow-md hover:scale-105 active:scale-95 transition"
+                >
+                  <span>{waiting ? "⏳ Connecting" : playing ? "❚❚ Pause" : "▶ Play Now"}</span>
+                </button>
+
+                <button
+                  onClick={nextRandom}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-teal px-5 py-3 text-xs font-bold text-cream hover:opacity-90 shadow transition"
+                  title="Play next random song"
+                >
+                  <span>Next Song</span>
+                  <span>⏭</span>
+                </button>
+
+                <div className="ml-auto text-xs text-teal/60 font-medium italic hidden lg:block">
+                  अरघ के बेर, सुरुज देव के नमन
+                </div>
+              </div>
+
+              {/* Sacred Meaning & Lyrics Drawer */}
+              {(current.meaning || current.lyric) && (
+                <div className="p-3.5 rounded-xl bg-cream/70 border border-line text-xs text-teal/80 space-y-1 mt-3">
+                  {current.lyric && (
+                    <p className="italic font-serif text-teal text-sm">
+                      "{current.lyric}"
+                    </p>
+                  )}
+                  {current.meaning && (
+                    <p className="text-teal/70 leading-relaxed font-medium">
+                      <strong className="text-teal font-bold uppercase tracking-wider text-[10px]">
+                        Significance:{" "}
+                      </strong>
+                      {current.meaning}
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
           </div>
-
-          {/* Meaning / Lyric Snippet for the playing song */}
-          {(current.meaning || current.lyric) && (
-            <div className="px-6 py-4 bg-cream/50 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between text-xs text-teal/80">
-              <div className="space-y-1 max-w-3xl">
-                {current.meaning && (
-                  <p>
-                    <strong className="text-teal font-bold uppercase tracking-wider text-[10px]">
-                      Significance:{" "}
-                    </strong>
-                    {current.meaning}
-                  </p>
-                )}
-                {current.lyric && (
-                  <p className="italic text-teal/70 font-serif text-sm">
-                    "{current.lyric}"
-                  </p>
-                )}
-              </div>
-              <span className="chip bg-white border-line text-[10px] whitespace-nowrap text-teal/60 shrink-0">
-                Traditional Bhojpuri Folk
-              </span>
-            </div>
-          )}
-        </div>
+        </section>
       )}
 
-      {/* Filter and Search Bar */}
-      <div className="mb-6 space-y-4">
+      {/* ========================================================================= */}
+      {/* SEARCH & RITUAL FILTER TABS                                              */}
+      {/* ========================================================================= */}
+      <section className="space-y-4">
         <div className="flex flex-col sm:flex-row gap-3 items-center justify-between">
-          {/* Search Box */}
           <div className="w-full sm:max-w-md relative">
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search by song title, singer, or lyrics..."
-              className="input pr-9"
+              placeholder="Search by title, singer (Sharda Sinha, Anuradha...), or lyrics..."
+              className="input pr-9 shadow-sm"
             />
             {search && (
               <button
@@ -297,8 +469,10 @@ export default function Songs() {
             )}
           </div>
 
-          <div className="text-xs text-teal/70 font-semibold self-end sm:self-center">
-            Showing {filteredTracks.length} unique songs
+          <div className="flex items-center gap-2 self-end sm:self-center">
+            <span className="text-xs text-teal/70 font-semibold font-mono">
+              Showing {filteredTracks.length} Songs
+            </span>
           </div>
         </div>
 
@@ -308,20 +482,22 @@ export default function Songs() {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition ${
+              className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition shadow-sm ${
                 activeCategory === cat
-                  ? "bg-teal text-cream shadow-sm"
+                  ? "bg-teal text-cream"
                   : "bg-white text-teal/70 hover:text-teal border border-line"
               }`}
             >
-              {cat === "all" ? "All Songs" : cat}
+              {cat === "all" ? "🌟 All Songs" : cat}
             </button>
           ))}
         </div>
-      </div>
+      </section>
 
-      {/* Songs List */}
-      <div className="space-y-3">
+      {/* ========================================================================= */}
+      {/* SONGS GRID / LIST                                                         */}
+      {/* ========================================================================= */}
+      <section className="space-y-3">
         {filteredTracks.map((t, idx) => {
           const isCurrent = current?.uid === t.uid;
           const isPlayingThis = isCurrent && playing;
@@ -330,20 +506,20 @@ export default function Songs() {
           return (
             <div
               key={t.uid}
-              className={`num-card !p-0 overflow-hidden border transition-all duration-200 ${
+              className={`rounded-2xl border transition-all duration-200 overflow-hidden ${
                 isCurrent
-                  ? "border-teal ring-2 ring-mustard/50 shadow-md bg-mustard/[0.04]"
-                  : "border-line hover:border-teal/40 hover:shadow-sm bg-white"
+                  ? "border-mustard ring-2 ring-mustard/60 bg-gradient-to-r from-mustard/[0.08] to-transparent shadow-md"
+                  : "border-line bg-white hover:border-teal/40 hover:shadow-sm"
               }`}
             >
               <div className="p-4 sm:p-5 flex items-center gap-3 sm:gap-4">
                 {/* Index / Visualizer */}
-                <div className="w-7 text-center shrink-0">
+                <div className="w-8 text-center shrink-0">
                   {isPlayingThis ? (
                     <div className="flex items-center justify-center gap-0.5 h-4">
-                      <span className="w-1 h-3 bg-teal rounded-full animate-pulse" />
-                      <span className="w-1 h-4 bg-mustard rounded-full animate-pulse [animation-delay:150ms]" />
-                      <span className="w-1 h-2 bg-teal rounded-full animate-pulse [animation-delay:300ms]" />
+                      <span className="w-1 h-3.5 bg-mustard rounded-full animate-bounce" />
+                      <span className="w-1 h-5 bg-teal rounded-full animate-bounce [animation-delay:150ms]" />
+                      <span className="w-1 h-2.5 bg-mustard rounded-full animate-bounce [animation-delay:300ms]" />
                     </div>
                   ) : (
                     <span className="text-xs font-mono font-bold text-teal/40">
@@ -352,10 +528,10 @@ export default function Songs() {
                   )}
                 </div>
 
-                {/* Thumbnail */}
+                {/* Thumbnail with quick Play overlay */}
                 <button
                   onClick={() => handlePlaySong(t)}
-                  className="relative w-14 h-11 sm:w-16 sm:h-12 rounded-lg overflow-hidden shrink-0 bg-teal/10 group cursor-pointer"
+                  className="relative w-16 h-12 sm:w-20 sm:h-14 rounded-xl overflow-hidden shrink-0 bg-[#0b2925] group cursor-pointer shadow-sm"
                   aria-label={`Play ${t.title}`}
                 >
                   {t.thumb ? (
@@ -370,20 +546,22 @@ export default function Songs() {
                     </span>
                   )}
                   <div
-                    className={`absolute inset-0 bg-black/40 flex items-center justify-center text-white transition-opacity ${
+                    className={`absolute inset-0 bg-black/45 flex items-center justify-center text-white transition-opacity ${
                       isPlayingThis ? "opacity-100" : "opacity-0 group-hover:opacity-100"
                     }`}
                   >
-                    <span className="text-xs font-bold">{isPlayingThis ? "❚❚" : "▶"}</span>
+                    <span className="text-xs font-black">{isPlayingThis ? "❚❚" : "▶"}</span>
                   </div>
                 </button>
 
-                {/* Titles & Artist */}
+                {/* Title & Artist & Category */}
                 <div className="min-w-0 flex-1 leading-snug">
                   <div className="flex flex-wrap items-baseline gap-1.5 sm:gap-2">
                     <h3
                       onClick={() => handlePlaySong(t)}
-                      className="text-sm sm:text-base font-bold text-teal hover:text-mustard cursor-pointer truncate"
+                      className={`text-sm sm:text-base font-bold cursor-pointer truncate transition ${
+                        isCurrent ? "text-teal" : "text-teal hover:text-mustard"
+                      }`}
                     >
                       {t.title}
                     </h3>
@@ -394,36 +572,42 @@ export default function Songs() {
                     )}
                   </div>
                   <div className="flex flex-wrap items-center gap-2 mt-1">
-                    <p className="text-xs text-teal/60 font-medium truncate">{t.artist}</p>
-                    <span className="text-[10px] chip !py-0.5 !px-2 bg-cream text-teal/70">
+                    <p className="text-xs text-teal/70 font-semibold truncate">{t.artist}</p>
+                    <span className="text-[10px] chip !py-0.5 !px-2 bg-cream text-teal/80 border-line">
                       {t.category}
                     </span>
                   </div>
                 </div>
 
-                {/* Action Buttons */}
+                {/* Actions */}
                 <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    onClick={() => handleCopyShare(t)}
+                    className="p-2 rounded-lg border border-line hover:border-teal text-teal/60 text-xs hidden sm:inline-block transition"
+                    title="Copy share link"
+                  >
+                    {copiedId === t.uid ? "✓" : "🔗"}
+                  </button>
+
                   {(t.meaning || t.lyric) && (
                     <button
-                      onClick={() =>
-                        setExpandedLyricId((prev) => (prev === t.uid ? null : t.uid))
-                      }
+                      onClick={() => setExpandedLyricId((prev) => (prev === t.uid ? null : t.uid))}
                       className={`text-xs px-2.5 py-1.5 rounded-lg border transition hidden sm:inline-block ${
                         isExpanded
                           ? "bg-cream border-teal/40 font-bold text-teal"
-                          : "border-line text-teal/60 hover:text-teal hover:bg-cream"
+                          : "border-line text-teal/70 hover:text-teal hover:bg-cream"
                       }`}
-                      title="View lyrics and meaning"
+                      title="Read lyrics and meaning"
                     >
-                      {isExpanded ? "Hide Words" : "Words"}
+                      {isExpanded ? "Hide" : "Lyrics & Meaning"}
                     </button>
                   )}
 
                   <button
                     onClick={() => handlePlaySong(t)}
-                    className={`btn !py-2 !px-4 text-xs font-bold flex items-center gap-1.5 transition ${
+                    className={`btn !py-2 !px-4 text-xs font-black flex items-center gap-1.5 transition ${
                       isPlayingThis
-                        ? "btn-accent shadow"
+                        ? "btn-accent shadow-md scale-105"
                         : "btn-primary hover:opacity-90"
                     }`}
                   >
@@ -432,20 +616,20 @@ export default function Songs() {
                 </div>
               </div>
 
-              {/* Expandable Words & Meaning Drawer */}
+              {/* Expandable Lyrics & English Meaning */}
               {isExpanded && (t.meaning || t.lyric) && (
-                <div className="px-5 py-4 bg-cream/60 border-t border-line text-xs text-teal/90 animate-fadeIn space-y-2">
+                <div className="px-5 py-4 bg-cream/70 border-t border-line text-xs text-teal/90 space-y-2 animate-fadeIn">
                   {t.lyric && (
                     <div>
-                      <span className="label text-[10px] text-teal/60">Lyric Line:</span>
-                      <p className="font-serif italic text-sm mt-0.5 text-teal">
+                      <span className="label text-[10px] text-teal/60">Sacred Folk Lyric:</span>
+                      <p className="font-serif italic text-sm mt-0.5 text-teal font-medium">
                         "{t.lyric}"
                       </p>
                     </div>
                   )}
                   {t.meaning && (
                     <div>
-                      <span className="label text-[10px] text-teal/60">English Meaning:</span>
+                      <span className="label text-[10px] text-teal/60">English Meaning & Significance:</span>
                       <p className="mt-0.5 leading-relaxed text-teal/80 font-medium">
                         {t.meaning}
                       </p>
@@ -459,23 +643,109 @@ export default function Songs() {
 
         {filteredTracks.length === 0 && (
           <div className="card text-center py-12">
-            <span className="text-3xl">🎵</span>
+            <span className="text-4xl">🪕</span>
             <h3 className="font-bold text-base mt-2 text-teal">No songs found</h3>
             <p className="text-xs text-teal/60 mt-1">
-              Try a different search word or clear the category filter.
+              Try searching by a different name, or paste a YouTube link to play it directly.
             </p>
-            <button
-              onClick={() => {
-                setSearch("");
-                setActiveCategory("all");
-              }}
-              className="btn btn-ghost text-xs !py-1.5 !px-4 mt-3"
-            >
-              Reset filters
-            </button>
+            <div className="flex justify-center gap-3 mt-4">
+              <button
+                onClick={() => {
+                  setSearch("");
+                  setActiveCategory("all");
+                }}
+                className="btn btn-ghost text-xs !py-1.5 !px-4"
+              >
+                Reset filters
+              </button>
+              <button
+                onClick={() => setShowAddModal(true)}
+                className="btn btn-primary text-xs !py-1.5 !px-4"
+              >
+                ➕ Add from YouTube
+              </button>
+            </div>
           </div>
         )}
-      </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* MODAL: ADD / PLAY ANY YOUTUBE CHHATH SONG                                  */}
+      {/* ========================================================================= */}
+      {showAddModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
+          <div className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl border border-line space-y-4">
+            <div className="flex items-center justify-between border-b border-line pb-3">
+              <div>
+                <h3 className="text-lg font-bold text-teal">Play Any YouTube Chhath Song</h3>
+                <p className="text-xs text-teal/60 mt-0.5">
+                  Paste any YouTube URL. It plays instantly and stays saved on your device.
+                </p>
+              </div>
+              <button
+                onClick={() => setShowAddModal(false)}
+                className="text-teal/50 hover:text-teal font-bold text-lg p-1"
+              >
+                ✕
+              </button>
+            </div>
+
+            <form onSubmit={handleAddCustomSong} className="space-y-3.5">
+              <div>
+                <label className="label text-[11px] mb-1 block">
+                  YouTube Link or Video ID <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. https://www.youtube.com/watch?v=... or youtu.be/..."
+                  value={customUrl}
+                  onChange={(e) => setCustomUrl(e.target.value)}
+                  className="input text-xs"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="label text-[11px] mb-1 block">Song Title (Optional)</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Kaanch Hi Baans"
+                    value={customTitle}
+                    onChange={(e) => setCustomTitle(e.target.value)}
+                    className="input text-xs"
+                  />
+                </div>
+                <div>
+                  <label className="label text-[11px] mb-1 block">Singer (Optional)</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Sharda Sinha"
+                    value={customArtist}
+                    onChange={(e) => setCustomArtist(e.target.value)}
+                    className="input text-xs"
+                  />
+                </div>
+              </div>
+
+              {addError && <p className="text-xs text-red-600 font-medium">{addError}</p>}
+
+              <div className="flex justify-end gap-2 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setShowAddModal(false)}
+                  className="btn btn-ghost text-xs !py-2 !px-4"
+                >
+                  Cancel
+                </button>
+                <button type="submit" className="btn btn-primary text-xs !py-2 !px-5 font-bold">
+                  ▶ Play & Save
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
