@@ -8,9 +8,28 @@ import Navbar from "../../components/Navbar";
 
 // Self-hosted fonts (next/font) — no runtime request to Google Fonts,
 // so no third-party IP leak and no render-blocking @import in CSS.
-const archivo = Archivo({ subsets: ["latin"], variable: "--font-archivo", display: "swap" });
-const newsreader = Newsreader({ subsets: ["latin"], style: ["normal", "italic"], weight: ["400", "500"], variable: "--font-newsreader", display: "swap" });
-const spaceMono = Space_Mono({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-spacemono", display: "swap" });
+// adjustFontFallback: false prevents Next.js from throwing TypeError during fallback metric calculation.
+const archivo = Archivo({
+  subsets: ["latin"],
+  variable: "--font-archivo",
+  display: "swap",
+  adjustFontFallback: false
+});
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  weight: ["400", "500"],
+  variable: "--font-newsreader",
+  display: "swap",
+  adjustFontFallback: false
+});
+const spaceMono = Space_Mono({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-spacemono",
+  display: "swap",
+  adjustFontFallback: false
+});
 
 export async function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
