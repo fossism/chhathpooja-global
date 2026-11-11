@@ -3,15 +3,41 @@ import { useState } from "react";
 import SunCompass from "./SunCompass";
 
 const CITIES = [
-  { name: "Patna", lat: 25.5941, lon: 85.1376 },
-  { name: "Delhi", lat: 28.6139, lon: 77.209 },
+  // Bihar & Purvanchal (Heartland)
+  { name: "Patna, Bihar", lat: 25.5941, lon: 85.1376 },
+  { name: "Gaya, Bihar", lat: 24.7955, lon: 85.0002 },
+  { name: "Muzaffarpur, Bihar", lat: 26.1209, lon: 85.3647 },
+  { name: "Bhagalpur, Bihar", lat: 25.2425, lon: 86.9842 },
+  { name: "Darbhanga, Bihar", lat: 26.1542, lon: 85.8918 },
+  { name: "Varanasi, UP", lat: 25.3176, lon: 82.9739 },
+  { name: "Gorakhpur, UP", lat: 26.7606, lon: 83.3732 },
+  { name: "Ranchi, Jharkhand", lat: 23.3441, lon: 85.3096 },
+  { name: "Jamshedpur, Jharkhand", lat: 22.8046, lon: 86.2029 },
+  { name: "Lucknow, UP", lat: 26.8467, lon: 80.9462 },
+  // Major Indian Metros
+  { name: "Delhi NCR", lat: 28.6139, lon: 77.209 },
   { name: "Mumbai", lat: 19.076, lon: 72.8777 },
   { name: "Kolkata", lat: 22.5726, lon: 88.3639 },
-  { name: "Janakpur", lat: 26.7288, lon: 85.9214 },
-  { name: "Kathmandu", lat: 27.7172, lon: 85.324 },
-  { name: "Edison, NJ", lat: 40.518, lon: -74.412 },
-  { name: "London", lat: 51.5074, lon: -0.1278 },
-  { name: "Dubai", lat: 25.2048, lon: 55.2708 }
+  { name: "Bengaluru", lat: 12.9716, lon: 77.5946 },
+  { name: "Hyderabad", lat: 17.385, lon: 78.4867 },
+  { name: "Surat", lat: 21.1702, lon: 72.8311 },
+  { name: "Ahmedabad", lat: 23.0225, lon: 72.5714 },
+  { name: "Pune", lat: 18.5204, lon: 73.8567 },
+  // Nepal
+  { name: "Janakpur, Nepal", lat: 26.7288, lon: 85.9214 },
+  { name: "Kathmandu, Nepal", lat: 27.7172, lon: 85.324 },
+  { name: "Birgunj, Nepal", lat: 27.0104, lon: 84.8774 },
+  // Global Diaspora
+  { name: "Edison, New Jersey (USA)", lat: 40.518, lon: -74.412 },
+  { name: "New York City (USA)", lat: 40.7128, lon: -74.006 },
+  { name: "San Francisco / Bay Area (USA)", lat: 37.7749, lon: -122.4194 },
+  { name: "Dallas, Texas (USA)", lat: 32.7767, lon: -96.797 },
+  { name: "Toronto, Canada", lat: 43.6532, lon: -79.3832 },
+  { name: "London, UK", lat: 51.5074, lon: -0.1278 },
+  { name: "Dubai, UAE", lat: 25.2048, lon: 55.2708 },
+  { name: "Singapore", lat: 1.3521, lon: 103.8198 },
+  { name: "Sydney, Australia", lat: -33.8688, lon: 151.2093 },
+  { name: "Port Louis, Mauritius", lat: -20.1609, lon: 57.5012 }
 ];
 
 export default function ArghyaFinder({ date }: { date: string }) {

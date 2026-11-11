@@ -1,6 +1,17 @@
 // Offline support: keep the festival shell working at the ghat with no signal.
-const CACHE = "chhath-v4";
-const CORE = ["/en", "/en/vidhi", "/en/ghats", "/en/calendar", "/icon.svg", "/manifest.json"];
+const CACHE = "chhath-v5";
+const CORE = [
+  "/en",
+  "/en/vidhi",
+  "/en/ghats",
+  "/en/calendar",
+  "/en/songs",
+  "/hi",
+  "/hi/vidhi",
+  "/hi/calendar",
+  "/icon.svg",
+  "/manifest.json"
+];
 
 // Same-origin paths that are safe to serve cache-first.
 const CACHEABLE = [
