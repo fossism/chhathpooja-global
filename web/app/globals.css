@@ -5,7 +5,7 @@
 /* Fonts are self-hosted via next/font (see app/[locale]/layout.tsx) —
    no Google Fonts @import, so no third-party request and no render block. */
 /* Theme: Teal #16564F · Mustard #E8B84B · Cream #FFF8F3 · White — Bodhya-style editorial */
-body { @apply bg-cream text-teal antialiased; font-family: var(--font-archivo), Archivo, system-ui, sans-serif; }
+html, body { @apply bg-cream text-teal antialiased; font-family: var(--font-archivo), Archivo, system-ui, sans-serif; overflow-x: hidden; max-width: 100vw; }
 
 .shell { @apply max-w-6xl mx-auto px-4 md:px-6; }
 
