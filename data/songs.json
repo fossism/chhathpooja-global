@@ -1,56 +1,110 @@
 [
   {
-    "id": "kosi-bharal",
-    "title": "Kosi Bharal",
-    "titleDevanagari": "कोसी भरल",
-    "meaning_en": "The kosi (earthen altar) is filled — invocation to Chhathi Maiya on Kharna night.",
-    "lyricsSnippet": "Kosi bharal Chhathi Maiya, geet gaila...",
-    "singerCredit": "Traditional folk",
-    "license": "CC-BY-SA (folk, public domain melody)"
+    "id": "ho-deenanath",
+    "title": "Ho Deenanath",
+    "titleDevanagari": "हो दीनानाथ",
+    "meaning_en": "The classic opening prayer to the Sun God — a request that the ghat be ready and the offering accepted.",
+    "lyricsSnippet": "हो दीनानाथ, ऐसो हे ऐसो हे करिले विनतिया, घाट सजि गइल बा हो...",
+    "singerCredit": "Padma Bhushan Sharda Sinha",
+    "license": "YouTube embed · T-Series Bhakti Sagar"
   },
   {
-    "id": "surya-arghya",
-    "title": "Uga Ho Suraj Dev",
-    "titleDevanagari": "उगा हो सूरज देव",
-    "meaning_en": "Rise, O Sun God — awaiting Usha Arghya at dawn.",
-    "lyricsSnippet": "Uga ho Suraj Dev, arghya lebo...",
-    "singerCredit": "Traditional folk",
-    "license": "CC-BY-SA (folk, public domain melody)"
-  },
-  {
-    "id": "chhathi-maiya",
-    "title": "Jai Chhathi Maiya",
-    "titleDevanagari": "जय छठी मैया",
-    "meaning_en": "Praise to Chhathi Maiya, protector of children and family.",
-    "lyricsSnippet": "Jai Jai Chhathi Maiya, sabke bhagya jagaila...",
-    "singerCredit": "Traditional folk",
-    "license": "CC-BY-SA (folk, public domain melody)"
-  },
-  {
-    "id": "kellwa-ke-paat",
-    "title": "Kellwa Ke Paat Par",
-    "titleDevanagari": "केलवा के पात पर",
-    "meaning_en": "Offerings laid on banana leaves — the classic Sandhya Arghya song.",
-    "lyricsSnippet": "Kellwa ke paat par, uge Suraj Mal...",
-    "singerCredit": "Traditional folk",
-    "license": "CC-BY-SA (folk, public domain melody)"
-  },
-  {
-    "id": "paat-na",
+    "id": "pahile-pahil-sharda",
     "title": "Pahile Pahil Chhathi Maiya",
     "titleDevanagari": "पहिले पहिल छठी मैया",
-    "meaning_en": "First salutations to Chhathi Maiya — sung while filling the daura.",
-    "lyricsSnippet": "Pahile pahil Chhathi Maiya ke, sat sat pranam...",
-    "singerCredit": "Traditional folk",
-    "license": "CC-BY-SA (folk, public domain melody)"
+    "meaning_en": "A first-time vrati asks Chhathi Maiya for forgiveness and blessings for the whole family.",
+    "lyricsSnippet": "पहिले पहिल हम कईनी, छठी मईया व्रत तोहर, करिहा क्षमा छठी मईया, भूल-चूक गलती हमार...",
+    "singerCredit": "Padma Bhushan Sharda Sinha",
+    "license": "YouTube embed · Worldwide Records Bhojpuri"
   },
   {
-    "id": "sooraj-saathe",
-    "title": "Suraj Sange Chhathi",
-    "titleDevanagari": "सूरज संगे छठी",
-    "meaning_en": "With the Sun, we worship Chhathi — evening vigil song.",
-    "lyricsSnippet": "Suraj sange Chhathi Maiya, deep jalaila...",
-    "singerCredit": "Traditional folk",
-    "license": "CC-BY-SA (folk, public domain melody)"
+    "id": "kelwa-ke-paat",
+    "title": "Kelwa Ke Paat Par",
+    "titleDevanagari": "केलवा के पात पर",
+    "meaning_en": "Offerings laid on banana leaves at sunset — the defining Sandhya Arghya song.",
+    "lyricsSnippet": "केलवा के पात पर उगे सूरज मल, झुकी झुकी मांगे अरघ के परनाम...",
+    "singerCredit": "Padma Bhushan Sharda Sinha",
+    "license": "YouTube embed · T-Series Bhakti Sagar"
+  },
+  {
+    "id": "aragh-ke-ber",
+    "title": "Aragh Ke Ber",
+    "titleDevanagari": "अरग के बेर",
+    "meaning_en": "The hour of arghya arrives; the vrati calls the sun to receive the offering.",
+    "lyricsSnippet": "अरग के बेर हो, अरग के बेर, सूरज मल के अरग के बेर...",
+    "singerCredit": "Padma Bhushan Sharda Sinha",
+    "license": "YouTube embed · Saregama Hum Bhojpuri"
+  },
+  {
+    "id": "jode-jode-supwa",
+    "title": "Jode Jode Supwa Tora Chadaibo",
+    "titleDevanagari": "जोड़े जोड़े सुपवा तोरा चढ़ाइबो",
+    "meaning_en": "Pairs of bamboo soops, coconuts and supari are carried to the ghat for the evening offering.",
+    "lyricsSnippet": "जोड़े जोड़े सुपवा तोरा चढ़ाइबो, छठी मैया...",
+    "singerCredit": "Kalpana Patowary",
+    "license": "YouTube embed · T-Series Bhakti Sagar"
+  },
+  {
+    "id": "kaanch-hi-baans",
+    "title": "Kaanch Hi Baans Ke Bahangiya",
+    "titleDevanagari": "काँच ही बाँस के बहंगिया",
+    "meaning_en": "The delicate bamboo bahangi bends under the weight of the daura as the family walks to the river.",
+    "lyricsSnippet": "काँच ही बाँस के बहंगिया, बहंगी लचकत जाए, बाट जे पूछे बटोरहिया...",
+    "singerCredit": "Anuradha Paudwal",
+    "license": "YouTube embed · T-Series Bhakti Sagar"
+  },
+  {
+    "id": "uga-hai-suraj-dev",
+    "title": "Uga Hai Suraj Dev",
+    "titleDevanagari": "उगा हो सूरज देव",
+    "meaning_en": "A dawn call to the rising sun — the first arghya of Usha Arghya.",
+    "lyricsSnippet": "उगा हो सूरज देव, भेल भिनसरवा...",
+    "singerCredit": "Anuradha Paudwal",
+    "license": "YouTube embed · T-Series Bhakti Sagar"
+  },
+  {
+    "id": "uthau-suruj-bhaile-bihaan",
+    "title": "Uthau Suruj Bhaile Bihaan",
+    "titleDevanagari": "उठउ सुरुज भइले बिहान",
+    "meaning_en": "Wake, O Sun; the vrati has waited all night with lamps and offerings.",
+    "lyricsSnippet": "उठउ सुरुज भइले बिहान, अरघ लेबे आइल बा...",
+    "singerCredit": "Padma Bhushan Sharda Sinha",
+    "license": "YouTube embed · T-Series Bhakti Sagar"
+  },
+  {
+    "id": "dukhwa-mitayin",
+    "title": "Dukhwa Mitayin Chhathi Maiya",
+    "titleDevanagari": "दुखवा मिटाईं छठी मैया",
+    "meaning_en": "A prayer to Chhathi Maiya to remove sorrow and increase happiness in the home.",
+    "lyricsSnippet": "दुखवा मिटाईं छठी मैया, सुखवा बढ़ाईं...",
+    "singerCredit": "Padma Bhushan Sharda Sinha",
+    "license": "YouTube embed · Sharda Sinha Official"
+  },
+  {
+    "id": "jode-jode-nariyal",
+    "title": "Jode Jode Nariyal",
+    "titleDevanagari": "जोड़े जोड़े नारियल",
+    "meaning_en": "Coconuts and offerings are paired and laid out for the mother goddess.",
+    "lyricsSnippet": "जोड़े जोड़े नारियल, जोड़े जोड़े सुपारी...",
+    "singerCredit": "Devi",
+    "license": "YouTube embed · T-Series Bhakti Sagar"
+  },
+  {
+    "id": "jai-chhathi-maiya",
+    "title": "Jai Chhathi Maiya",
+    "titleDevanagari": "जय छठी मैया",
+    "meaning_en": "A celebratory invocation of Chhathi Maiya, sung with the whole family.",
+    "lyricsSnippet": "जय छठी मैया, जय छठी मैया...",
+    "singerCredit": "Sonu Nigam, Pawan Singh & Khushboo Jain",
+    "license": "YouTube embed · GMJ - Global Music Junction - Bhojpuri"
+  },
+  {
+    "id": "kartik-mahina",
+    "title": "Kartik Mahina Hola Chhathi Maai",
+    "titleDevanagari": "कार्तिक महीना होला छठ के पुजनवा",
+    "meaning_en": "Kartik has come, and with it the month of Chhathi Maiya's worship.",
+    "lyricsSnippet": "कार्तिक महीना होला छठ के पुजनवा...",
+    "singerCredit": "Mona Singh",
+    "license": "YouTube embed · TARANG MUSIC"
   }
 ]

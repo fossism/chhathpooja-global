@@ -46,7 +46,7 @@ Practical solutions for devotees living in modern apartments or cold climates:
 - Substituting locally available citrus like pomelo or grapefruit for dabh nimbu.
 
 ### Traditional folk music archive
-Curated recordings of classic geet sung by Padma Bhushan Sharda Sinha, Anuradha Paudwal, Bharat Sharma Vyas, and folk masters. Includes original Bhojpuri and Maithili lyrics along with English meanings.
+A hand-picked set of iconic Chhathi Maiya geet, from Sharda Sinha's immortal hymns to the arghya songs families sing at the ghat. Every embed is verified to work, and each track includes its original Bhojpuri or Maithili lyric with an English meaning.
 
 ### Community photo wall
 A moderated space where diaspora families from around the world share their ghat arrangements, kosi setups, and festival memories.
