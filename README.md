@@ -31,6 +31,9 @@ A clear walkthrough of each day of the festival:
 3. Sandhya Arghya: Making fresh thekua, packing the bamboo daura, and offering the sunset arghya in waist-deep water. Night vigil with sugarcane kosi and earthen lamps.
 4. Usha Arghya and Parana: Pre-dawn gathering at the ghat, offering morning arghya to the rising sun, breaking the fast with ginger and raw milk, and sharing prasad.
 
+### Illustrated Gatha
+Why we stand in the river at dusk, told the way it is told in Bihar. Six short stories — Karna, Draupadi, Sita, Chhathi Maiya — with public-domain paintings, CC-licensed photographs of the festival, sourced readings and full image credits.
+
 ### Complete samagri list with photos
 A complete breakdown of items needed across the 4 days, organized into categories so families can prepare in advance:
 - Ritual vessels and containers: Bamboo soop (winnowing tray), bamboo daura (large head-basket), terracotta elephant (mitti ka hathi for kosi), brass or copper lota, kalash, thali, and clay diyas.

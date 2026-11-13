@@ -64,6 +64,56 @@ export default function Home({ params }: { params: { locale: string } }) {
         </figure>
       </section>
 
+      {/* Illustrated Gatha teaser */}
+      <section aria-labelledby="gatha-teaser" className="band bg-[#FBF3E9]">
+        <div className="shell grid items-center gap-10 md:grid-cols-2 md:gap-14">
+          <div>
+            <span className="marker">
+              <span className="marker-rule" />
+              The Gatha
+            </span>
+            <h2 id="gatha-teaser" className="headline mt-4 text-3xl leading-[1.1] md:text-4xl">
+              Why the first arghya goes to the{" "}
+              <em className="text-mustard">setting</em> sun
+            </h2>
+            <p className="mt-4 max-w-lg text-sm leading-relaxed text-teal/75 md:text-base">
+              Karna of Anga, Draupadi in the forest, Sita coming home. The
+              stories we carry down to the ghat, with old paintings and
+              photographs from the river.
+            </p>
+            <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[10px] uppercase tracking-[0.18em] text-teal/45">
+              <span>Six stories</span>
+              <span aria-hidden="true" className="h-px w-6 bg-teal/25" />
+              <span>6 min read</span>
+            </div>
+            <Link
+              href={`/${params.locale}/gatha`}
+              className="mt-6 inline-flex items-center gap-2 border-b border-teal/40 pb-1 text-sm font-bold text-teal transition-colors hover:border-mustard hover:text-mustard"
+            >
+              Read the Gatha <span aria-hidden="true">→</span>
+            </Link>
+          </div>
+
+          <div className="w-full max-w-sm justify-self-center md:justify-self-end">
+            <figure className="border border-line bg-white p-2.5 shadow-[12px_12px_0_0_rgba(232,184,75,0.35)] md:p-3">
+              <div className="relative aspect-square overflow-hidden bg-teal/5">
+                <Image
+                  src="/images/gatha/surya-mandala.jpg"
+                  alt="A geometric Surya mandala with the sun god at its centre, surrounded by planetary attendants"
+                  fill
+                  sizes="(max-width: 768px) 90vw, 40vw"
+                  className="object-cover"
+                />
+              </div>
+              <figcaption className="px-1 pb-1 pt-2.5 font-mono text-[10px] leading-relaxed text-teal/55">
+                A Surya mandala, Rajasthan, c. 18th century. The sun sits at the
+                centre of the planetary orbits.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
       {/* The 4 days */}
       <section className="band">
         <div className="shell">
