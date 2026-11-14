@@ -189,7 +189,8 @@ export default function Home({ params }: { params: { locale: string } }) {
             <p className="text-cream/70 mt-4 max-w-md">Crowdsourced ghats, photos from the diaspora, and songs your nani sang — all open data.</p>
             <div className="flex flex-wrap gap-3 mt-6">
               <Link href={`/${params.locale}/ghats`} className="btn btn--on-dark">Open ghat map</Link>
-              <Link href={`/${params.locale}/wall`} className="btn btn-accent">See global wall</Link>
+              <Link href={`/${params.locale}/prasad`} className="btn btn-accent">Prasad Seva</Link>
+              <Link href={`/${params.locale}/wall`} className="btn btn-ghost !text-cream !border-cream/40">Global wall</Link>
             </div>
           </div>
           <div className="grid grid-cols-3 gap-4">
