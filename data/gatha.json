@@ -1,0 +1,356 @@
+{
+  "meta": {
+    "readingTime": "6 min read",
+    "plates": "Six stories",
+    "regions": "Bihar · Mithila · Jharkhand · Nepal",
+    "note": "Chhath has no founder and no single book. The stories below are the ones most often told in Bihar. Another district will tell them another way, and that is all right."
+  },
+  "intro": {
+    "marker": "Gatha · छठ की गाथा",
+    "title": "What we carry to the ghat",
+    "subtitle": "The stories behind Chhath, told the way we tell them in Bihar.",
+    "paragraph": "Chhath is four days in Kartik, and most of it happens at the river. The rest is memory: a few old stories that families carry down to the ghat along with the soop and the sugarcane. These are the ones we tell."
+  },
+  "facts": [
+    {
+      "label": "The sixth day",
+      "value": "Shashthi",
+      "text": "Chhath is named for the sixth day of the waxing moon in Kartik."
+    },
+    {
+      "label": "Two offerings",
+      "value": "Dusk, then dawn",
+      "text": "Sandhya Arghya to the setting sun, Usha Arghya to the rising one."
+    },
+    {
+      "label": "No priest",
+      "value": "The family",
+      "text": "The ghat is the temple. The vrati is the one who keeps the fast."
+    }
+  ],
+  "chapters": [
+    {
+      "id": "surya",
+      "number": "01",
+      "kicker": "The sun",
+      "title": "The sun we can see",
+      "titleHi": "सूर्य, जो दिखते हैं",
+      "imageAspect": "square",
+      "image": {
+        "src": "/images/gatha/surya-mandala.jpg",
+        "alt": "A geometric Surya mandala with the sun god at its centre, surrounded by planetary attendants",
+        "caption": "A Surya mandala, Rajasthan, c. 18th century. The sun sits at the centre of the planetary orbits.",
+        "credit": "Public domain · Wikimedia Commons"
+      },
+      "body": [
+        "Long before any temple, there was the river and the sun. In Bihar the sun is not a picture in a book. It comes up over the Ganga, dries the paddy spread out on the road, and goes down behind the same water in the evening. We see it every day. Maybe that is why we can stand in front of it and hold up water.",
+        "Arghya is just that: water in both hands, a few flowers, a little rice. The sun takes it from everyone the same way."
+      ],
+      "note": "Surya is called Pratyaksha Devta, the god you can see.",
+      "inset": {
+        "src": "/images/gatha/surya-poster.jpg",
+        "alt": "Vintage chromolithograph of Surya standing on a seven-horse chariot inside a blazing golden orb",
+        "caption": "Surya on his seven-horse chariot. Ravi Varma Press chromolithograph."
+      }
+    },
+    {
+      "id": "karna",
+      "number": "02",
+      "kicker": "Karna",
+      "title": "The son who did not forget",
+      "titleHi": "अंग का कर्ण",
+      "imageAspect": "square",
+      "image": {
+        "src": "/images/gatha/karna-kurukshetra.jpg",
+        "alt": "Pahari painting of Karna seated in a golden chariot on the battlefield of Kurukshetra",
+        "caption": "Karna in his chariot at Kurukshetra, from a Pahari-school Mahabharata series.",
+        "credit": "Public domain · Wikimedia Commons"
+      },
+      "body": [
+        "Karna is the one we tell first. His mother was Kunti, still a girl when she called on the sun god and was given a son. She could not keep him. She put him in a basket and set it on the river, and a charioteer named Adhiratha found the child and raised him.",
+        "He grew up to be king of Anga, the land around Bhagalpur and Munger. He had little to thank the world for. Still, every morning before he went to court, he stood in the Ganga and offered water to his father.",
+        "People here say that is how Chhath began in Bihar. Not from a book. From a son who did not forget."
+      ],
+      "note": "Anga is the old name for the Bhagalpur and Munger belt."
+    },
+    {
+      "id": "draupadi",
+      "number": "03",
+      "kicker": "Draupadi",
+      "title": "Draupadi in the forest",
+      "titleHi": "द्रौपदी का व्रत",
+      "imageAspect": "portrait",
+      "image": {
+        "src": "/images/gatha/draupadi-pandavas.jpg",
+        "alt": "Ravi Varma Press print of Draupadi seated with the five Pandavas under a royal canopy",
+        "caption": "Draupadi with the Pandavas. Ravi Varma Press, c. 1910.",
+        "credit": "Public domain · Wikimedia Commons"
+      },
+      "body": [
+        "The Pandavas had lost their kingdom and were living in the forest. Draupadi had nothing left to give. The sage Dhaumya told her to worship the sun. She kept the fast of Kartik and stood in the water with her offering. After that, things changed for the Pandavas. They won the kingdom back.",
+        "In Ranchi, in Nagdi village, women still go to a spring instead of the river. They say that is where she stood."
+      ],
+      "note": "Nagdi is one of the few Chhath ghats that is not on a river."
+    },
+    {
+      "id": "sita",
+      "number": "04",
+      "kicker": "Sita",
+      "title": "Sita comes home",
+      "titleHi": "सीता का घर वापसी",
+      "imageAspect": "landscape",
+      "image": {
+        "src": "/images/gatha/sita-ayodhya.jpg",
+        "alt": "Kalighat painting of Rama, Sita and Lakshmana travelling home on a swan boat",
+        "caption": "Rama, Sita and Lakshmana return to Ayodhya. Kalighat school, 19th century.",
+        "credit": "Public domain · Wikimedia Commons"
+      },
+      "body": [
+        "After fourteen years in the forest, Ram and Sita came back to Ayodhya. Ram had killed Ravana, and the priests told him he must atone. In Mithila they say Sita kept the fast of Kartik Shashthi and offered water for that atonement.",
+        "In Munger there is a rock in the middle of the Ganga with her footprint on it. In Janakpur, where she was born, Chhath is the day a daughter comes home."
+      ],
+      "note": "The rock is called Sita Charan. It sits in the river at Munger."
+    },
+    {
+      "id": "chhathi-maiya",
+      "number": "05",
+      "kicker": "Chhathi Maiya",
+      "title": "The sixth day",
+      "titleHi": "छठी मैया",
+      "imageAspect": "portrait",
+      "image": {
+        "src": "/images/gatha/chhathi-maiya.jpg",
+        "alt": "Colourful folk murti of the goddess Shashthi holding a child, seated on a cat",
+        "caption": "Shashthi with the child Skanda. Folk murti from Bagbazar, Kolkata.",
+        "credit": "Arnab Dutta · CC BY-SA 4.0"
+      },
+      "body": [
+        "There was a king called Priyavrat and a queen called Malini. They had no child. They performed the yagya for a son, and a bowl of kheer rose out of the fire. The queen ate it and became pregnant.",
+        "The child was born dead. Malini ran to the river to end her life. A woman stopped her at the water and said: I am Devasena, the sixth. Worship me and the sun, and you will have a child. Malini did, and she was blessed.",
+        "That is Chhathi Maiya, the sixth form of Prakriti, the one who looks after children. In Bihar nobody calls her Shashthi. She is Maiya, the mother.",
+        "Women fast for their children. Then the children grow up and fast for their mother. You will see both at the same ghat, keeping the same fast."
+      ],
+      "note": "The story is told in the Brahmavaivarta Purana. Shashthi is also worshipped six days after a child is born."
+    },
+    {
+      "id": "bihar",
+      "number": "06",
+      "kicker": "Bihar",
+      "title": "Why here",
+      "titleHi": "बिहार क्यों",
+      "imageAspect": "landscape",
+      "image": {
+        "src": "/images/gatha/bihar-arghya.jpg",
+        "alt": "Women in orange and red saris holding bamboo soops filled with fruit and flowers at a Chhath ghat",
+        "caption": "Offerings of the first harvest, carried to the water in bamboo soops.",
+        "credit": "Goutam1962 · CC BY-SA 4.0"
+      },
+      "body": [
+        "By Kartik the rains are over and the water has come down. The fields are full. The first rice, the sugarcane, the coconut and the thekua go to the river before anyone eats them.",
+        "Chhath is the one festival where no priest is needed. The family keeps the fast, the family carries the daura, the family stands in the water. That is why it travels so well. From Patna to Janakpur to New Jersey, it is still done at home."
+      ],
+      "note": "The fast begins on Kartik Shukla Chaturthi and ends with Usha Arghya.",
+      "inset": {
+        "src": "/images/gatha/deo-sun-temple.jpg",
+        "alt": "Historic photograph of the stone Sun Temple at Deo in Aurangabad district, Bihar",
+        "caption": "The Sun Temple at Deo, Aurangabad — Bihar's own house of Surya. Photograph, 1860s."
+      }
+    }
+  ],
+  "epilogue": {
+    "id": "return",
+    "number": "07",
+    "kicker": "The promise",
+    "title": "The sun goes. The sun comes back.",
+    "titleHi": "लौटता सूरज",
+    "imageAspect": "portrait",
+    "image": {
+      "src": "/images/gatha/chhath-lamps.jpg",
+      "alt": "Clay lamps and offerings glowing on a Chhath ghat after dark, reflected in the river",
+      "caption": "Lamps and offerings on the ghat through the night.",
+      "credit": "Gaurav Dhwaj Khadka · CC BY-SA 4.0"
+    },
+    "body": [
+      "On Sandhya Arghya we offer to the sun as it goes down. Then the night on the ghat: lamps, songs, cardamom tea, somebody's baby asleep on a blanket, somebody's mother asleep sitting up.",
+      "At dawn the same sun comes back and the same hands lift the same soop. We offer water again.",
+      "For one night we wait for the sun to return. It always does. That is what we are thanking it for."
+    ]
+  },
+  "gallery": [
+    {
+      "src": "/images/gatha/janakpur.jpg",
+      "alt": "A dense crowd of devotees in bright saris standing in the Bagmati river at Janakpur, Nepal",
+      "caption": "Janakpur, where Sita was born. The Bagmati fills up for Chhath.",
+      "credit": "Steffen Gauger · CC BY-SA 3.0",
+      "span": "wide"
+    },
+    {
+      "src": "/images/gatha/bhagalpur-arghya.jpg",
+      "alt": "A vast crowd of devotees along the Ganga at Barani Ghat in Bhagalpur, Bihar",
+      "caption": "Barani Ghat, Bhagalpur, on the morning of Usha Arghya.",
+      "credit": "Vkumarv · CC BY-SA 4.0",
+      "span": "tall"
+    },
+    {
+      "src": "/images/gatha/thekua.jpg",
+      "alt": "Four golden thekua cookies stacked on a white plate",
+      "caption": "Thekua. Wheat, jaggery and ghee, made a few days before.",
+      "credit": "Nitish12345kumar · CC BY-SA 4.0"
+    },
+    {
+      "src": "/images/gatha/offerings.jpg",
+      "alt": "Bamboo soops, bananas, coconuts and clay lamps arranged on the ground for Chhath",
+      "caption": "Soop, sugarcane, coconut, and the first of the harvest.",
+      "credit": "Shivendujha · CC BY-SA 4.0"
+    },
+    {
+      "src": "/images/gatha/women-yamuna.jpg",
+      "alt": "Three women in red and yellow saris standing in the Yamuna river during Chhath in Delhi",
+      "caption": "The Yamuna in Delhi. The festival travels with the people who keep it.",
+      "credit": "Goutam1962 · CC BY-SA 4.0"
+    },
+    {
+      "src": "/images/gatha/bhagalpur-ghat.jpg",
+      "alt": "Devotees gathered on the steps of Narayanpur Ganga Ghat in Bhagalpur district",
+      "caption": "Narayanpur Ghat, Bhagalpur. No temple, no priest.",
+      "credit": "Biharpro7252 · CC BY-SA 4.0",
+      "span": "wide"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Britannica — Chhath Puja",
+      "url": "https://www.britannica.com/topic/Chhath-Puja",
+      "note": "History, deities and the Ushas connection."
+    },
+    {
+      "title": "Sahapedia — Chhath Puja: Origin of the Festival, and the Story of Devasena",
+      "url": "https://www.sahapedia.org/chhath-puja-origin-of-the-festival-and-the-story-of-devasena",
+      "note": "Karna, Sita, Draupadi and the Shashthi traditions."
+    },
+    {
+      "title": "Wikipedia — Chhath",
+      "url": "https://en.wikipedia.org/wiki/Chhath",
+      "note": "Regional tellings, including Munger and Ranchi."
+    },
+    {
+      "title": "News18 — Who is Chhathi Maiya?",
+      "url": "https://www.news18.com/lifestyle/spirituality/chhath-puja-2026-who-is-chhathi-maiya-know-the-story-history-and-significance-ws-r-10420847.html",
+      "note": "Shashthi as the sixth form of Prakriti."
+    }
+  ],
+  "credits": [
+    {
+      "title": "Chhath Puja (Morning)",
+      "artist": "Sntshkumar750",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "page": "https://commons.wikimedia.org/wiki/File:Chhath_Puja_%28Morning%29.jpg"
+    },
+    {
+      "title": "Mandala of the Sun God Surya",
+      "artist": "Kitaharasa (attr.)",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "page": "https://commons.wikimedia.org/wiki/File:Mandala_of_the_Sun_God_Surya.jpg"
+    },
+    {
+      "title": "Surya poster",
+      "artist": "Raja Ravi Varma Press",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "page": "https://commons.wikimedia.org/wiki/File:Surya_poster.jpg"
+    },
+    {
+      "title": "Karna in Kurukshetra",
+      "artist": "Pahari school; derivative by RajeshUnuppally",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "page": "https://commons.wikimedia.org/wiki/File:Karna_in_Kurukshetra.jpg"
+    },
+    {
+      "title": "The Pandavas and Draupadi",
+      "artist": "Ravi Varma Press, c. 1910",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "page": "https://commons.wikimedia.org/wiki/File:The_Pandavas_and_Draupadi%2C_from_the_Ravi_Varma_Press%2C_c.1910.jpg"
+    },
+    {
+      "title": "Rama and Sita, with Lakshmana returning to Ayodhya",
+      "artist": "Anonymous, Kalighat school",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "page": "https://commons.wikimedia.org/wiki/File:Rama_and_Sita%2C_with_Lakshmana_returning_to_Ayodhya.jpg"
+    },
+    {
+      "title": "Shashthi",
+      "artist": "Arnab Dutta",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "page": "https://commons.wikimedia.org/wiki/File:Shashthi_Arnab_Dutta.jpg"
+    },
+    {
+      "title": "Offering Arghya in the Chhath Celebrations",
+      "artist": "Goutam1962",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "page": "https://commons.wikimedia.org/wiki/File:Offering_Arghya_in_the_Chhath_Celebrations.jpg"
+    },
+    {
+      "title": "Chhath Parba",
+      "artist": "Gaurav Dhwaj Khadka",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "page": "https://commons.wikimedia.org/wiki/File:Chhath_Parba.jpg"
+    },
+    {
+      "title": "Janakpur Chhath Parva Festival",
+      "artist": "Steffen Gauger",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "page": "https://commons.wikimedia.org/wiki/File:JanakpurChhathParvaFestival.jpg"
+    },
+    {
+      "title": "Barani Ghat, Bhagalpur — Chhath morning arghya",
+      "artist": "Vkumarv",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "page": "https://commons.wikimedia.org/wiki/File:Barani_Ghat%28Vikaramshila_Setu%2C_Bhagalpur%29_Chhath_Puja_Morning_Arghya.JPG"
+    },
+    {
+      "title": "Narayanpur Ganga Ghat, Bhagalpur",
+      "artist": "Biharpro7252",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "page": "https://commons.wikimedia.org/wiki/File:Narayanpur_Ganga_Ghat%2C_Chhath_Puja%2CBhagalpur_district.jpg"
+    },
+    {
+      "title": "Thekua Prasadam of Chhath Puja",
+      "artist": "Nitish12345kumar",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "page": "https://commons.wikimedia.org/wiki/File:Thekua_Prasadam_of_Chhath_Puja.jpg"
+    },
+    {
+      "title": "Chhath offerings on the riverbank",
+      "artist": "Shivendujha",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "page": "https://commons.wikimedia.org/wiki/File:Chhath_.jpg"
+    },
+    {
+      "title": "Women observing Chhath vrat at Yamuna, Delhi",
+      "artist": "Goutam1962",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "page": "https://commons.wikimedia.org/wiki/File:Women_Observing_Chhath_Vrat_at_Yamuna_Delhi.jpg"
+    },
+    {
+      "title": "Temple of Deo, Bihar",
+      "artist": "Thomas Fraser Peppé, 1860s",
+      "license": "Public domain",
+      "licenseUrl": "",
+      "page": "https://commons.wikimedia.org/wiki/File:Temple_of_Deo%2C_Bihar_-_DPLA_-_0043d975074ca16392d22536a024b6a8.jpg"
+    }
+  ]
+}

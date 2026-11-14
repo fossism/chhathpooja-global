@@ -7,7 +7,7 @@ const LAST_MODIFIED = new Date("2026-10-01");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://chhathmahaparv.org";
-  const pages = ["", "/calendar", "/vidhi", "/ghats", "/ask", "/wall", "/songs", "/kids", "/about"];
+  const pages = ["", "/calendar", "/vidhi", "/gatha", "/ghats", "/ask", "/wall", "/songs", "/kids", "/about"];
   return locales.flatMap((l) =>
     pages.map((p) => ({ url: `${base}/${l}${p}`, lastModified: LAST_MODIFIED }))
   );

@@ -128,6 +128,7 @@ export default function LocaleLayout({ children, params }: { children: React.Rea
             <p className="label mb-2">Site</p>
             <Link className="block py-0.5 hover:underline" href={`/${params.locale}/ask`}>Chhath Sahayak</Link>
             <Link className="block py-0.5 hover:underline" href={`/${params.locale}/vidhi`}>Vidhi guide</Link>
+            <Link className="block py-0.5 hover:underline" href={`/${params.locale}/gatha`}>Illustrated Gatha</Link>
             <Link className="block py-0.5 hover:underline" href={`/${params.locale}/calendar`}>Calendar</Link>
             <Link className="block py-0.5 hover:underline" href={`/${params.locale}/songs`}>Folk archive</Link>
             <Link className="block py-0.5 hover:underline" href={`/${params.locale}/kids`}>Kids mode</Link>
