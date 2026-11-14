@@ -29,7 +29,7 @@ export default function Home({ params }: { params: { locale: string } }) {
             </h1>
             <p className="text-teal/70 mt-4 max-w-md">{m.heroSubtitle}</p>
             <div className="flex flex-wrap gap-3 mt-6">
-              <Link href={`/${params.locale}/vidhi`} className="btn btn-primary">Start Vidhi</Link>
+              <Link href={`/${params.locale}/gatha`} className="btn btn-primary">Know Gatha</Link>
               <Link href={`/${params.locale}/ghats`} className="btn btn-ghost">Find ghats</Link>
             </div>
             <div className="flex flex-wrap gap-2 mt-6 text-xs">
@@ -68,10 +68,7 @@ export default function Home({ params }: { params: { locale: string } }) {
       <section aria-labelledby="gatha-teaser" className="band bg-[#FBF3E9]">
         <div className="shell grid items-center gap-10 md:grid-cols-2 md:gap-14">
           <div>
-            <span className="marker">
-              <span className="marker-rule" />
-              The Gatha
-            </span>
+            <span className="marker">The Gatha</span>
             <h2 id="gatha-teaser" className="headline mt-4 text-3xl leading-[1.1] md:text-4xl">
               Why the first arghya goes to the{" "}
               <em className="text-mustard">setting</em> sun
