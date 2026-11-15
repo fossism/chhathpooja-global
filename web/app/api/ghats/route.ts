@@ -1,5 +1,6 @@
 import { getGhats } from "../../../lib/chhath";
 import { sbInsert, supabaseConfigured } from "../../../lib/supabase";
+import { verifyPowChallenge } from "../../../lib/pow-server";
 
 const IPV4_RE = /^(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}$/;
 const IPV6_RE = /^[0-9a-fA-F:]{2,39}$/;
@@ -102,6 +103,15 @@ export async function POST(req: Request) {
   } catch {
     return Response.json({ error: "Invalid JSON." }, { status: 400 });
   }
+
+  // Anti-spam Proof-of-Work check
+  if (!verifyPowChallenge(body.pow)) {
+    return Response.json(
+      { error: "Anti-spam proof-of-work challenge failed or expired. Please retry." },
+      { status: 403 }
+    );
+  }
+
   const name = clean(body.name, 80);
   const city = clean(body.city, 60);
   const country = clean(body.country || "India", 60);

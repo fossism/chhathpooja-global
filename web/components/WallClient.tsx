@@ -86,6 +86,71 @@ function createThumbnail(file: File, maxWidth = 480, quality = 0.75): Promise<st
   });
 }
 
+// Native IndexedDB helper with zero runtime dependencies (super lightweight & quota-free)
+const DB_NAME = "chhath_wall_db";
+const STORE_NAME = "wall_posts";
+const DB_VERSION = 1;
+
+function openWallDB(): Promise<IDBDatabase | null> {
+  if (typeof window === "undefined" || !window.indexedDB) {
+    return Promise.resolve(null);
+  }
+  return new Promise((resolve) => {
+    try {
+      const request = window.indexedDB.open(DB_NAME, DB_VERSION);
+      request.onupgradeneeded = () => {
+        const db = request.result;
+        if (!db.objectStoreNames.contains(STORE_NAME)) {
+          db.createObjectStore(STORE_NAME, { keyPath: "id" });
+        }
+      };
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => resolve(null);
+    } catch {
+      resolve(null);
+    }
+  });
+}
+
+async function savePostToIDB(post: Post): Promise<void> {
+  const db = await openWallDB();
+  if (!db) return;
+  return new Promise((resolve) => {
+    try {
+      const tx = db.transaction(STORE_NAME, "readwrite");
+      const store = tx.objectStore(STORE_NAME);
+      store.put(post);
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => resolve();
+    } catch {
+      resolve();
+    }
+  });
+}
+
+async function loadPostsFromIDB(): Promise<Post[]> {
+  const db = await openWallDB();
+  if (!db) return [];
+  return new Promise((resolve) => {
+    try {
+      const tx = db.transaction(STORE_NAME, "readonly");
+      const store = tx.objectStore(STORE_NAME);
+      const req = store.getAll();
+      req.onsuccess = () => {
+        const res = req.result;
+        if (Array.isArray(res)) {
+          resolve(res.reverse());
+        } else {
+          resolve([]);
+        }
+      };
+      req.onerror = () => resolve([]);
+    } catch {
+      resolve([]);
+    }
+  });
+}
+
 export default function WallClient() {
   const [posts, setPosts] = useState<Post[]>(SEED);
   const [filter, setFilter] = useState("All");
@@ -99,30 +164,47 @@ export default function WallClient() {
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [justSubmitted, setJustSubmitted] = useState(false);
 
-  // Load user posts safely from localStorage on mount with strict schema validation
+  // Load user posts safely from IndexedDB with localStorage fallback
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem("chhath_wall_user_posts");
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed)) {
-          const validPosts: Post[] = parsed.filter(
-            (p): p is Post =>
-              Boolean(p) &&
-              typeof p.id === "string" &&
-              typeof p.city === "string" &&
-              typeof p.country === "string" &&
-              typeof p.text === "string" &&
-              (p.img === undefined || (typeof p.img === "string" && p.img.startsWith("data:image/")))
-          );
-          if (validPosts.length > 0) {
-            setPosts([...validPosts, ...SEED]);
+    let active = true;
+    async function initPosts() {
+      // 1. Try persistent IndexedDB first (quota-free)
+      const idbPosts = await loadPostsFromIDB();
+      if (!active) return;
+      if (idbPosts.length > 0) {
+        setPosts([...idbPosts, ...SEED]);
+        return;
+      }
+
+      // 2. Fallback to localStorage and migrate to IDB
+      try {
+        const saved = localStorage.getItem("chhath_wall_user_posts");
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed)) {
+            const validPosts: Post[] = parsed.filter(
+              (p): p is Post =>
+                Boolean(p) &&
+                typeof p.id === "string" &&
+                typeof p.city === "string" &&
+                typeof p.country === "string" &&
+                typeof p.text === "string" &&
+                (p.img === undefined || (typeof p.img === "string" && p.img.startsWith("data:image/")))
+            );
+            if (validPosts.length > 0) {
+              setPosts([...validPosts, ...SEED]);
+              validPosts.forEach((p) => savePostToIDB(p));
+            }
           }
         }
+      } catch {
+        // Ignore localStorage errors
       }
-    } catch {
-      // Ignore localStorage errors
     }
+    initPosts();
+    return () => {
+      active = false;
+    };
   }, []);
 
   function clearPendingImg() {
@@ -195,7 +277,10 @@ export default function WallClient() {
     const updated = [newPost, ...posts];
     setPosts(updated);
 
-    // Save only user's local posts to localStorage, capped to latest 10 to avoid quota exhaustion
+    // Persist full post to IndexedDB (virtually unlimited quota)
+    savePostToIDB(newPost);
+
+    // Also backup capped recent items to localStorage for private browsing fallback
     try {
       const existingUserPosts: Post[] = JSON.parse(localStorage.getItem("chhath_wall_user_posts") || "[]");
       const capped = [newPost, ...existingUserPosts.filter((p) => Boolean(p) && typeof p === "object")].slice(0, 10);

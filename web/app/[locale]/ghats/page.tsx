@@ -2,6 +2,7 @@
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { getGhats } from "../../../lib/chhath";
+import { solvePowChallenge } from "../../../lib/pow-client";
 
 const Map = dynamic(() => import("../../../components/GhatMap"), { ssr: false });
 
@@ -64,13 +65,18 @@ export default function GhatsPage() {
     // Best-effort backend queue: works offline-first even with no Supabase.
     setSending(true);
     try {
+      const pow = await solvePowChallenge();
       const r = await fetch("/api/ghats", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, city, country })
+        body: JSON.stringify({ name, city, country, pow })
       });
       const j = await r.json().catch(() => null);
-      setNotice(j?.note ?? (r.ok ? "Submitted." : "Saved as local preview."));
+      if (!r.ok && j?.error) {
+        setFormError(j.error);
+      } else {
+        setNotice(j?.note ?? (r.ok ? "Submitted." : "Saved as local preview."));
+      }
     } catch {
       setNotice("Saved as local preview (offline). It will sync when you submit with connection.");
     } finally {

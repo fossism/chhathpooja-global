@@ -45,6 +45,33 @@ export default function ArghyaFinder({ date }: { date: string }) {
   const [res, setRes] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  async function handleShare() {
+    if (!res) return;
+    const shareData = {
+      title: "Chhath Mahaparv Arghya Timings",
+      text: `Chhath Mahaparv Arghya Timings (${city.name}):\n🌅 Usha Arghya (Sunrise): ${res.sunrise ?? "—"}\n🌇 Sandhya Arghya (Sunset): ${res.sunset ?? "—"}\nJai Chhathi Maiya!`,
+      url: typeof window !== "undefined" ? window.location.href : "https://chhathpooja-global.vercel.app"
+    };
+
+    if (typeof navigator !== "undefined" && navigator.share) {
+      try {
+        await navigator.share(shareData);
+        return;
+      } catch (err: any) {
+        if (err?.name === "AbortError") return;
+      }
+    }
+
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      try {
+        await navigator.clipboard.writeText(`${shareData.text}\n${shareData.url}`);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2500);
+      } catch {}
+    }
+  }
 
   async function fetchTime(lat: number, lon: number) {
     setLoading(true);
@@ -121,6 +148,16 @@ export default function ArghyaFinder({ date }: { date: string }) {
           {Number.isFinite(Number(res.lat)) && res.date && (
             <SunCompass lat={Number(res.lat)} date={String(res.date)} />
           )}
+          <button
+            onClick={handleShare}
+            className="btn btn-ghost w-full mt-3 !py-2 text-xs font-bold inline-flex items-center justify-center gap-2 border-line hover:border-teal/40"
+            title="Share Arghya timings with family"
+          >
+            <svg className="w-4 h-4 text-mustard" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+            </svg>
+            <span>{copied ? "✓ Copied Timings to Clipboard!" : "Share Arghya Timings"}</span>
+          </button>
         </div>
       ) : (
         !error && <p className="text-sm text-teal/70 mt-3">Pick a city — powered by Open-Meteo, no key needed.</p>

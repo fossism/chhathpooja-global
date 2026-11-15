@@ -6,6 +6,7 @@ module.exports = {
       colors: {
         teal: "#16564F",
         mustard: "#E8B84B",
+        "amber-contrast": "#9A6600",
         cream: "#FFF8F3",
         label: "#16564F",
         line: "#E4DAD4"

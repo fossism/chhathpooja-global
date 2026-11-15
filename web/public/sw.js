@@ -1,5 +1,5 @@
 // Offline support: keep the festival shell working at the ghat with no signal.
-const CACHE = "chhath-v6";
+const CACHE = "chhath-v7";
 const CORE = [
   "/en",
   "/en/vidhi",
@@ -9,7 +9,11 @@ const CORE = [
   "/hi",
   "/hi/vidhi",
   "/hi/calendar",
-  "/icon.svg",
+  "/bho",
+  "/mai",
+  "/ne",
+  "/icon.svg?v=2",
+  "/icon-192.png?v=2",
   "/manifest.json"
 ];
 
@@ -68,10 +72,19 @@ self.addEventListener("fetch", (e) => {
   // Never intercept or cache HMR or development hot-updates
   if (url.pathname.includes("hot-update") || url.pathname.includes("webpack")) return;
 
-  // Navigations: network first, cached /en shell when offline.
+  // Navigations: network first, cached locale shell when offline.
   if (req.mode === "navigate") {
     // @ts-ignore
-    e.respondWith(fetch(req).catch(() => caches.match("/en")));
+    e.respondWith(
+      fetch(req).catch(async () => {
+        const seg = url.pathname.split("/")[1] || "en";
+        const matched = await caches.match(`/${seg}`);
+        if (matched) return matched;
+        const fallbackEn = await caches.match("/en");
+        if (fallbackEn) return fallbackEn;
+        return caches.match("/");
+      })
+    );
     return;
   }
 

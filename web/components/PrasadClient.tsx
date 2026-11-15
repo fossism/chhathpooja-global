@@ -1,7 +1,15 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import { PrasadListing, PrasadCategory, getInitialPrasadListings, generateWhatsAppLink } from "../lib/prasad";
+import {
+  PrasadListing,
+  PrasadCategory,
+  getInitialPrasadListings,
+  generateWhatsAppLink,
+  generateTelegramLink,
+  isValidPhoneNumber,
+  isValidTelegramHandle
+} from "../lib/prasad";
 
 const CATEGORIES: { id: PrasadCategory; label: string }[] = [
   { id: "all", label: "All Cities & Posts" },
@@ -47,8 +55,10 @@ export default function PrasadClient() {
   const [formPickupMode, setFormPickupMode] = useState("Walk-in Seva Desk (No Phone Needed)");
   const [formQuantity, setFormQuantity] = useState("");
   const [formTiming, setFormTiming] = useState("Nov 15 (Sandhya Arghya) & Nov 16 (Usha Arghya)");
-  const [formContactType, setFormContactType] = useState<"walkin" | "whatsapp">("walkin");
+  const [formContactType, setFormContactType] = useState<"walkin" | "whatsapp" | "telegram">("walkin");
   const [formPhone, setFormPhone] = useState("");
+  const [formTelegram, setFormTelegram] = useState("");
+  const [phoneConsent, setPhoneConsent] = useState(false);
   const [formNotes, setFormNotes] = useState("");
   const [pledgeAccepted, setPledgeAccepted] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
@@ -115,6 +125,24 @@ export default function PrasadClient() {
       return;
     }
 
+    if (formContactType === "whatsapp") {
+      if (!isValidPhoneNumber(formPhone)) {
+        setFormError("Please enter a valid 10-15 digit phone number for WhatsApp coordination.");
+        return;
+      }
+      if (!phoneConsent) {
+        setFormError("Please confirm phone ownership and consent to WhatsApp inquiries.");
+        return;
+      }
+    }
+
+    if (formContactType === "telegram") {
+      if (!isValidTelegramHandle(formTelegram)) {
+        setFormError("Please enter a valid Telegram username (e.g. @your_handle).");
+        return;
+      }
+    }
+
     const defaultAudience = formType === "offer"
       ? "Students, soldiers, workers & devotees away from home"
       : "Hostel students & devotees hoping to receive holy prasad";
@@ -133,7 +161,8 @@ export default function PrasadClient() {
       quantityNote: formQuantity.trim(),
       availableFrom: formTiming.trim() || "Nov 15 Sandhya Arghya & Nov 16 Usha Arghya",
       contactType: formContactType,
-      phone: formContactType === "whatsapp" ? formPhone.trim() : "",
+      phone: formContactType === "whatsapp" ? formPhone.trim() : undefined,
+      telegram: formContactType === "telegram" ? formTelegram.replace(/^@/, "").trim() : undefined,
       notes: formNotes.trim(),
       verified: true,
       createdAt: new Date().toISOString(),
@@ -158,7 +187,10 @@ export default function PrasadClient() {
     setFormLandmark("");
     setFormTargetAudience("");
     setFormQuantity("");
+    setFormContactType("walkin");
     setFormPhone("");
+    setFormTelegram("");
+    setPhoneConsent(false);
     setFormNotes("");
     setPledgeAccepted(false);
   };
@@ -604,7 +636,7 @@ export default function PrasadClient() {
                     <span>Walk-in Directions</span>
                   </button>
 
-                  {listing.phone && (
+                  {listing.phone && generateWhatsAppLink(listing) && (
                     <a
                       href={generateWhatsAppLink(listing)}
                       target="_blank"
@@ -616,6 +648,21 @@ export default function PrasadClient() {
                         <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
                       </svg>
                       <span>WhatsApp</span>
+                    </a>
+                  )}
+
+                  {listing.telegram && generateTelegramLink(listing) && (
+                    <a
+                      href={generateTelegramLink(listing)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-[#229ED9]/10 text-[#006699] font-bold text-xs hover:bg-[#229ED9]/20 transition"
+                      title="Telegram Contact"
+                    >
+                      <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.52 2.77-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z" />
+                      </svg>
+                      <span>Telegram</span>
                     </a>
                   )}
 
@@ -954,6 +1001,100 @@ export default function PrasadClient() {
                     className="w-full py-1.5 px-3 rounded-lg border border-line bg-white text-teal placeholder:text-teal/35 focus:ring-2 focus:ring-teal/20"
                   />
                 </div>
+              </div>
+
+              {/* Contact / Coordination Channel */}
+              <div className="space-y-2">
+                <label className="block font-bold text-teal text-xs">
+                  Contact / Coordination Mode *
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setFormContactType("walkin")}
+                    className={`p-2 rounded-xl border text-left text-xs transition ${
+                      formContactType === "walkin"
+                        ? "bg-teal/10 border-teal text-teal font-bold"
+                        : "bg-white border-line text-teal/70 hover:border-teal/30"
+                    }`}
+                  >
+                    <div className="font-bold">Walk-in Desk</div>
+                    <div className="text-[10px] text-teal/60 font-normal">Zero phone exposure</div>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setFormContactType("telegram")}
+                    className={`p-2 rounded-xl border text-left text-xs transition ${
+                      formContactType === "telegram"
+                        ? "bg-[#229ED9]/15 border-[#229ED9] text-[#006699] font-bold"
+                        : "bg-white border-line text-teal/70 hover:border-teal/30"
+                    }`}
+                  >
+                    <div className="font-bold">Telegram</div>
+                    <div className="text-[10px] text-teal/60 font-normal">@handle (Pseudonymous)</div>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setFormContactType("whatsapp")}
+                    className={`p-2 rounded-xl border text-left text-xs transition ${
+                      formContactType === "whatsapp"
+                        ? "bg-[#25D366]/15 border-[#25D366] text-[#128C7E] font-bold"
+                        : "bg-white border-line text-teal/70 hover:border-teal/30"
+                    }`}
+                  >
+                    <div className="font-bold">WhatsApp</div>
+                    <div className="text-[10px] text-teal/60 font-normal">Direct devotee phone</div>
+                  </button>
+                </div>
+
+                {formContactType === "whatsapp" && (
+                  <div className="p-3 bg-amber-50/70 rounded-xl border border-mustard/30 space-y-2">
+                    <div>
+                      <label className="block font-semibold text-teal text-xs mb-1">
+                        Devotee Phone / WhatsApp Number *
+                      </label>
+                      <input
+                        type="tel"
+                        value={formPhone}
+                        onChange={(e) => setFormPhone(e.target.value)}
+                        placeholder="e.g. 9876543210 (10-15 digits)"
+                        className="w-full py-1.5 px-3 rounded-lg border border-line bg-white text-teal placeholder:text-teal/35 text-xs focus:ring-2 focus:ring-teal/20"
+                        required
+                      />
+                    </div>
+                    <label className="flex items-start gap-2 text-[10px] text-teal/80 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={phoneConsent}
+                        onChange={(e) => setPhoneConsent(e.target.checked)}
+                        className="mt-0.5 rounded text-teal focus:ring-teal"
+                        required
+                      />
+                      <span>
+                        <strong>Anti-Harassment Shield:</strong> I confirm this is my own active phone number and agree to receive respectful prasad coordination inquiries.
+                      </span>
+                    </label>
+                  </div>
+                )}
+
+                {formContactType === "telegram" && (
+                  <div className="p-3 bg-sky-50/70 rounded-xl border border-sky-200 space-y-1">
+                    <label className="block font-semibold text-teal text-xs mb-1">
+                      Telegram Username *
+                    </label>
+                    <input
+                      type="text"
+                      value={formTelegram}
+                      onChange={(e) => setFormTelegram(e.target.value)}
+                      placeholder="@your_username"
+                      className="w-full py-1.5 px-3 rounded-lg border border-line bg-white text-teal placeholder:text-teal/35 text-xs focus:ring-2 focus:ring-teal/20"
+                      required
+                    />
+                    <p className="text-[10px] text-teal/65">
+                      Devotees can message your Telegram handle directly without learning your personal phone number.
+                    </p>
+                  </div>
+                )}
               </div>
 
               {/* Pavitrata Pledge */}

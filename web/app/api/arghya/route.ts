@@ -1,3 +1,5 @@
+import { calculateAstronomicalTimes } from "../../../lib/sun";
+
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const IPV4_RE = /^(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}$/;
 const IPV6_RE = /^[0-9a-fA-F:]{2,39}$/;
@@ -127,15 +129,17 @@ export async function GET(req: Request) {
   const safeLon = Math.round(lon * 10000) / 10000;
 
   // Open-Meteo forecast only covers ~16 days ahead. Far-future festival
-  // dates return empty daily arrays, so detect nulls and fall back.
+  // dates return empty daily arrays, or if the API is offline/rate-limited,
+  // we compute accurate astronomical sunrise/sunset for user coordinates using NOAA equations.
+  const astroFallback = calculateAstronomicalTimes(safeLat, safeLon, dateRaw);
   const fallback = {
-    sunrise: "06:10",
-    sunset: "17:25",
+    sunrise: astroFallback.sunrise,
+    sunset: astroFallback.sunset,
     date: dateRaw,
     lat: safeLat,
     lon: safeLon,
     fallback: true,
-    note: "No forecast for this date yet — showing Patna estimate. Confirm with local Panchang."
+    note: "Calculated via offline astronomical solar equations for your coordinates."
   };
   try {
     const url =
