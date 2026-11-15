@@ -176,6 +176,22 @@ export default function Home({ params }: { params: { locale: string } }) {
         </div>
       </section>
 
+      {/* Traditional Arghya Painting — Riverbank devotional offerings */}
+      <section aria-label="Traditional Chhath Arghya painting" className="mural-breakout">
+        <figure className="mural-frame" style={{ background: "#21282D" }}>
+          <Image
+            src="/chhath-arghya-painting.jpg"
+            alt="Traditional Chhath Puja painting — vrtais in the river offering Arghya with soop and daura"
+            fill
+            sizes="100vw"
+            quality={75}
+            placeholder="blur"
+            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAIABADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCw1pHhQ3GOpHeozbRBiSgw3Y9qKKXKVc//2Q=="
+          />
+          <figcaption>Sacred Arghya on the riverbank — Traditional Chhath painting</figcaption>
+        </figure>
+      </section>
+
       {/* Teal band: community in numbers */}
       <section className="band-teal">
         <div className="shell grid md:grid-cols-2 gap-10 items-center">

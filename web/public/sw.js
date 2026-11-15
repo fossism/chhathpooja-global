@@ -1,5 +1,5 @@
 // Offline support: keep the festival shell working at the ghat with no signal.
-const CACHE = "chhath-v7";
+const CACHE = "chhath-v8";
 const CORE = [
   "/en",
   "/en/vidhi",
@@ -26,7 +26,8 @@ const CACHEABLE = [
   /^\/leaflet\//,                       // map marker icons
   /^\/covers\//,                        // album art
   /^\/images\//,                        // vidhi and ritual images
-  /^\/chhath-mural\.jpg$/               // homepage mural
+  /^\/chhath-mural\.jpg$/,              // homepage mural
+  /^\/chhath-arghya-painting\.jpg$/     // traditional arghya painting
 ];
 
 self.addEventListener("install", (e) => {

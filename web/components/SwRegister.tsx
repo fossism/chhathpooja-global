@@ -24,9 +24,15 @@ export default function SwRegister() {
       return;
     }
 
-    navigator.serviceWorker.register("/sw.js").catch(() => {
-      // Offline support is best-effort; site works fine without it.
-    });
+    navigator.serviceWorker
+      .register("/sw.js")
+      .then((reg) => {
+        // Prompt immediate check for newer service worker on each load
+        reg.update().catch(() => {});
+      })
+      .catch(() => {
+        // Offline support is best-effort; site works fine without it.
+      });
   }, []);
 
   return null;
