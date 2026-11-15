@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "clean": "rm -rf .next",
-    "predev": "rm -rf .next",
+    "clean": "rm -rf .next .next-dev",
+    "predev": "rm -rf .next-dev",
     "dev": "next dev",
     "prebuild": "rm -rf .next",
     "build": "next build",
