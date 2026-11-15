@@ -12,12 +12,6 @@ const nextConfig = {
     contentDispositionType: "attachment"
   },
   transpilePackages: ["leaflet", "react-leaflet"],
-  webpack: (config, { dev }) => {
-    if (dev) {
-      config.cache = false;
-    }
-    return config;
-  },
   async headers() {
     const isProd = process.env.NODE_ENV === "production";
     const csp = [
