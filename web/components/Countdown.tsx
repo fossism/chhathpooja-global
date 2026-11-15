@@ -279,25 +279,6 @@ export default function Countdown({
           ))}
         </div>
 
-        {/* State notification banners */}
-        {!isUsha && isSandhyaPassed && hasBoth && !isUshaPassed && (
-          <div className="mt-3 p-3 rounded-xl border border-mustard/40 bg-mustard/15 backdrop-blur-md flex flex-wrap items-center justify-between gap-2 text-xs text-cream">
-            <div className="flex items-center gap-2">
-              <span>🌅</span>
-              <span>
-                <strong>Sandhya Arghya concluded.</strong> Devotees are preparing for Usha Arghya!
-              </span>
-            </div>
-            <button
-              type="button"
-              onClick={() => setUserSelectedTab("usha")}
-              className="px-3 py-1 rounded-lg bg-mustard text-black font-extrabold hover:bg-mustard/90 transition shadow"
-            >
-              View Usha Arghya Countdown 🌄 →
-            </button>
-          </div>
-        )}
-
         {isUsha && isUshaPassed && (
           <div className="mt-3 p-3 rounded-xl border border-mustard/40 bg-black/40 text-center text-xs text-cream font-medium">
             ✦ Usha Arghya &amp; Parana completed. Chhath Mahaparv Sampann! May Chhathi Maiya &amp; Surya Dev bless all devotees.
@@ -336,25 +317,6 @@ export default function Countdown({
           </div>
         ))}
       </div>
-
-      {/* State notification banners */}
-      {!isUsha && isSandhyaPassed && hasBoth && !isUshaPassed && (
-        <div className="mt-3 p-3 rounded-lg border border-teal/20 bg-teal/5 flex flex-wrap items-center justify-between gap-2 text-xs text-teal">
-          <div className="flex items-center gap-2">
-            <span>🌅</span>
-            <span>
-              <strong>Sandhya Arghya concluded.</strong> Devotees are preparing for Usha Arghya!
-            </span>
-          </div>
-          <button
-            type="button"
-            onClick={() => setUserSelectedTab("usha")}
-            className="px-3 py-1 rounded-md bg-teal text-cream font-bold hover:opacity-90 transition text-xs"
-          >
-            View Usha Arghya Countdown 🌄 →
-          </button>
-        </div>
-      )}
 
       {isUsha && isUshaPassed && (
         <div className="mt-3 p-3 rounded-lg border border-line bg-cream text-center text-xs text-teal font-medium">
