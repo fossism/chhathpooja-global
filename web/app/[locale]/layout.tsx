@@ -69,11 +69,11 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     description: m.description,
     icons: {
       icon: [
-        { url: "/icon.svg", type: "image/svg+xml" },
-        { url: "/icon-192.png", sizes: "192x192", type: "image/png" }
+        { url: "/icon.svg?v=2", type: "image/svg+xml" },
+        { url: "/icon-192.png?v=2", sizes: "192x192", type: "image/png" }
       ],
-      shortcut: "/icon.svg",
-      apple: "/icon-192.png"
+      shortcut: "/icon.svg?v=2",
+      apple: "/icon-192.png?v=2"
     },
     alternates: {
       canonical: `${base}/${locale}`,
@@ -121,7 +121,7 @@ export default function LocaleLayout({ children, params }: { children: React.Rea
       <footer className="bg-cream border-t border-line">
         <div className="shell py-10 grid sm:grid-cols-2 md:grid-cols-4 gap-8">
           <div>
-            <img src="/icon.svg" alt="Chhath Mahaparv" className="w-10 h-10" />
+            <img src="/icon.svg?v=2" alt="Chhath Mahaparv" className="w-10 h-10" />
             <p className="text-sm text-teal/70 mt-3">Chhath Mahaparv — keeping the Mahaparv alive everywhere. MIT open-source.</p>
           </div>
           <nav className="text-sm" aria-label="Site">

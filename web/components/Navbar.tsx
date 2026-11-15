@@ -205,7 +205,7 @@ export default function Navbar({ locale }: { locale: string }) {
             className="flex items-center gap-2.5 group cursor-pointer shrink-0"
           >
             <div className="relative w-9 h-9 rounded-xl overflow-hidden shadow-sm group-hover:scale-105 transition-transform duration-300 ring-2 ring-mustard/40 bg-white p-0.5">
-              <img src="/icon.svg" alt="Chhath Mahaparv" className="w-full h-full object-contain" />
+              <img src="/icon.svg?v=2" alt="Chhath Mahaparv" className="w-full h-full object-contain" />
             </div>
             <div className="leading-tight">
               <span className="font-extrabold tracking-tight text-teal text-base sm:text-lg group-hover:text-mustard transition block">

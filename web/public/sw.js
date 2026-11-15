@@ -1,5 +1,5 @@
 // Offline support: keep the festival shell working at the ghat with no signal.
-const CACHE = "chhath-v5";
+const CACHE = "chhath-v6";
 const CORE = [
   "/en",
   "/en/vidhi",
