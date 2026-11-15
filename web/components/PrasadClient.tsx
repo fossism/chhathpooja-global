@@ -250,37 +250,52 @@ export default function PrasadClient() {
         </div>
       )}
 
-      {/* Hero Banner: Concise, Impactful with Italics */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-teal via-[#134e47] to-teal p-6 sm:p-8 text-cream shadow-xl border border-teal/30">
-        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-72 h-72 rounded-full bg-mustard/10 blur-3xl pointer-events-none" />
+      {/* Hero Banner: Modern Devotional UI with Sacred Glow */}
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#072d27] via-[#0d3b34] to-[#082621] p-6 sm:p-9 text-cream shadow-2xl border border-mustard/20">
+        {/* Sacred ambient glows */}
+        <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-mustard/15 blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-24 -left-16 w-72 h-72 rounded-full bg-amber-500/10 blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 max-w-3xl space-y-3.5">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-mustard/20 border border-mustard/40 text-mustard text-xs font-bold uppercase tracking-wider">
-            <span className="w-2 h-2 rounded-full bg-mustard animate-ping" />
-            Zero-Contact • <em>Pure Seva</em>
+        <div className="relative z-10 max-w-3xl space-y-4">
+          <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-mustard/15 border border-mustard/30 text-mustard text-xs font-semibold tracking-wide shadow-xs backdrop-blur-md">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-mustard opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-mustard" />
+            </span>
+            <span>Zero-Contact • Pure Seva</span>
           </div>
 
-          <h1 className="font-extrabold text-2xl sm:text-4xl text-cream tracking-tight leading-tight">
-            Prasad Seva &bull; <em>Mahaprasad</em> for Everyone
+          <h1 className="font-extrabold text-2xl sm:text-4xl lg:text-[2.6rem] text-cream tracking-tight leading-tight">
+            Prasad Seva <span className="text-mustard/70 font-normal">&bull;</span>{" "}
+            <em className="italic font-serif text-mustard tracking-normal">Mahaprasad</em>{" "}for Everyone
           </h1>
 
-          <p className="text-cream/85 text-xs sm:text-sm leading-relaxed max-w-2xl">
-            Connecting fasting families with soldiers, students, and workers <em>far from home</em> — 100% free, zero contact, served with pure devotion.
+          <p className="text-cream/85 text-xs sm:text-sm md:text-base leading-relaxed max-w-2xl font-light">
+            Connecting fasting families with soldiers, students, and workers far from home — 100% free, zero contact, served with pure devotion.
           </p>
 
           {/* 3 Sleek Micro-Highlights */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 text-xs">
-            <div className="bg-white/10 backdrop-blur-xs p-2.5 rounded-lg border border-white/10">
-              <p className="font-bold text-mustard text-[11px]">Armed Forces</p>
-              <p className="text-cream/80 text-[11px] mt-0.5 leading-snug"><em>Jawans on duty</em> in Leh, Siachen, Srinagar &amp; desert borders.</p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1 text-xs">
+            <div className="group bg-white/[0.06] hover:bg-white/[0.1] transition-all duration-200 p-3.5 rounded-xl border border-white/10 hover:border-mustard/30 shadow-xs space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-mustard" />
+                <p className="font-bold text-mustard text-[12px] tracking-wide">Armed Forces</p>
+              </div>
+              <p className="text-cream/80 text-[11px] leading-snug">Jawans on duty in Leh, Siachen, Srinagar &amp; desert borders.</p>
             </div>
-            <div className="bg-white/10 backdrop-blur-xs p-2.5 rounded-lg border border-white/10">
-              <p className="font-bold text-mustard text-[11px]">Students &amp; Workers</p>
-              <p className="text-cream/80 text-[11px] mt-0.5 leading-snug"><em>Hostels &amp; shifts</em> in Kota, DU, Prayagraj &amp; Surat.</p>
+            <div className="group bg-white/[0.06] hover:bg-white/[0.1] transition-all duration-200 p-3.5 rounded-xl border border-white/10 hover:border-mustard/30 shadow-xs space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-mustard" />
+                <p className="font-bold text-mustard text-[12px] tracking-wide">Students &amp; Workers</p>
+              </div>
+              <p className="text-cream/80 text-[11px] leading-snug">Hostels &amp; shifts in Kota, DU, Prayagraj &amp; Surat.</p>
             </div>
-            <div className="bg-white/10 backdrop-blur-xs p-2.5 rounded-lg border border-white/10">
-              <p className="font-bold text-mustard text-[11px]">Zero-Contact Walk-in</p>
-              <p className="text-cream/80 text-[11px] mt-0.5 leading-snug"><em>Public desks</em> at landmarks — no phone numbers needed.</p>
+            <div className="group bg-white/[0.06] hover:bg-white/[0.1] transition-all duration-200 p-3.5 rounded-xl border border-white/10 hover:border-mustard/30 shadow-xs space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-mustard" />
+                <p className="font-bold text-mustard text-[12px] tracking-wide">Zero-Contact Walk-in</p>
+              </div>
+              <p className="text-cream/80 text-[11px] leading-snug">Public desks at landmarks — no phone numbers needed.</p>
             </div>
           </div>
 
@@ -290,18 +305,21 @@ export default function PrasadClient() {
                 setFormType("offer");
                 setIsModalOpen(true);
               }}
-              className="btn btn-accent text-xs !py-2.5 !px-5 font-bold shadow-md hover:scale-[1.02] transition"
+              className="btn btn-accent text-xs !py-2.5 !px-5 font-bold shadow-lg shadow-mustard/15 hover:shadow-mustard/25 hover:scale-[1.02] active:scale-[0.98] transition-all inline-flex items-center gap-2 cursor-pointer"
             >
-              List a Prasad Point
+              <svg className="w-4 h-4 text-teal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
+              </svg>
+              <span>Offering Prasad</span>
             </button>
             <button
               onClick={() => {
                 setFormType("request");
                 setIsModalOpen(true);
               }}
-              className="btn btn-ghost !text-cream !border-cream/40 text-xs !py-2.5 !px-4 hover:bg-white/10 transition"
+              className="btn btn-ghost !text-cream !border-cream/35 hover:!border-cream text-xs !py-2.5 !px-4 hover:bg-white/10 transition-all cursor-pointer inline-flex items-center gap-1.5"
             >
-              Request Prasad
+              <span>Request Prasad</span>
             </button>
           </div>
         </div>
@@ -351,7 +369,7 @@ export default function PrasadClient() {
           </button>
         </div>
 
-        <p className="text-xs text-teal/65 font-medium italic">
+        <p className="text-xs text-teal/65 font-medium">
           Showing {filteredListings.length} active listings
         </p>
       </div>
@@ -561,7 +579,7 @@ export default function PrasadClient() {
                       <span className="font-bold text-teal">Timing:</span> {listing.availableFrom}
                     </p>
                     {listing.quantityNote && (
-                      <p className="text-teal/70 text-[11px] leading-relaxed italic">
+                      <p className="text-teal/70 text-[11px] leading-relaxed">
                         &ldquo;{listing.quantityNote}&rdquo;
                       </p>
                     )}
@@ -677,7 +695,7 @@ export default function PrasadClient() {
                 <ul className="list-disc pl-4 space-y-1 text-teal/75">
                   <li>No registration, phone number, or personal disclosure required.</li>
                   <li>Reach the landmark desk during the specified time slot.</li>
-                  <li>Say <em>&ldquo;Jai Chhathi Maiya&rdquo;</em>, receive your sacred prasad with dignity, and walk away with blessings.</li>
+                  <li>Say &ldquo;Jai Chhathi Maiya&rdquo;, receive your sacred prasad with dignity, and walk away with blessings.</li>
                   <li>Everything is 100% free and served with sacred love.</li>
                 </ul>
               </div>

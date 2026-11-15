@@ -7,6 +7,16 @@ import { locales, defaultLocale } from "./i18n";
 // Now: clean protocol-relative slashes and redirect to default locale securely.
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
+
+  // Never intercept Next.js internals, API routes, or static file requests
+  if (
+    pathname.startsWith("/_next") ||
+    pathname.startsWith("/api") ||
+    /\.(?:ico|png|jpg|jpeg|svg|css|js|woff2?|json|txt|xml|map)$/i.test(pathname)
+  ) {
+    return NextResponse.next();
+  }
+
   const cleanPath = pathname.replace(/^\/+/, "/");
   const seg = cleanPath.split("/")[1] || "";
 
@@ -22,7 +32,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    "/((?!api|_next/static|_next/image|_next/data|favicon.ico|manifest.json|sw.js|icon.svg|.*\\.(?:png|jpg|jpeg|gif|webp|svg|ico|css|js|json|xml|txt|woff2?|map)).*)"
-  ]
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"]
 };
