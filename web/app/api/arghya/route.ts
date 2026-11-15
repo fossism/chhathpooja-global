@@ -1,29 +1,100 @@
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+const IPV4_RE = /^(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}$/;
+const IPV6_RE = /^[0-9a-fA-F:]{2,39}$/;
 
-// Minimal in-memory rate limit: 30 req / min per IP (per server instance).
-// Prevents this open proxy from being abused for Open-Meteo scraping.
+// Memory-bounded rate limit: 30 req / min per IP + 300 req / min global cap.
+// Prevents this open proxy from being abused for Open-Meteo scraping,
+// and protects Node.js memory from unbounded Map growth / OOM attacks.
 const WINDOW_MS = 60_000;
-const MAX_HITS = 30;
-const hits = new Map<string, number[]>();
+const MAX_HITS_PER_IP = 30;
+const MAX_GLOBAL_HITS = 300;
+const MAX_TRACKED_IPS = 2_000;
+
+interface RateLimitEntry {
+  timestamps: number[];
+  lastSeen: number;
+}
+
+const ipHits = new Map<string, RateLimitEntry>();
+let globalHits: number[] = [];
+let lastSweep = Date.now();
+
+function cleanupStaleEntries(now: number) {
+  if (now - lastSweep < 30_000 && ipHits.size < MAX_TRACKED_IPS) return;
+  lastSweep = now;
+  ipHits.forEach((entry, ip) => {
+    if (now - entry.lastSeen > WINDOW_MS) {
+      ipHits.delete(ip);
+    }
+  });
+  // Hard cap defense: under high-volume IP spoofing, evict the oldest entries
+  if (ipHits.size >= MAX_TRACKED_IPS) {
+    let purged = 0;
+    ipHits.forEach((_, key) => {
+      if (purged < 500) {
+        ipHits.delete(key);
+        purged++;
+      }
+    });
+  }
+}
 
 function isRateLimited(ip: string): boolean {
   const now = Date.now();
-  const arr = (hits.get(ip) ?? []).filter((t) => now - t < WINDOW_MS);
-  arr.push(now);
-  hits.set(ip, arr);
-  return arr.length > MAX_HITS;
+  cleanupStaleEntries(now);
+
+  // Global safety cap across all clients
+  globalHits = globalHits.filter((t) => now - t < WINDOW_MS);
+  if (globalHits.length >= MAX_GLOBAL_HITS) {
+    return true;
+  }
+  globalHits.push(now);
+
+  // Per-IP rate check
+  const entry = ipHits.get(ip) ?? { timestamps: [], lastSeen: now };
+  const recent = entry.timestamps.filter((t) => now - t < WINDOW_MS);
+  recent.push(now);
+  entry.timestamps = recent;
+  entry.lastSeen = now;
+  ipHits.set(ip, entry);
+
+  return recent.length > MAX_HITS_PER_IP;
 }
 
 function getClientIp(req: Request): string {
+  // Check common trusted proxy headers first
+  const cfIp = req.headers.get("cf-connecting-ip");
+  if (cfIp && (IPV4_RE.test(cfIp.trim()) || IPV6_RE.test(cfIp.trim()))) {
+    return cfIp.trim();
+  }
+
+  const realIp = req.headers.get("x-real-ip");
+  if (realIp && (IPV4_RE.test(realIp.trim()) || IPV6_RE.test(realIp.trim()))) {
+    return realIp.trim();
+  }
+
   const fwd = req.headers.get("x-forwarded-for");
-  if (fwd) return fwd.split(",")[0].trim().slice(0, 64);
-  return "local";
+  if (fwd) {
+    const candidate = fwd.split(",")[0].trim();
+    if (IPV4_RE.test(candidate) || IPV6_RE.test(candidate)) {
+      return candidate;
+    }
+  }
+  return "anonymous";
 }
 
 export async function GET(req: Request) {
   const ip = getClientIp(req);
   if (isRateLimited(ip)) {
-    return Response.json({ error: "Rate limit exceeded. Try again in a minute." }, { status: 429 });
+    return Response.json(
+      { error: "Rate limit exceeded. Try again in a minute." },
+      {
+        status: 429,
+        headers: {
+          "Retry-After": "60"
+        }
+      }
+    );
   }
 
   const { searchParams } = new URL(req.url);
