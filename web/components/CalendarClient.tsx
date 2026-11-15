@@ -255,8 +255,16 @@ export default function CalendarClient({ events, locale = "en" }: CalendarClient
               {/* Live Festival Countdown Widget */}
               <div className="lg:col-span-5 bg-black/35 backdrop-blur-md rounded-2xl border border-mustard/40 p-5 sm:p-6 shadow-xl">
                 <Countdown
+                  sandhyaTarget={spotlightEvent.sandhyaArghya}
+                  ushaTarget={spotlightEvent.ushaArghya}
+                  sandhyaLabel="Sandhya Arghya Countdown"
+                  ushaLabel="Usha Arghya Countdown"
+                  tabLabels={{
+                    sandhya: "Sandhya Arghya",
+                    usha: "Usha Arghya"
+                  }}
                   target={spotlightEvent.sandhyaArghya}
-                  label={`Sandhya Arghya Countdown`}
+                  label="Sandhya Arghya Countdown"
                   variant="hero"
                 />
               </div>
