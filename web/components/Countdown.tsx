@@ -83,12 +83,12 @@ export default function Countdown({
 
     if (variant === "hero" || variant === "gold") {
       return (
-        <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-          <div className="inline-flex p-1 bg-black/50 rounded-xl border border-mustard/30 text-xs font-mono">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+          <div className="flex items-center p-1 bg-black/50 rounded-xl border border-mustard/30 text-xs font-mono w-full sm:w-auto">
             <button
               type="button"
               onClick={() => setUserSelectedTab("sandhya")}
-              className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
+              className={`flex-1 sm:flex-none px-3 py-1.5 rounded-lg transition-all flex items-center justify-center gap-1.5 ${
                 !isUsha
                   ? "bg-mustard text-black font-extrabold shadow-md scale-100"
                   : "text-cream/70 hover:text-mustard hover:bg-white/5"
@@ -105,7 +105,7 @@ export default function Countdown({
             <button
               type="button"
               onClick={() => setUserSelectedTab("usha")}
-              className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
+              className={`flex-1 sm:flex-none px-3 py-1.5 rounded-lg transition-all flex items-center justify-center gap-1.5 ${
                 isUsha
                   ? "bg-mustard text-black font-extrabold shadow-md scale-100"
                   : "text-cream/70 hover:text-mustard hover:bg-white/5"
@@ -126,7 +126,7 @@ export default function Countdown({
               )}
             </button>
           </div>
-          <span className="text-[10px] md:text-xs font-mono uppercase text-mustard/80 font-semibold tracking-wider">
+          <span className="text-[10px] md:text-xs font-mono uppercase text-mustard/80 font-semibold tracking-wider text-right sm:text-left">
             {timeDesc}
           </span>
         </div>
@@ -134,12 +134,12 @@ export default function Countdown({
     }
 
     return (
-      <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-        <div className="inline-flex p-1 bg-cream rounded-xl border border-line text-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+        <div className="flex items-center p-1 bg-cream rounded-xl border border-line text-xs w-full sm:w-auto">
           <button
             type="button"
             onClick={() => setUserSelectedTab("sandhya")}
-            className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
+            className={`flex-1 sm:flex-none px-3 py-1.5 rounded-lg transition-all flex items-center justify-center gap-1.5 ${
               !isUsha
                 ? "bg-teal text-cream font-bold shadow-sm"
                 : "text-teal/70 hover:text-teal hover:bg-white/60"
@@ -156,7 +156,7 @@ export default function Countdown({
           <button
             type="button"
             onClick={() => setUserSelectedTab("usha")}
-            className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
+            className={`flex-1 sm:flex-none px-3 py-1.5 rounded-lg transition-all flex items-center justify-center gap-1.5 ${
               isUsha
                 ? "bg-teal text-cream font-bold shadow-sm"
                 : "text-teal/70 hover:text-teal hover:bg-white/60"
@@ -174,7 +174,7 @@ export default function Countdown({
             )}
           </button>
         </div>
-        <span className="text-[10px] md:text-xs font-mono uppercase text-teal/60 font-semibold tracking-wider">
+        <span className="text-[10px] md:text-xs font-mono uppercase text-teal/60 font-semibold tracking-wider text-right sm:text-left">
           {timeDesc}
         </span>
       </div>

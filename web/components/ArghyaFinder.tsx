@@ -107,26 +107,30 @@ export default function ArghyaFinder({ date }: { date: string }) {
 
   return (
     <div>
-      <div className="flex flex-wrap gap-2 items-end">
-        <div>
+      <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-end">
+        <div className="flex-1">
           <label htmlFor="arghya-city" className="label block mb-1">City</label>
           <select
             id="arghya-city"
-            className="input !w-auto font-semibold"
+            className="input w-full font-semibold"
             value={city.name}
             onChange={(e) => setCity(CITIES.find((c) => c.name === e.target.value)!)}
           >
             {CITIES.map((c) => <option key={c.name} value={c.name}>{c.name}</option>)}
           </select>
         </div>
-        <button className="btn btn-primary" disabled={loading} onClick={() => fetchTime(city.lat, city.lon)}>{loading ? "Loading…" : "Get time"}</button>
-        <button
-          className="btn btn-ghost"
-          disabled={loading}
-          onClick={useMyLocation}
-        >
-          Use my location
-        </button>
+        <div className="flex items-center gap-2">
+          <button className="btn btn-primary flex-1 sm:flex-initial text-center justify-center" disabled={loading} onClick={() => fetchTime(city.lat, city.lon)}>
+            {loading ? "Loading…" : "Get time"}
+          </button>
+          <button
+            className="btn btn-ghost flex-1 sm:flex-initial text-center justify-center"
+            disabled={loading}
+            onClick={useMyLocation}
+          >
+            Use my location
+          </button>
+        </div>
       </div>
       {error && <p role="alert" className="text-sm font-semibold text-red-700 mt-3">{error}</p>}
       <p className="text-xs text-teal/60 mt-2">“Use my location” asks your browser once — coordinates are sent to Open-Meteo for this lookup only, never stored. You can always pick a city instead.</p>

@@ -179,7 +179,7 @@ export default function PrasadClient() {
     } catch {}
 
     setIsModalOpen(false);
-    showToast(formType === "offer" ? "Prasad Seva point registered." : "Prasad request registered.");
+    showToast(formType === "offer" ? "Prasad point registered." : "Prasad request registered.");
 
     // Reset Form
     setFormHubName("");
@@ -283,7 +283,7 @@ export default function PrasadClient() {
       )}
 
       {/* Hero Banner: Modern Devotional UI with Sacred Glow */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#072d27] via-[#0d3b34] to-[#082621] p-6 sm:p-9 text-cream shadow-2xl border border-mustard/20">
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#072d27] via-[#0d3b34] to-[#082621] p-5 sm:p-8 md:p-9 text-cream shadow-2xl border border-mustard/20">
         {/* Sacred ambient glows */}
         <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-mustard/15 blur-3xl pointer-events-none" />
         <div className="absolute -bottom-24 -left-16 w-72 h-72 rounded-full bg-amber-500/10 blur-3xl pointer-events-none" />
@@ -298,7 +298,7 @@ export default function PrasadClient() {
           </div>
 
           <h1 className="font-extrabold text-2xl sm:text-4xl lg:text-[2.6rem] text-cream tracking-tight leading-tight">
-            Prasad Seva <span className="text-mustard/70 font-normal">&bull;</span>{" "}
+            Prasad <span className="text-mustard/70 font-normal">&bull;</span>{" "}
             <em className="italic font-serif text-mustard tracking-normal">Mahaprasad</em>{" "}for Everyone
           </h1>
 
@@ -337,7 +337,7 @@ export default function PrasadClient() {
                 setFormType("offer");
                 setIsModalOpen(true);
               }}
-              className="btn btn-accent text-xs !py-2.5 !px-5 font-bold shadow-lg shadow-mustard/15 hover:shadow-mustard/25 hover:scale-[1.02] active:scale-[0.98] transition-all inline-flex items-center gap-2 cursor-pointer"
+              className="btn btn-accent text-xs !py-2.5 !px-5 font-bold shadow-lg shadow-mustard/15 hover:shadow-mustard/25 hover:scale-[1.02] active:scale-[0.98] transition-all inline-flex items-center justify-center gap-2 cursor-pointer w-full sm:w-auto"
             >
               <svg className="w-4 h-4 text-teal" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
@@ -349,7 +349,7 @@ export default function PrasadClient() {
                 setFormType("request");
                 setIsModalOpen(true);
               }}
-              className="btn btn-ghost !text-cream !border-cream/35 hover:!border-cream text-xs !py-2.5 !px-4 hover:bg-white/10 transition-all cursor-pointer inline-flex items-center gap-1.5"
+              className="btn btn-ghost !text-cream !border-cream/35 hover:!border-cream text-xs !py-2.5 !px-4 hover:bg-white/10 transition-all cursor-pointer inline-flex items-center justify-center gap-1.5 w-full sm:w-auto"
             >
               <span>Request Prasad</span>
             </button>
@@ -359,23 +359,23 @@ export default function PrasadClient() {
 
       {/* Giver & Receiver Primary Segment Toggle */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-1">
-        <div className="inline-flex p-1 rounded-xl bg-white border border-line shadow-xs">
+        <div className="flex items-center gap-1 p-1 rounded-xl bg-white border border-line shadow-xs overflow-x-auto scrollbar-none w-full sm:w-auto">
           <button
             onClick={() => setActiveTab("all")}
-            className={`px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 ${
+            className={`px-3 sm:px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 shrink-0 whitespace-nowrap ${
               activeTab === "all"
                 ? "bg-teal text-cream shadow-xs"
                 : "text-teal/70 hover:text-teal hover:bg-cream/50"
             }`}
           >
-            <span>All Seva</span>
+            <span>All Prasad</span>
             <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${activeTab === "all" ? "bg-white/20 text-cream" : "bg-cream text-teal/70"}`}>
               {typeCounts.all}
             </span>
           </button>
           <button
             onClick={() => setActiveTab("offer")}
-            className={`px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 ${
+            className={`px-3 sm:px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 shrink-0 whitespace-nowrap ${
               activeTab === "offer"
                 ? "bg-amber-600 text-cream shadow-xs"
                 : "text-teal/70 hover:text-teal hover:bg-cream/50"
@@ -388,7 +388,7 @@ export default function PrasadClient() {
           </button>
           <button
             onClick={() => setActiveTab("request")}
-            className={`px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 ${
+            className={`px-3 sm:px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5 shrink-0 whitespace-nowrap ${
               activeTab === "request"
                 ? "bg-teal text-cream shadow-xs"
                 : "text-teal/70 hover:text-teal hover:bg-cream/50"
@@ -466,42 +466,45 @@ export default function PrasadClient() {
             )}
           </div>
 
-          {/* City Dropdown */}
-          <div className="shrink-0 flex items-center gap-2">
-            <label className="text-xs font-semibold text-teal/70 whitespace-nowrap">
-              City:
-            </label>
-            <select
-              value={selectedCity}
-              onChange={(e) => setSelectedCity(e.target.value)}
-              aria-label="Filter by City"
-              className="text-xs py-1.5 px-3 rounded-lg border border-line bg-cream/30 text-teal font-medium focus:outline-hidden focus:ring-2 focus:ring-teal/20 cursor-pointer"
-            >
-              {allCities.map((city) => (
-                <option key={city} value={city}>
-                  {city}
-                </option>
-              ))}
-            </select>
-          </div>
+          {/* City & Item Dropdowns (Clean 2-col on mobile, inline on desktop) */}
+          <div className="grid grid-cols-2 gap-2.5 w-full md:w-auto md:flex md:items-center">
+            {/* City Dropdown */}
+            <div className="flex items-center gap-1.5 flex-1">
+              <label className="text-[11px] sm:text-xs font-semibold text-teal/70 whitespace-nowrap">
+                City:
+              </label>
+              <select
+                value={selectedCity}
+                onChange={(e) => setSelectedCity(e.target.value)}
+                aria-label="Filter by City"
+                className="w-full text-xs py-1.5 px-2.5 rounded-lg border border-line bg-cream/30 text-teal font-medium focus:outline-hidden focus:ring-2 focus:ring-teal/20 cursor-pointer"
+              >
+                {allCities.map((city) => (
+                  <option key={city} value={city}>
+                    {city}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          {/* Prasad Item Dropdown */}
-          <div className="shrink-0 flex items-center gap-2">
-            <label className="text-xs font-semibold text-teal/70 whitespace-nowrap">
-              Item:
-            </label>
-            <select
-              value={selectedPrasad}
-              onChange={(e) => setSelectedPrasad(e.target.value)}
-              aria-label="Filter by Prasad Item"
-              className="text-xs py-1.5 px-3 rounded-lg border border-line bg-cream/30 text-teal font-medium focus:outline-hidden focus:ring-2 focus:ring-teal/20 cursor-pointer"
-            >
-              {PRASAD_FILTER_TYPES.map((item) => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
+            {/* Prasad Item Dropdown */}
+            <div className="flex items-center gap-1.5 flex-1">
+              <label className="text-[11px] sm:text-xs font-semibold text-teal/70 whitespace-nowrap">
+                Item:
+              </label>
+              <select
+                value={selectedPrasad}
+                onChange={(e) => setSelectedPrasad(e.target.value)}
+                aria-label="Filter by Prasad Item"
+                className="w-full text-xs py-1.5 px-2.5 rounded-lg border border-line bg-cream/30 text-teal font-medium focus:outline-hidden focus:ring-2 focus:ring-teal/20 cursor-pointer"
+              >
+                {PRASAD_FILTER_TYPES.map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
       </div>
@@ -625,7 +628,7 @@ export default function PrasadClient() {
                 </div>
 
                 {/* Bottom Actions */}
-                <div className="pt-4 mt-4 border-t border-line/60 flex items-center justify-between gap-2">
+                <div className="pt-4 mt-4 border-t border-line/60 flex flex-wrap items-center justify-between gap-2">
                   <button
                     onClick={() => setSelectedLandmarkListing(listing)}
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-teal text-cream font-bold text-xs hover:brightness-110 transition shadow-xs"
@@ -763,7 +766,7 @@ export default function PrasadClient() {
       {/* Modal: List a New Prasad Seva Point / Request */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in">
-          <div className="card !p-6 sm:!p-8 max-w-xl w-full bg-white shadow-2xl rounded-2xl space-y-4 max-h-[92vh] overflow-y-auto border border-teal/20">
+          <div className="card !p-4 sm:!p-6 md:!p-8 max-w-xl w-full bg-white shadow-2xl rounded-2xl space-y-4 max-h-[92vh] overflow-y-auto border border-teal/20">
             {/* Modal Header */}
             <div className="flex items-start justify-between gap-3 border-b border-line pb-3">
               <div>
