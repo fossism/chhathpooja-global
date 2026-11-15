@@ -39,7 +39,8 @@ export default function Countdown({
   const ushaDate = ushaTarget || "";
   const hasBoth = Boolean(sandhyaDate && ushaDate);
 
-  const [now, setNow] = useState<Date | null>(null);
+  // Initialize with current Date so server and client have immediate valid timestamps
+  const [now, setNow] = useState<Date>(() => new Date());
   const [userSelectedTab, setUserSelectedTab] = useState<"sandhya" | "usha" | null>(null);
 
   useEffect(() => {
@@ -49,14 +50,14 @@ export default function Countdown({
   }, []);
 
   // Compute timing milestones
-  const nowMs = now ? now.getTime() : 0;
+  const nowMs = now.getTime();
   const sandhyaMs = sandhyaDate ? new Date(`${sandhyaDate}T${sandhyaTime}:00+05:30`).getTime() : 0;
   const ushaMs = ushaDate ? new Date(`${ushaDate}T${ushaTime}:00+05:30`).getTime() : 0;
 
-  const isSandhyaPassed = sandhyaMs > 0 && nowMs > 0 && sandhyaMs <= nowMs;
-  const isUshaPassed = ushaMs > 0 && nowMs > 0 && ushaMs <= nowMs;
+  const isSandhyaPassed = sandhyaMs > 0 && sandhyaMs <= nowMs;
+  const isUshaPassed = ushaMs > 0 && ushaMs <= nowMs;
 
-  // Determine active tab
+  // Determine active tab: automatically track upcoming arghya unless user manually selected a tab
   let activeTab: "sandhya" | "usha" = initialArghya || "sandhya";
   if (userSelectedTab) {
     activeTab = userSelectedTab;
@@ -235,7 +236,7 @@ export default function Countdown({
 
   if (variant === "hero" || variant === "gold") {
     return (
-      <div role="timer" aria-label={`${activeLabel} ${activeTarget}`}>
+      <div role="timer" suppressHydrationWarning aria-label={`${activeLabel} ${activeTarget}`}>
         {renderTabs()}
 
         <div className="flex items-center justify-between gap-2">
@@ -253,7 +254,7 @@ export default function Countdown({
               />
             </span>
             <p className="text-xs uppercase font-mono tracking-widest text-mustard font-bold">
-              {activeLabel} • {activeTarget}
+              {activeLabel} • {activeTarget} {c.isPassed && "(Concluded)"}
             </p>
           </div>
           {!hasBoth && (
@@ -263,7 +264,7 @@ export default function Countdown({
           )}
         </div>
 
-        <div className="grid grid-cols-4 gap-2 mt-3" aria-hidden="true">
+        <div className="grid grid-cols-4 gap-2 mt-3" aria-hidden="true" suppressHydrationWarning>
           {boxes.map((b) => (
             <div
               key={b.l}
@@ -278,6 +279,19 @@ export default function Countdown({
             </div>
           ))}
         </div>
+
+        {!isUsha && isSandhyaPassed && hasBoth && !isUshaPassed && (
+          <div className="mt-3 p-2.5 rounded-xl border border-mustard/40 bg-mustard/15 backdrop-blur-md flex flex-wrap items-center justify-between gap-2 text-xs text-cream">
+            <span>Sandhya Arghya concluded at sunset. Next is <strong>Usha Arghya</strong> at dawn.</span>
+            <button
+              type="button"
+              onClick={() => setUserSelectedTab("usha")}
+              className="px-3 py-1 rounded-lg bg-mustard text-black font-extrabold hover:bg-mustard/90 transition shadow text-xs shrink-0"
+            >
+              Switch to Usha Arghya 🌄 →
+            </button>
+          </div>
+        )}
 
         {isUsha && isUshaPassed && (
           <div className="mt-3 p-3 rounded-xl border border-mustard/40 bg-black/40 text-center text-xs text-cream font-medium">
@@ -295,11 +309,18 @@ export default function Countdown({
   }
 
   return (
-    <div role="timer" aria-label={`${activeLabel} ${activeTarget}`}>
+    <div role="timer" suppressHydrationWarning aria-label={`${activeLabel} ${activeTarget}`}>
       {renderTabs()}
 
       <div className="flex items-center justify-between gap-2">
-        <p className="label">{activeLabel} • {activeTarget}</p>
+        <p className="label flex items-center gap-1.5">
+          <span>{activeLabel} • {activeTarget}</span>
+          {c.isPassed && (
+            <span className="text-[10px] font-bold text-teal bg-teal/10 px-2 py-0.5 rounded-full border border-teal/20">
+              Concluded
+            </span>
+          )}
+        </p>
         {!hasBoth && (
           <span className="text-[10px] md:text-xs font-mono uppercase text-teal/60 font-semibold tracking-wider">
             {timeDesc}
@@ -307,7 +328,7 @@ export default function Countdown({
         )}
       </div>
 
-      <div className="grid grid-cols-4 gap-2 mt-3" aria-hidden="true">
+      <div className="grid grid-cols-4 gap-2 mt-3" aria-hidden="true" suppressHydrationWarning>
         {boxes.map((b) => (
           <div key={b.l} className="count-box">
             <p className="text-2xl md:text-3xl font-bold tabular-nums">
@@ -317,6 +338,19 @@ export default function Countdown({
           </div>
         ))}
       </div>
+
+      {!isUsha && isSandhyaPassed && hasBoth && !isUshaPassed && (
+        <div className="mt-3 p-2.5 rounded-lg border border-teal/20 bg-teal/5 flex flex-wrap items-center justify-between gap-2 text-xs text-teal">
+          <span>Sandhya Arghya concluded at sunset. Next is <strong>Usha Arghya</strong> at dawn.</span>
+          <button
+            type="button"
+            onClick={() => setUserSelectedTab("usha")}
+            className="px-2.5 py-1 rounded-md bg-teal text-cream font-bold hover:opacity-90 transition text-xs shrink-0"
+          >
+            Switch to Usha Arghya 🌄 →
+          </button>
+        </div>
+      )}
 
       {isUsha && isUshaPassed && (
         <div className="mt-3 p-3 rounded-lg border border-line bg-cream text-center text-xs text-teal font-medium">
