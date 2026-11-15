@@ -22,7 +22,7 @@ export default function Calendar({ params }: { params?: { locale?: string } }) {
     <div className="shell py-8 md:py-12">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
       />
       <CalendarClient events={dates} locale={locale} />
     </div>

@@ -6,7 +6,10 @@ const nextConfig = {
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 86400,
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384]
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    dangerouslyAllowSVG: false,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    contentDispositionType: "attachment"
   },
   transpilePackages: ["leaflet", "react-leaflet"],
   webpack: (config, { dev }) => {
@@ -16,15 +19,19 @@ const nextConfig = {
     return config;
   },
   async headers() {
+    const isProd = process.env.NODE_ENV === "production";
     const csp = [
       "default-src 'self'",
-      // Next.js dev needs unsafe-inline/unsafe-eval; prod serializes the same policy.
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.youtube.com",
+      // In production, unsafe-eval is omitted to protect against XSS execution sinks
+      isProd
+        ? "script-src 'self' 'unsafe-inline' https://www.youtube.com"
+        : "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.youtube.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com data:",
       // Local marker icons + OSM tiles + mural images + YouTube artwork. No unpkg/imgur/etc.
       "img-src 'self' data: blob: https://*.tile.openstreetmap.org https://tile.openstreetmap.org https://i.ytimg.com",
-      "connect-src 'self' https://api.open-meteo.com https://www.youtube.com https://i.ytimg.com",
+      // Include Supabase endpoints alongside Open-Meteo & YouTube
+      "connect-src 'self' https://api.open-meteo.com https://www.youtube.com https://i.ytimg.com https://*.supabase.co",
       "frame-src 'self' https://www.youtube.com",
       "frame-ancestors 'none'",
       "base-uri 'self'",

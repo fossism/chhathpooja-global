@@ -58,6 +58,34 @@ async function hasValidImageSignature(file: File): Promise<boolean> {
   }
 }
 
+function createThumbnail(file: File, maxWidth = 480, quality = 0.75): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const img = new window.Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      const scale = Math.min(1, maxWidth / (img.width || 1));
+      const width = Math.round(img.width * scale);
+      const height = Math.round(img.height * scale);
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) {
+        reject(new Error("Canvas context unavailable"));
+        return;
+      }
+      ctx.drawImage(img, 0, 0, width, height);
+      resolve(canvas.toDataURL("image/jpeg", quality));
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error("Failed to load image for resizing"));
+    };
+    img.src = url;
+  });
+}
+
 export default function WallClient() {
   const [posts, setPosts] = useState<Post[]>(SEED);
   const [filter, setFilter] = useState("All");
@@ -71,14 +99,25 @@ export default function WallClient() {
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [justSubmitted, setJustSubmitted] = useState(false);
 
-  // Load user posts from localStorage on mount
+  // Load user posts safely from localStorage on mount with strict schema validation
   useEffect(() => {
     try {
       const saved = localStorage.getItem("chhath_wall_user_posts");
       if (saved) {
-        const parsed: Post[] = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setPosts([...parsed, ...SEED]);
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          const validPosts: Post[] = parsed.filter(
+            (p): p is Post =>
+              Boolean(p) &&
+              typeof p.id === "string" &&
+              typeof p.city === "string" &&
+              typeof p.country === "string" &&
+              typeof p.text === "string" &&
+              (p.img === undefined || (typeof p.img === "string" && p.img.startsWith("data:image/")))
+          );
+          if (validPosts.length > 0) {
+            setPosts([...validPosts, ...SEED]);
+          }
         }
       }
     } catch {
@@ -121,12 +160,13 @@ export default function WallClient() {
         setFileKey((k) => k + 1);
         return;
       }
-      // Read as Data URL so it can persist in localStorage
-      const reader = new FileReader();
-      reader.onload = () => {
-        setPendingImg({ dataUrl: reader.result as string, name: file.name });
-      };
-      reader.readAsDataURL(file);
+      // Compress and resize to an efficient lightweight thumbnail (~25 KB)
+      // preventing localStorage quota blowouts (which happen with raw 3MB data URLs)
+      const thumb = await createThumbnail(file, 480, 0.75);
+      setPendingImg({ dataUrl: thumb, name: file.name });
+    } catch {
+      setImgError("Could not process image file. Please try another photo.");
+      setFileKey((k) => k + 1);
     } finally {
       setChecking(false);
     }
@@ -155,10 +195,11 @@ export default function WallClient() {
     const updated = [newPost, ...posts];
     setPosts(updated);
 
-    // Save only user's local posts to localStorage
+    // Save only user's local posts to localStorage, capped to latest 10 to avoid quota exhaustion
     try {
       const existingUserPosts: Post[] = JSON.parse(localStorage.getItem("chhath_wall_user_posts") || "[]");
-      localStorage.setItem("chhath_wall_user_posts", JSON.stringify([newPost, ...existingUserPosts]));
+      const capped = [newPost, ...existingUserPosts.filter((p) => Boolean(p) && typeof p === "object")].slice(0, 10);
+      localStorage.setItem("chhath_wall_user_posts", JSON.stringify(capped));
     } catch {
       // localStorage quota or private mode fallback
     }
