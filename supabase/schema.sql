@@ -41,11 +41,12 @@ create policy "ghats_public_read_verified"
   to anon, authenticated
   using (verified = true);
 
--- Authenticated users may propose new ghats, but never self-verify.
+-- Community users (anon or authenticated) may propose new ghats, but never self-verify.
 drop policy if exists "ghats_auth_insert_unverified" on ghats;
-create policy "ghats_auth_insert_unverified"
+drop policy if exists "ghats_public_insert_unverified" on ghats;
+create policy "ghats_public_insert_unverified"
   on ghats for insert
-  to authenticated
+  to anon, authenticated
   with check (verified = false);
 
 -- No public update/delete. Moderation happens with service_role key only.
@@ -57,11 +58,12 @@ create policy "photos_public_read_moderated"
   to anon, authenticated
   using (moderated = true);
 
--- Authenticated users may upload rows, but never self-moderate.
+-- Community users (anon or authenticated) may upload rows, but never self-moderate.
 drop policy if exists "photos_auth_insert_unmoderated" on photos;
-create policy "photos_auth_insert_unmoderated"
+drop policy if exists "photos_public_insert_unmoderated" on photos;
+create policy "photos_public_insert_unmoderated"
   on photos for insert
-  to authenticated
+  to anon, authenticated
   with check (moderated = false);
 
 -- No public update/delete on photos either.
@@ -77,9 +79,9 @@ create policy "photos_auth_insert_unmoderated"
 --
 -- authenticated write, 3 MB cap + image MIME only (defense in depth with
 -- the client-side checks in WallClient.tsx):
--- drop policy if exists "wall_auth_write_images" on storage.objects;
--- create policy "wall_auth_write_images" on storage.objects for insert
---   to authenticated
+-- drop policy if exists "wall_public_write_images" on storage.objects;
+-- create policy "wall_public_write_images" on storage.objects for insert
+--   to anon, authenticated
 --   with check (
 --     bucket_id = 'chhath-wall'
 --     and (octet_length(name) < 512)
