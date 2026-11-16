@@ -1,262 +1,125 @@
 {
-  "note": "Curated & deduplicated Chhath Mahaparv playlist. Verified embed-playable tracks covering Sharda Sinha classics, Anuradha Paudwal, Sonu Nigam, Malini Awasthi, Pawan Singh, Khesari Lal, and non-stop jukeboxes.",
+  "note": "Hand-picked, verified Chhathi Maiya geet only. Duplicate uploads, mislabelled links, non-Chhath party tracks and dead embeds were removed. Every video below returns a valid YouTube oEmbed response.",
   "songs": [
-    {
-      "id": "sharda-bhakti-ras",
-      "title": "Chhath Bhakti Ras — Sharda Sinha Master Jukebox",
-      "titleDevanagari": "छठ भक्ति रस — शारदा सिन्हा",
-      "artist": "Padma Bhushan Sharda Sinha",
-      "category": "Sharda Sinha Legends",
-      "youtubeId": "MNsbDT3fhUs",
-      "meaning": "Legendary, soulful Chhath classics including Ho Deenanath, Kaanch Hi Baans, and Kelwa Ke Paat Par by Bihar's revered nightingale.",
-      "lyric": "Pahile pahil hum kayeni Chhathi Maiya vrata tohar, karahu kripa Chhathi Maiya..."
-    },
-    {
-      "id": "kelwa-ke-paat",
-      "title": "Kelwa Ke Paat Par",
-      "titleDevanagari": "केलवा के पात पर",
-      "artist": "Madhu Pandey • Traditional",
-      "category": "Sandhya Arghya",
-      "youtubeId": "QzPHuipyjcE",
-      "meaning": "Offerings laid on fresh banana leaves — the quintessential Sandhya Arghya anthem.",
-      "lyric": "Kelwa ke paat par uge Suraj Mal, jhuki jhuki maange arghya parnam..."
-    },
     {
       "id": "ho-deenanath",
       "title": "Ho Deenanath",
       "titleDevanagari": "हो दीनानाथ",
       "artist": "Padma Bhushan Sharda Sinha",
-      "category": "Sharda Sinha Legends",
-      "youtubeId": "HfHkBEjofqk",
-      "meaning": "The ultimate invocation to the Sun God (Deenanath), praying for light, grace, and eternal blessings for family.",
-      "lyric": "Ho Deenanath, aiso he aiso he karile vinatiya, ghaat saji gail ba ho..."
+      "category": "Invocation",
+      "youtubeId": "j74EcjyN1WQ",
+      "meaning": "The classic opening prayer to the Sun God — a request that the ghat be ready and the offering accepted.",
+      "lyric": "हो दीनानाथ, ऐसो हे ऐसो हे करिले विनतिया, घाट सजि गइल बा हो..."
     },
     {
       "id": "pahile-pahil-sharda",
       "title": "Pahile Pahil Chhathi Maiya",
       "titleDevanagari": "पहिले पहिल छठी मैया",
       "artist": "Padma Bhushan Sharda Sinha",
-      "category": "Sharda Sinha Legends",
+      "category": "Invocation",
       "youtubeId": "DG8F-csoRAQ",
-      "meaning": "The most revered and emotional ode sung when someone observes the Chhath fast for the very first time in life.",
-      "lyric": "Pahile pahil hum kayeni Chhathi Maiya vrata tohar, suneha araj mora hey Chhathi Maai..."
+      "meaning": "A first-time vrati asks Chhathi Maiya for forgiveness and blessings for the whole family.",
+      "lyric": "पहिले पहिल हम कईनी, छठी मईया व्रत तोहर, करिहा क्षमा छठी मईया, भूल-चूक गलती हमार..."
     },
     {
-      "id": "kaanch-hi-baans-anuradha",
+      "id": "kelwa-ke-paat",
+      "title": "Kelwa Ke Paat Par",
+      "titleDevanagari": "केलवा के पात पर",
+      "artist": "Padma Bhushan Sharda Sinha",
+      "category": "Sandhya Arghya",
+      "youtubeId": "knZ8b5YnQiY",
+      "meaning": "Offerings laid on banana leaves at sunset — the defining Sandhya Arghya song.",
+      "lyric": "केलवा के पात पर उगे सूरज मल, झुकी झुकी मांगे अरघ के परनाम..."
+    },
+    {
+      "id": "aragh-ke-ber",
+      "title": "Aragh Ke Ber",
+      "titleDevanagari": "अरग के बेर",
+      "artist": "Padma Bhushan Sharda Sinha",
+      "category": "Sandhya Arghya",
+      "youtubeId": "bPBzXIU-ivQ",
+      "meaning": "The hour of arghya arrives; the vrati calls the sun to receive the offering.",
+      "lyric": "अरग के बेर हो, अरग के बेर, सूरज मल के अरग के बेर..."
+    },
+    {
+      "id": "jode-jode-supwa",
+      "title": "Jode Jode Supwa Tora Chadaibo",
+      "titleDevanagari": "जोड़े जोड़े सुपवा तोरा चढ़ाइबो",
+      "artist": "Kalpana Patowary",
+      "category": "Sandhya Arghya",
+      "youtubeId": "G3PMFpftpbg",
+      "meaning": "Pairs of bamboo soops, coconuts and supari are carried to the ghat for the evening offering.",
+      "lyric": "जोड़े जोड़े सुपवा तोरा चढ़ाइबो, छठी मैया..."
+    },
+    {
+      "id": "kaanch-hi-baans",
       "title": "Kaanch Hi Baans Ke Bahangiya",
-      "titleDevanagari": "काँच ही बाँस के बहँगिया",
-      "artist": "Anuradha Paudwal • T-Series",
+      "titleDevanagari": "काँच ही बाँस के बहंगिया",
+      "artist": "Anuradha Paudwal",
       "category": "Ghat Procession",
-      "youtubeId": "A-n8vBvN014",
-      "meaning": "The iconic procession anthem describing carrying the delicate bamboo pole (Bahangi) with sacred Daura to the Ganga ghat.",
-      "lyric": "Kaanch hi baans ke bahangiya, bahangi lachkat jaaye, baat je puchhe batorhiya..."
+      "youtubeId": "Eyq7vfxu4iA",
+      "meaning": "The delicate bamboo bahangi bends under the weight of the daura as the family walks to the river.",
+      "lyric": "काँच ही बाँस के बहंगिया, बहंगी लचकत जाए, बाट जे पूछे बटोरहिया..."
     },
     {
-      "id": "uga-ho-suruj-dev",
-      "title": "Uga Ho Suruj Dev",
+      "id": "uga-hai-suraj-dev",
+      "title": "Uga Hai Suraj Dev",
       "titleDevanagari": "उगा हो सूरज देव",
-      "artist": "Dimpal Bhumi",
+      "artist": "Anuradha Paudwal",
       "category": "Usha Arghya",
-      "youtubeId": "Hr0wkUIfLmA",
-      "meaning": "Invoking Surya Dev to rise above the river horizon as vratis wait with arghya in cold morning waters.",
-      "lyric": "Uga ho Suruj Dev arghya ke ber, arghya ke beriya aai gail..."
+      "youtubeId": "6e6Hp6R5SVU",
+      "meaning": "A dawn call to the rising sun — the first arghya of Usha Arghya.",
+      "lyric": "उगा हो सूरज देव, भेल भिनसरवा..."
     },
     {
-      "id": "uga-he-suruj-dev-jyoti",
-      "title": "Uga He Suruj Dev (2025 Special)",
-      "titleDevanagari": "उगा हे सुरुज देव",
-      "artist": "Jyoti • Traditional",
+      "id": "uthau-suruj-bhaile-bihaan",
+      "title": "Uthau Suruj Bhaile Bihaan",
+      "titleDevanagari": "उठउ सुरुज भइले बिहान",
+      "artist": "Padma Bhushan Sharda Sinha",
       "category": "Usha Arghya",
-      "youtubeId": "gqTpjBHeh_k",
-      "meaning": "Praising the radiant rays of the rising morning sun during Usha Arghya at the riverbank.",
-      "lyric": "Uga he suruj dev bhail aragh ke ber, sab sakhiyan mil ke thadh ba..."
+      "youtubeId": "j9G3caThH98",
+      "meaning": "Wake, O Sun; the vrati has waited all night with lamps and offerings.",
+      "lyric": "उठउ सुरुज भइले बिहान, अरघ लेबे आइल बा..."
     },
     {
-      "id": "sonu-jai-chhathi-maiya",
-      "title": "Jai Chhathi Maiya",
-      "titleDevanagari": "जय छठी मैया",
-      "artist": "Sonu Nigam, Pawan Singh & Khushboo Jain",
-      "category": "Festive Celebration",
-      "youtubeId": "e-0FjvSOaw8",
-      "meaning": "Grand collaboration celebrating the divine protection and immense blessings of Chhathi Maiya.",
-      "lyric": "Jai Jai Chhathi Maiya, sabhi ke dukhwa hara, charno me tohar aayi gail baani..."
-    },
-    {
-      "id": "malini-chhathi-maiya",
-      "title": "Hey Chhathi Maiya",
-      "titleDevanagari": "हे छठी मैया",
-      "artist": "Malini Awasthi",
-      "category": "Sharda Sinha Legends",
-      "youtubeId": "mXveZxtgVco",
-      "meaning": "An earthy, emotive vocal tribute invoking the compassionate mother Chhathi in authentic folk dialect.",
-      "lyric": "Hey Chhathi Maiya tohra dewal par deep jalawle baani, sabke suhaag sajaiha..."
+      "id": "dukhwa-mitayin",
+      "title": "Dukhwa Mitayin Chhathi Maiya",
+      "titleDevanagari": "दुखवा मिटाईं छठी मैया",
+      "artist": "Padma Bhushan Sharda Sinha",
+      "category": "Chhathi Maiya",
+      "youtubeId": "NkDiSj9c1EA",
+      "meaning": "A prayer to Chhathi Maiya to remove sorrow and increase happiness in the home.",
+      "lyric": "दुखवा मिटाईं छठी मैया, सुखवा बढ़ाईं..."
     },
     {
       "id": "jode-jode-nariyal",
       "title": "Jode Jode Nariyal",
       "titleDevanagari": "जोड़े जोड़े नारियल",
-      "artist": "Devi • T-Series Bhakti Sagar",
-      "category": "Kharna & Bhakti",
-      "youtubeId": "_sAqci2REgw",
-      "meaning": "Offering pairs of green and dry coconuts along with sacred bamboo soop to Chhathi Maiya.",
-      "lyric": "Jode jode nariyal Chhathi ghate aani, araj lagawani ho Chhathi Maiya..."
+      "artist": "Devi",
+      "category": "Chhathi Maiya",
+      "youtubeId": "2fFXDHk2TLs",
+      "meaning": "Coconuts and offerings are paired and laid out for the mother goddess.",
+      "lyric": "जोड़े जोड़े नारियल, जोड़े जोड़े सुपारी..."
     },
     {
-      "id": "jode-jode-supwa",
-      "title": "Jode Jode Supwa Tora Chadaibo",
-      "titleDevanagari": "जोड़े जोड़े सूपवा तोरा चढ़ाइबो",
-      "artist": "Kalpana Patowary",
-      "category": "Sandhya Arghya",
-      "youtubeId": "Ydd0cSY3I8s",
-      "meaning": "A pure offering song dedicated to the bamboo winnow (soop) filled with fruits and prasad for the sun.",
-      "lyric": "Jode jode supwa tora chadaibo ae Chhathi Maiya, mangal kaaj karaiha..."
-    },
-    {
-      "id": "patna-ke-ghat",
-      "title": "Patna Ke Ghat",
-      "titleDevanagari": "पटना के घाट",
-      "artist": "Pawan Singh & Pooja N",
-      "category": "Ghat Procession",
-      "youtubeId": "vU1lXf7gG9g",
-      "meaning": "Vivid depictions of the grand, bustling ghats of Patna on the sacred banks of the Ganges.",
-      "lyric": "Patna ke ghat par aisan bheer ba, deepan se jagmag Ganga teer ba..."
+      "id": "jai-chhathi-maiya",
+      "title": "Jai Chhathi Maiya",
+      "titleDevanagari": "जय छठी मैया",
+      "artist": "Sonu Nigam, Pawan Singh & Khushboo Jain",
+      "category": "Chhathi Maiya",
+      "youtubeId": "_-R1Wcit1VM",
+      "meaning": "A celebratory invocation of Chhathi Maiya, sung with the whole family.",
+      "lyric": "जय छठी मैया, जय छठी मैया..."
     },
     {
       "id": "kartik-mahina",
       "title": "Kartik Mahina Hola Chhathi Maai",
-      "titleDevanagari": "कार्तिक महीना होला छठी माई",
+      "titleDevanagari": "कार्तिक महीना होला छठ के पुजनवा",
       "artist": "Mona Singh",
-      "category": "Kharna & Bhakti",
+      "category": "Chhathi Maiya",
       "youtubeId": "qfbCSaGZ-08",
-      "meaning": "Welcoming the auspicious month of Kartik and the arrival of Chhath Mahaparv in our homes.",
-      "lyric": "Kartik mahina hola Chhathi Maai ke, charo dishi chhaile bahaar..."
-    },
-    {
-      "id": "tani-daura-tham",
-      "title": "Tani Se Daura Tham Ke Chala",
-      "titleDevanagari": "तनी से दउरा थाम के चला",
-      "artist": "Ragini Mishra",
-      "category": "Ghat Procession",
-      "youtubeId": "v8W8oaN83x8",
-      "meaning": "Gentle guidance while walking carefully balancing the sacred decorated bamboo Daura on the head.",
-      "lyric": "Tani se daura tham ke chala, ghatwa dhoop bhari le..."
-    },
-    {
-      "id": "chala-ganga-kinare",
-      "title": "Chala Ganga Kinare",
-      "titleDevanagari": "चला गंगा किनारे",
-      "artist": "Khesari Lal Yadav & Karishma Kakkar",
-      "category": "Ghat Procession",
-      "youtubeId": "38mTaX7LkgY",
-      "meaning": "Inviting the entire village, friends, and family to head together to the holy riverbank.",
-      "lyric": "Chala chala sakhiya Ganga kinare, Suruj Dev ke arghya lagai..."
-    },
-    {
-      "id": "jeetadi-chhathi-maai",
-      "title": "Jeetadi Chhathi Maai",
-      "titleDevanagari": "जीतदी छठी माई",
-      "artist": "Khesari Lal Yadav",
-      "category": "Festive Celebration",
-      "youtubeId": "D1xJmHEeoCc",
-      "meaning": "A jubilant celebration of family health, victory, fulfillment of vows, and pure devotion.",
-      "lyric": "Jeetadi Chhathi Maai sabke mangala kaaj, baje dhol nagara..."
-    },
-    {
-      "id": "pari-khatir-piyari",
-      "title": "Pari Khatir Piyari Piya",
-      "titleDevanagari": "परी खातिर पियरी पिया",
-      "artist": "Khesari Lal Yadav & Shilpi Raj",
-      "category": "Festive Celebration",
-      "youtubeId": "UlLpWuzD568",
-      "meaning": "Purchasing festive yellow attire, sacred puja samagri, and gifts for the holy festival.",
-      "lyric": "Pari khatir piyari piya lele aiha bajar se, Chhathi ghate chalab..."
-    },
-    {
-      "id": "top10-chhath-jukebox",
-      "title": "Top 10 Chhath Songs (Mega Jukebox)",
-      "titleDevanagari": "टॉप 10 छठ गीत (मेगा जूकबॉक्स)",
-      "artist": "Pawan Singh, Khesari Lal, Anu Dubey & more",
-      "category": "Non-Stop Jukebox",
-      "youtubeId": "9aLD92Od5SE",
-      "meaning": "Over 45 minutes of continuous festive favorites for uninterrupted playing at the ghat or home.",
-      "lyric": "Chhath Mahaparv ke sangeet se gunjey charo dishi ghaat..."
-    },
-    {
-      "id": "top15-chhath-collection",
-      "title": "Top 15 Chhath Geet Collection (Non-Stop)",
-      "titleDevanagari": "15 सर्वकालिक छठ गीत (नॉन-स्टॉप)",
-      "artist": "Wave Music All Stars",
-      "category": "Non-Stop Jukebox",
-      "youtubeId": "2KHk_4DOi7E",
-      "meaning": "A continuous compilation of 15 classic ghat and family Chhath Puja bhajans.",
-      "lyric": "Mangal geet gawa Chhathi Maiya ke, aayi gail mahaparav..."
-    },
-    {
-      "id": "superhit-wave-geet",
-      "title": "Superhit Mahila Chhath Geet",
-      "titleDevanagari": "सुपरहिट महिला छठ गीत",
-      "artist": "Wave Bhojpuri Traditional Choir",
-      "category": "Kharna & Bhakti",
-      "youtubeId": "oBriY2sNA2g",
-      "meaning": "Authentic women's choir singing age-old rural Chhath hymns while preparing thekua prasad.",
-      "lyric": "Suna suna sakhiya Chhathi geet, gharduware chhai gail aashirwad..."
-    },
-    {
-      "id": "bolo-jai-chhathi-maiya",
-      "title": "Bolo Jai Chhathi Maiya",
-      "titleDevanagari": "बोलो जय छठी मैया",
-      "artist": "Bandana Dubey",
-      "category": "Usha Arghya",
-      "youtubeId": "W3dL5MkYGFM",
-      "meaning": "Chorus chants of praise echoing across the river waters at the magical moment of Arghya.",
-      "lyric": "Bolo Jai Chhathi Maiya, bolo jai Suruj Dev, sabke kalyan kara..."
-    },
-    {
-      "id": "nimiya-ke-daar",
-      "title": "Nimiya Ke Daar Maiya",
-      "titleDevanagari": "निमिया के डाँड़ मैया",
-      "artist": "Dimpal Bhumi",
-      "category": "Kharna & Bhakti",
-      "youtubeId": "b9u43LEmyD0",
-      "meaning": "Traditional invocation of the divine feminine presence residing in the sacred neem tree.",
-      "lyric": "Nimiya ke daar par jhulua lagayili, Chhathi Maiya aayi gaili..."
-    },
-    {
-      "id": "kelwa-ke-paat-stage",
-      "title": "Kelwa Ke Paat Par (Ghat Stage Special)",
-      "titleDevanagari": "केलवा के पात पर (लाइव घाट प्रस्तुति)",
-      "artist": "Durga Boss & Choir",
-      "category": "Sandhya Arghya",
-      "youtubeId": "rdJVSLY4hIk",
-      "meaning": "Vibrant stage presentation of Kelwa Ke Paat Par recorded live amidst thousands of devotees.",
-      "lyric": "Kelwa ke paat par uge suraj dev, charo dishi gungunaila..."
-    },
-    {
-      "id": "kosi-bharal",
-      "title": "Kosi Bharal",
-      "titleDevanagari": "कोसी भरल",
-      "artist": "Traditional Folk (Acoustic)",
-      "category": "Kharna & Bhakti",
-      "meaning": "Invocation to Chhathi Maiya during the night vigil while filling the sacred earthen kosi with sugarcane and diyas.",
-      "lyric": "Kosi bharal Chhathi Maiya geet gaila, jagmag kare diyarwa..."
-    },
-    {
-      "id": "pahile-pahil-folk",
-      "title": "Pahile Pahil Chhathi Maiya (Acoustic Chants)",
-      "titleDevanagari": "पहिले पहिल छठी मैया (पारंपरिक धुन)",
-      "artist": "Traditional Folk (Acoustic)",
-      "category": "Sharda Sinha Legends",
-      "meaning": "The first salutation to Chhathi Maiya when embarking upon the sacred fast.",
-      "lyric": "Pahile pahil Chhathi Maiya ke, sat sat pranam karile hum..."
-    },
-    {
-      "id": "suraj-sange-chhathi",
-      "title": "Suraj Sange Chhathi",
-      "titleDevanagari": "सूरज संगे छठी",
-      "artist": "Traditional Folk (Acoustic)",
-      "category": "Sandhya Arghya",
-      "meaning": "Devotional harmony worshipping Surya and Chhathi in the twilight waters.",
-      "lyric": "Suraj sange Chhathi Maiya deep jalaila, charo dishi gungunaila..."
+      "meaning": "Kartik has come, and with it the month of Chhathi Maiya's worship.",
+      "lyric": "कार्तिक महीना होला छठ के पुजनवा..."
     }
   ]
 }

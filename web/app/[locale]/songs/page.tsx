@@ -93,13 +93,10 @@ export default function Songs() {
     playRandom(filteredTracks.length ? filteredTracks : combinedTracks);
   };
 
-  const handlePlayJukebox = () => {
-    const jukes = combinedTracks.filter((t) => t.category === "Non-Stop Jukebox");
-    if (jukes.length > 0) {
-      playTracks(jukes, 0);
-    } else {
-      handleShufflePlay();
-    }
+  const handlePlaySharda = () => {
+    const sharda = combinedTracks.filter((t) => t.artist.toLowerCase().includes("sharda"));
+    if (sharda.length) playTracks(sharda, 0);
+    else handleShufflePlay();
   };
 
   const extractYoutubeId = (url: string): string | null => {
@@ -204,29 +201,29 @@ export default function Songs() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-mustard opacity-90"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-mustard"></span>
             </span>
-            पवित्र छठ महापर्व संगीत संगम • 24×7 Divine Melodies
+            पवित्र छठ महापर्व संगीत संगम • Curated Archive
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white leading-tight">
             Chhath <em>Folk Songs</em> & Bhakti Dhun
           </h1>
           <p className="text-cream/80 text-sm sm:text-base mt-2 max-w-2xl leading-relaxed">
-            From Padma Bhushan Sharda Sinha’s immortal hymns to joyous ghat processions, Arghya anthems, and non-stop jukeboxes. Powered by YouTube official embeds — ad-free in-app listening, verified clean, zero buffering.
+            A small, carefully kept archive of the Chhathi Maiya geet families actually sing at the ghat — Sharda Sinha’s immortal hymns, sunset and sunrise arghya, and the walk to the river. Every track is a verified YouTube embed: no jukebox filler, no party tracks, no dead or mislabelled links.
           </p>
 
           {/* Quick Stats Badges */}
           <div className="flex flex-wrap items-center gap-2 mt-4 text-xs font-mono text-cream/70">
             <span className="px-2.5 py-1 rounded-lg bg-black/40 border border-cream/15">
-              🎵 {combinedTracks.length} Curated Songs
+              {ALL_TRACKS.length} hand-picked geet
             </span>
             <span className="px-2.5 py-1 rounded-lg bg-black/40 border border-cream/15">
-              👑 Sharda Sinha Classics
+              Only Chhathi Maiya songs
             </span>
             <span className="px-2.5 py-1 rounded-lg bg-black/40 border border-cream/15">
-              🌅 Sunset & Sunrise Arghya
+              Verified YouTube embeds
             </span>
             <span className="px-2.5 py-1 rounded-lg bg-black/40 border border-cream/15">
-              📻 Non-Stop Jukeboxes
+              Sharda Sinha · Anuradha Paudwal & more
             </span>
           </div>
 
@@ -241,11 +238,24 @@ export default function Songs() {
             </button>
 
             <button
-              onClick={handlePlayJukebox}
+              onClick={handlePlaySharda}
               className="inline-flex items-center gap-2 rounded-full bg-black/45 border border-mustard/40 px-4 py-2.5 text-xs sm:text-sm font-bold text-cream hover:bg-black/60 active:scale-95 transition"
             >
-              <span>📻</span>
-              <span>Play Mega Jukebox</span>
+              <svg
+                className="w-4 h-4 shrink-0"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Z" />
+                <path d="M19 11a7 7 0 0 1-14 0" />
+                <path d="M12 18v3" />
+              </svg>
+              <span>Play Sharda classics</span>
             </button>
 
             <button
@@ -446,6 +456,18 @@ export default function Songs() {
           </div>
         </section>
       )}
+
+      {/* ========================================================================= */}
+      {/* CURATORIAL NOTE                                                           */}
+      {/* ========================================================================= */}
+      <section className="flex items-start gap-3 rounded-2xl border border-line bg-cream/60 px-4 py-3 sm:px-5">
+        <span className="mt-0.5 shrink-0 rounded-full border border-teal/25 px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-widest text-teal/60">
+          Curated
+        </span>
+        <p className="text-xs text-teal/70 leading-relaxed">
+          The archive is deliberately small. We kept the geet that families actually sing at the ghat, removed duplicate uploads and non-Chhath tracks, and checked every link.
+        </p>
+      </section>
 
       {/* ========================================================================= */}
       {/* SEARCH & RITUAL FILTER TABS                                              */}
