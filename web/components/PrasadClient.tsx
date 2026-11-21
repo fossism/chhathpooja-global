@@ -8,7 +8,9 @@ import {
   generateWhatsAppLink,
   generateTelegramLink,
   isValidPhoneNumber,
-  isValidTelegramHandle
+  isValidTelegramHandle,
+  normalizePrasadListings,
+  listingForStorage
 } from "../lib/prasad";
 
 const CATEGORIES: { id: PrasadCategory; label: string }[] = [
@@ -68,13 +70,18 @@ export default function PrasadClient() {
     try {
       const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
       if (stored) {
-        const userPosts: PrasadListing[] = JSON.parse(stored);
-        if (Array.isArray(userPosts) && userPosts.length > 0) {
+        const userPosts = normalizePrasadListings(JSON.parse(stored));
+        if (userPosts.length > 0) {
           setListings((prev) => {
             const initialIds = new Set(prev.map((l) => l.id));
             const freshUserPosts = userPosts.filter((p) => !initialIds.has(p.id));
             return [...freshUserPosts, ...prev];
           });
+          // Migrate older entries that may contain a persisted phone/Telegram.
+          localStorage.setItem(
+            LOCAL_STORAGE_KEY,
+            JSON.stringify(userPosts.map(listingForStorage))
+          );
         }
       }
     } catch {}
@@ -147,8 +154,12 @@ export default function PrasadClient() {
       ? "Students, soldiers, workers & devotees away from home"
       : "Hostel students & devotees hoping to receive holy prasad";
 
+    const newId =
+      typeof crypto !== "undefined" && "randomUUID" in crypto
+        ? crypto.randomUUID()
+        : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
     const newListing: PrasadListing = {
-      id: `user-${Date.now()}`,
+      id: `user-${newId}`,
       type: formType,
       hubName,
       category: formCategory,
@@ -174,8 +185,11 @@ export default function PrasadClient() {
 
     try {
       const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
-      const existingUserPosts: PrasadListing[] = stored ? JSON.parse(stored) : [];
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify([newListing, ...existingUserPosts]));
+      const existingUserPosts = stored ? normalizePrasadListings(JSON.parse(stored)) : [];
+      const persisted = [newListing, ...existingUserPosts]
+        .map(listingForStorage)
+        .slice(0, 20);
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(persisted));
     } catch {}
 
     setIsModalOpen(false);
@@ -202,8 +216,10 @@ export default function PrasadClient() {
     try {
       const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
       if (stored) {
-        const existing: PrasadListing[] = JSON.parse(stored);
-        const filtered = existing.filter((l) => l.id !== id);
+        const existing = normalizePrasadListings(JSON.parse(stored));
+        const filtered = existing
+          .filter((l) => l.id !== id)
+          .map(listingForStorage);
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(filtered));
       }
     } catch {}
@@ -1077,6 +1093,10 @@ export default function PrasadClient() {
                         <strong>Anti-Harassment Shield:</strong> I confirm this is my own active phone number and agree to receive respectful prasad coordination inquiries.
                       </span>
                     </label>
+                    <p className="text-[10px] text-teal/65">
+                      Privacy: your phone number stays in this tab only. It is not written to
+                      persistent browser storage and disappears when you close the tab.
+                    </p>
                   </div>
                 )}
 

@@ -1,8 +1,12 @@
 # Chhath Mahaparv (chhathpooja-global)
 
-Keeping Chhath alive, anywhere on earth.
+> **Open-source, offline-first digital companion for Chhath Mahaparv worldwide. 100% ad-free, community-driven, and privacy-first.**
 
-An open-source, ad-free website built for people celebrating Chhath Puja, whether in Bihar, Jharkhand, Eastern UP, Nepal, or living abroad in places like the US, UK, UAE, Canada, and Australia.
+[![Live Demo](https://img.shields.io/badge/Live_Site-chhathpooja--global.vercel.app-16564F?style=flat&logo=vercel)](https://chhathpooja-global.vercel.app/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-E8B84B.svg)](https://opensource.org/licenses/MIT)
+[![PWA Ready](https://img.shields.io/badge/PWA-Offline--First-16564F.svg)](https://chhathpooja-global.vercel.app/)
+
+An open-source, ad-free platform built for devotees celebrating Chhath Puja, whether in Bihar, Jharkhand, Eastern UP, Nepal, or living abroad in places like the US, UK, UAE, Canada, and Australia.
 
 ## Why this exists
 

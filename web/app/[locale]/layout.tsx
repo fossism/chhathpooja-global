@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import Link from "next/link";
 import { Archivo, Newsreader, Space_Mono } from "next/font/google";
 import { locales } from "../../i18n";
@@ -6,6 +7,7 @@ import SwRegister from "../../components/SwRegister";
 import MusicProvider from "../../components/MusicProvider";
 import MiniPlayer from "../../components/MiniPlayer";
 import Navbar from "../../components/Navbar";
+import { getNextChhath, formatChhathBeacon } from "../../lib/chhath";
 
 // Self-hosted fonts (next/font) — no runtime request to Google Fonts,
 // so no third-party IP leak and no render-blocking @import in CSS.
@@ -36,6 +38,9 @@ export async function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
+// Unknown locales should 404 instead of rendering duplicate fallback pages.
+export const dynamicParams = false;
+
 const META: Record<string, { title: string; description: string }> = {
   en: {
     title: "ChhathMahaparv — Keeping Chhath alive, anywhere on earth",
@@ -59,8 +64,9 @@ const META: Record<string, { title: string; description: string }> = {
   }
 };
 
-export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
-  const locale = (locales as readonly string[]).includes(params.locale) ? params.locale : "en";
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale: rawLocale } = await params;
+  const locale = (locales as readonly string[]).includes(rawLocale) ? rawLocale : "en";
   const m = META[locale] ?? META.en;
   const base = "https://chhathmahaparv.org";
   return {
@@ -105,15 +111,22 @@ const LOCALES = [
   { code: "ne", label: "ने" }
 ];
 
-export default function LocaleLayout({ children, params }: { children: React.ReactNode; params: { locale: string } }) {
-  const locale = (locales as readonly string[]).includes(params.locale) ? params.locale : "en";
+export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
+  const { locale: rawLocale } = await params;
+  const locale = (locales as readonly string[]).includes(rawLocale) ? rawLocale : "en";
+  // Reading the request headers opts this layout (and its pages) into dynamic
+  // rendering, which is required so Next.js can attach the CSP nonce to its
+  // framework/inline scripts. Static HTML without a nonce would be blocked.
+  await headers();
+  const upcomingChhath = getNextChhath();
+  const beaconText = formatChhathBeacon(upcomingChhath);
   return (
     <html lang={locale} className={`${archivo.variable} ${newsreader.variable} ${spaceMono.variable}`}>
       <body>
       <MusicProvider>
       <SwRegister />
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-mustard focus:text-teal focus:px-4 focus:py-2 focus:font-bold">Skip to content</a>
-      <Navbar locale={locale} />
+      <Navbar locale={locale} beaconText={beaconText} />
 
       {/* Inner pages own their own .shell container; home bands are full-bleed. */}
       <main id="main" className="pb-16">{children}</main>
@@ -126,18 +139,18 @@ export default function LocaleLayout({ children, params }: { children: React.Rea
           </div>
           <nav className="text-sm" aria-label="Site">
             <p className="label mb-2">Site</p>
-            <Link className="block py-0.5 hover:underline" href={`/${params.locale}/ask`}>Chhath Sahayak</Link>
-            <Link className="block py-0.5 hover:underline" href={`/${params.locale}/vidhi`}>Vidhi guide</Link>
-            <Link className="block py-0.5 hover:underline" href={`/${params.locale}/gatha`}>Illustrated Gatha</Link>
-            <Link className="block py-0.5 hover:underline" href={`/${params.locale}/calendar`}>Calendar</Link>
-            <Link className="block py-0.5 hover:underline" href={`/${params.locale}/songs`}>Folk archive</Link>
-            <Link className="block py-0.5 hover:underline" href={`/${params.locale}/kids`}>Kids mode</Link>
+            <Link className="block py-0.5 hover:underline" href={`/${locale}/ask`}>Chhath Sahayak</Link>
+            <Link className="block py-0.5 hover:underline" href={`/${locale}/vidhi`}>Vidhi guide</Link>
+            <Link className="block py-0.5 hover:underline" href={`/${locale}/gatha`}>Illustrated Gatha</Link>
+            <Link className="block py-0.5 hover:underline" href={`/${locale}/calendar`}>Calendar</Link>
+            <Link className="block py-0.5 hover:underline" href={`/${locale}/songs`}>Folk archive</Link>
+            <Link className="block py-0.5 hover:underline" href={`/${locale}/kids`}>Kids mode</Link>
           </nav>
           <nav className="text-sm" aria-label="Community">
             <p className="label mb-2">Community</p>
-            <Link className="block py-0.5 hover:underline" href={`/${params.locale}/ghats`}>Ghat finder</Link>
-            <Link className="block py-0.5 hover:underline" href={`/${params.locale}/wall`}>Global wall</Link>
-            <Link className="block py-0.5 hover:underline" href={`/${params.locale}/about`}>Contribute</Link>
+            <Link className="block py-0.5 hover:underline" href={`/${locale}/ghats`}>Ghat finder</Link>
+            <Link className="block py-0.5 hover:underline" href={`/${locale}/wall`}>Global wall</Link>
+            <Link className="block py-0.5 hover:underline" href={`/${locale}/about`}>Contribute</Link>
           </nav>
           <div className="text-sm">
             <p className="label mb-2">Note</p>
@@ -147,7 +160,7 @@ export default function LocaleLayout({ children, params }: { children: React.Rea
                 <Link
                   key={l.code}
                   href={`/${l.code}`}
-                  className={`rounded-full px-2 py-1 text-xs font-bold ${params.locale === l.code ? "bg-teal text-cream" : "text-teal/70 hover:text-teal"}`}
+                  className={`rounded-full px-2 py-1 text-xs font-bold ${locale === l.code ? "bg-teal text-cream" : "text-teal/70 hover:text-teal"}`}
                 >
                   {l.label}
                 </Link>

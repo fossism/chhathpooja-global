@@ -2,6 +2,8 @@ node_modules/
 .next/
 .next-dev/
 .env*
+!.env.example
+!**/.env.example
 *.log
 .DS_Store
 *.tsbuildinfo

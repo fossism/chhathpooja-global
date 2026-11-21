@@ -2,7 +2,8 @@ import Link from "next/link";
 import WallClient from "../../../components/WallClient";
 import SamagriWall from "../../../components/SamagriWall";
 
-export default function Wall({ params }: { params: { locale: string } }) {
+export default async function Wall({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
   return (
     <div className="shell py-10 space-y-12">
       {/* Community Prasad Sharing Notice */}
@@ -14,7 +15,7 @@ export default function Wall({ params }: { params: { locale: string } }) {
             Missing home prasad in your city, or fasting and have extra Thekua to share with students? Connect on our zero-cost board.
           </p>
         </div>
-        <Link href={`/${params.locale}/prasad`} className="btn btn-primary text-xs !py-2 !px-4 shrink-0 font-bold">
+        <Link href={`/${locale}/prasad`} className="btn btn-primary text-xs !py-2 !px-4 shrink-0 font-bold">
           Open Prasad Board →
         </Link>
       </div>

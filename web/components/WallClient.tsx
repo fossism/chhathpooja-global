@@ -39,6 +39,51 @@ function sanitizeInput(s: string, max: number): string {
     .slice(0, max);
 }
 
+const MAX_STORED_IMAGE_CHARS = 1_500_000;
+const STORED_IMAGE_RE = /^data:image\/(?:jpeg|png|webp|gif);base64,[A-Za-z0-9+/=]+$/;
+
+function isValidPost(value: unknown): value is Post {
+  if (!value || typeof value !== "object") return false;
+  const p = value as Record<string, unknown>;
+  return (
+    typeof p.id === "string" &&
+    p.id.length > 0 &&
+    p.id.length <= 120 &&
+    typeof p.city === "string" &&
+    p.city.length <= MAX_CITY &&
+    typeof p.country === "string" &&
+    p.country.length <= MAX_COUNTRY &&
+    typeof p.text === "string" &&
+    p.text.length <= MAX_TEXT &&
+    typeof p.likes === "number" &&
+    Number.isFinite(p.likes) &&
+    p.likes >= 0 &&
+    p.likes <= 1_000_000 &&
+    (p.img === undefined ||
+      (typeof p.img === "string" &&
+        p.img.length <= MAX_STORED_IMAGE_CHARS &&
+        STORED_IMAGE_RE.test(p.img))) &&
+    (p.pending === undefined || typeof p.pending === "boolean")
+  );
+}
+
+function parseStoredPosts(raw: string | null): Post[] {
+  try {
+    const parsed = JSON.parse(raw ?? "[]");
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter(isValidPost).slice(0, 50);
+  } catch {
+    return [];
+  }
+}
+
+function makeLocalId(): string {
+  if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
+    return `local-${crypto.randomUUID()}`;
+  }
+  return `local-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
 async function hasValidImageSignature(file: File): Promise<boolean> {
   try {
     const buf = new Uint8Array(await file.slice(0, 12).arrayBuffer());
@@ -139,7 +184,7 @@ async function loadPostsFromIDB(): Promise<Post[]> {
       req.onsuccess = () => {
         const res = req.result;
         if (Array.isArray(res)) {
-          resolve(res.reverse());
+          resolve(res.filter(isValidPost).reverse());
         } else {
           resolve([]);
         }
@@ -178,24 +223,10 @@ export default function WallClient() {
 
       // 2. Fallback to localStorage and migrate to IDB
       try {
-        const saved = localStorage.getItem("chhath_wall_user_posts");
-        if (saved) {
-          const parsed = JSON.parse(saved);
-          if (Array.isArray(parsed)) {
-            const validPosts: Post[] = parsed.filter(
-              (p): p is Post =>
-                Boolean(p) &&
-                typeof p.id === "string" &&
-                typeof p.city === "string" &&
-                typeof p.country === "string" &&
-                typeof p.text === "string" &&
-                (p.img === undefined || (typeof p.img === "string" && p.img.startsWith("data:image/")))
-            );
-            if (validPosts.length > 0) {
-              setPosts([...validPosts, ...SEED]);
-              validPosts.forEach((p) => savePostToIDB(p));
-            }
-          }
+        const validPosts = parseStoredPosts(localStorage.getItem("chhath_wall_user_posts"));
+        if (validPosts.length > 0) {
+          setPosts([...validPosts, ...SEED]);
+          validPosts.forEach((p) => savePostToIDB(p));
         }
       } catch {
         // Ignore localStorage errors
@@ -265,7 +296,7 @@ export default function WallClient() {
     }
 
     const newPost: Post = {
-      id: `local-${Date.now()}`,
+      id: makeLocalId(),
       city,
       country,
       text,
@@ -282,8 +313,8 @@ export default function WallClient() {
 
     // Also backup capped recent items to localStorage for private browsing fallback
     try {
-      const existingUserPosts: Post[] = JSON.parse(localStorage.getItem("chhath_wall_user_posts") || "[]");
-      const capped = [newPost, ...existingUserPosts.filter((p) => Boolean(p) && typeof p === "object")].slice(0, 10);
+      const existingUserPosts = parseStoredPosts(localStorage.getItem("chhath_wall_user_posts"));
+      const capped = [newPost, ...existingUserPosts].slice(0, 10);
       localStorage.setItem("chhath_wall_user_posts", JSON.stringify(capped));
     } catch {
       // localStorage quota or private mode fallback

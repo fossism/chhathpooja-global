@@ -10,6 +10,56 @@ function fmt(s: number): string {
   return `${m}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
 }
 
+const MAX_CUSTOM_TRACKS = 50;
+const YOUTUBE_ID_RE = /^[A-Za-z0-9_-]{11}$/;
+
+function clean(value: unknown, max: number): string {
+  return String(value ?? "")
+    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, max);
+}
+
+function normalizeCustomTrack(value: unknown): Track | null {
+  if (!value || typeof value !== "object") return null;
+  const t = value as Record<string, unknown>;
+  if (t.kind !== "youtube" || typeof t.youtubeId !== "string" || !YOUTUBE_ID_RE.test(t.youtubeId)) {
+    return null;
+  }
+
+  const youtubeId = t.youtubeId;
+  const uid = clean(t.uid, 160) || `custom-${youtubeId}`;
+  return {
+    uid,
+    id: clean(t.id, 160) || `custom-${youtubeId}`,
+    title: clean(t.title, 160) || `Chhath Geet (${youtubeId})`,
+    titleDevanagari: clean(t.titleDevanagari, 160) || undefined,
+    artist: clean(t.artist, 120) || "Community Added",
+    album: clean(t.album, 120) || undefined,
+    category: "Added by You",
+    kind: "youtube",
+    youtubeId,
+    lyric: clean(t.lyric, 2_000) || undefined,
+    meaning: clean(t.meaning, 500) || undefined,
+    // Never trust a stored thumbnail URL; rebuild it from the validated ID.
+    thumb: `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`
+  };
+}
+
+function parseCustomTracks(raw: string | null): Track[] {
+  try {
+    const parsed = JSON.parse(raw ?? "[]");
+    if (!Array.isArray(parsed)) return [];
+    return parsed
+      .map(normalizeCustomTrack)
+      .filter((t): t is Track => t !== null)
+      .slice(0, MAX_CUSTOM_TRACKS);
+  } catch {
+    return [];
+  }
+}
+
 export default function Songs() {
   const {
     current,
@@ -44,10 +94,7 @@ export default function Songs() {
   useEffect(() => {
     try {
       const saved = localStorage.getItem("chhath_custom_songs");
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed)) setCustomTracks(parsed);
-      }
+      if (saved) setCustomTracks(parseCustomTracks(saved));
     } catch {
       /* ignore storage errors */
     }
@@ -114,8 +161,12 @@ export default function Songs() {
       setAddError("Please paste a valid YouTube video URL or 11-character video ID.");
       return;
     }
+    const uniqueSuffix =
+      typeof crypto !== "undefined" && "randomUUID" in crypto
+        ? crypto.randomUUID()
+        : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
     const newTrack: Track = {
-      uid: `custom-${ytid}-${Date.now()}`,
+      uid: `custom-${ytid}-${uniqueSuffix}`,
       id: `custom-${ytid}`,
       title: customTitle.trim() || `Chhath Geet (${ytid})`,
       artist: customArtist.trim() || "Community Added",
@@ -126,7 +177,7 @@ export default function Songs() {
       meaning: "Custom YouTube track added to your local playlist."
     };
 
-    const updated = [newTrack, ...customTracks];
+    const updated = [newTrack, ...customTracks].slice(0, MAX_CUSTOM_TRACKS);
     setCustomTracks(updated);
     try {
       localStorage.setItem("chhath_custom_songs", JSON.stringify(updated));

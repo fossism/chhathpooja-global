@@ -1,5 +1,5 @@
 // Offline support: keep the festival shell working at the ghat with no signal.
-const CACHE = "chhath-v8";
+const CACHE = "chhath-v9";
 const CORE = [
   "/en",
   "/en/vidhi",
@@ -48,11 +48,21 @@ self.addEventListener("activate", (e) => {
   );
 });
 
+// Only cache expected static asset types. This avoids storing error pages or
+// unexpected HTML/JSON under a hashed asset URL.
+const CACHEABLE_TYPE_RE =
+  /^(?:text\/css|text\/javascript|application\/javascript|application\/json|image\/(?:png|jpeg|webp|gif|svg\+xml)|font\/|application\/font)/i;
+
 async function cacheFirst(req) {
   const hit = await caches.match(req);
   if (hit) return hit;
   const res = await fetch(req);
-  if (res && res.ok && res.type === "basic") {
+  if (
+    res &&
+    res.ok &&
+    res.type === "basic" &&
+    CACHEABLE_TYPE_RE.test(res.headers.get("content-type") || "")
+  ) {
     const copy = res.clone();
     caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {});
   }

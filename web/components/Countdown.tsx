@@ -39,8 +39,10 @@ export default function Countdown({
   const ushaDate = ushaTarget || "";
   const hasBoth = Boolean(sandhyaDate && ushaDate);
 
-  // Initialize with current Date so server and client have immediate valid timestamps
-  const [now, setNow] = useState<Date>(() => new Date());
+  // Start with the SSR skeleton and fill in the clock after hydration. Using
+  // new Date() during the initial render makes the server and client output
+  // differ by a second, which triggers a hydration error in Next.js dev.
+  const [now, setNow] = useState<Date | null>(null);
   const [userSelectedTab, setUserSelectedTab] = useState<"sandhya" | "usha" | null>(null);
 
   useEffect(() => {
@@ -50,7 +52,7 @@ export default function Countdown({
   }, []);
 
   // Compute timing milestones
-  const nowMs = now.getTime();
+  const nowMs = now?.getTime() ?? 0;
   const sandhyaMs = sandhyaDate ? new Date(`${sandhyaDate}T${sandhyaTime}:00+05:30`).getTime() : 0;
   const ushaMs = ushaDate ? new Date(`${ushaDate}T${ushaTime}:00+05:30`).getTime() : 0;
 

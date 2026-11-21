@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { usePlayer } from "./MusicProvider";
+import { getNextChhath, formatChhathBeacon } from "../lib/chhath";
 
 const NAV_ITEMS = [
   {
@@ -97,8 +98,9 @@ const LOCALES = [
   { code: "ne", label: "ने", name: "नेपाली" }
 ];
 
-export default function Navbar({ locale }: { locale: string }) {
+export default function Navbar({ locale, beaconText }: { locale: string; beaconText?: string }) {
   const pathname = usePathname();
+  const displayBeaconText = beaconText || formatChhathBeacon(getNextChhath());
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langMenuOpen, setLangMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -156,7 +158,7 @@ export default function Navbar({ locale }: { locale: string }) {
               <span className="relative inline-flex rounded-full h-2 w-2 bg-mustard" />
             </span>
             <span className="font-semibold tracking-wide truncate text-[11px] sm:text-xs">
-              Kartik Chhath Mahaparv • Nov 13–16, 2026 • Global
+              {displayBeaconText}
             </span>
           </div>
 

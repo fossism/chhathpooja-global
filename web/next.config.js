@@ -1,10 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   distDir: process.env.NODE_ENV === "development" ? ".next-dev" : ".next",
+  // Allow the dev server to be opened through either localhost or 127.0.0.1.
+  // This only affects `next dev`; production origins are governed by CSP/API checks.
+  allowedDevOrigins: ["localhost", "127.0.0.1"],
   compress: true,
   poweredByHeader: false,
   images: {
     formats: ["image/avif", "image/webp"],
+    // Keep the qualities used by the app explicit; Next.js 16 requires this.
+    qualities: [65, 75],
     minimumCacheTTL: 86400,
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
@@ -14,24 +19,7 @@ const nextConfig = {
   },
   transpilePackages: ["leaflet", "react-leaflet"],
   async headers() {
-    const isProd = process.env.NODE_ENV === "production";
-    const csp = [
-      "default-src 'self'",
-      // In production, unsafe-eval is omitted to protect against XSS execution sinks
-      isProd
-        ? "script-src 'self' 'unsafe-inline' https://www.youtube.com"
-        : "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.youtube.com",
-      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-      "font-src 'self' https://fonts.gstatic.com data:",
-      // Local marker icons + OSM tiles + mural images + YouTube artwork. No unpkg/imgur/etc.
-      "img-src 'self' data: blob: https://*.tile.openstreetmap.org https://tile.openstreetmap.org https://i.ytimg.com",
-      // Include Supabase endpoints alongside Open-Meteo & YouTube
-      "connect-src 'self' https://api.open-meteo.com https://www.youtube.com https://i.ytimg.com https://*.supabase.co",
-      "frame-src 'self' https://www.youtube.com",
-      "frame-ancestors 'none'",
-      "base-uri 'self'",
-      "form-action 'self'"
-    ].join("; ");
+    // CSP is set per-request with a nonce in middleware.ts.
     return [
       {
         source: "/sw.js",
@@ -43,7 +31,6 @@ const nextConfig = {
       {
         source: "/:path*",
         headers: [
-          { key: "Content-Security-Policy", value: csp },
           { key: "X-Frame-Options", value: "DENY" },
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
@@ -54,7 +41,10 @@ const nextConfig = {
           {
             key: "Strict-Transport-Security",
             value: "max-age=63072000; includeSubDomains; preload"
-          }
+          },
+          { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
+          { key: "Cross-Origin-Resource-Policy", value: "same-origin" },
+          { key: "X-Permitted-Cross-Domain-Policies", value: "none" }
         ]
       }
     ];

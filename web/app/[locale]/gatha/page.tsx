@@ -80,12 +80,14 @@ const indexItems = [
   { id: epilogue.id, number: epilogue.number, title: epilogue.title }
 ];
 
-export function generateMetadata({
+export async function generateMetadata({
   params
 }: {
-  params: { locale: string };
-}): Metadata {
-  const url = `${BASE}/${params.locale}/gatha`;
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale: rawLocale } = await params;
+  const locale = (locales as readonly string[]).includes(rawLocale) ? rawLocale : "en";
+  const url = `${BASE}/${locale}/gatha`;
   return {
     title: TITLE,
     description: DESCRIPTION,
@@ -119,11 +121,13 @@ export function generateMetadata({
   };
 }
 
-export default function GathaPage({
+export default async function GathaPage({
   params
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
+  const { locale: rawLocale } = await params;
+  const locale = (locales as readonly string[]).includes(rawLocale) ? rawLocale : "en";
   return (
     <div>
       <GathaProgress />
@@ -174,7 +178,7 @@ export default function GathaPage({
                 Read the story
               </a>
               <Link
-                href={`/${params.locale}/vidhi`}
+                href={`/${locale}/vidhi`}
                 className="btn border border-cream/40 bg-transparent text-cream hover:bg-cream/10"
               >
                 Walk the four days
@@ -620,17 +624,17 @@ export default function GathaPage({
             <em>start with the four days.</em>
           </h2>
           <div className="mt-7 flex flex-wrap gap-3">
-            <Link href={`/${params.locale}/vidhi`} className="btn btn-primary">
+            <Link href={`/${locale}/vidhi`} className="btn btn-primary">
               The four days
             </Link>
             <Link
-              href={`/${params.locale}/songs`}
+              href={`/${locale}/songs`}
               className="btn bg-cream text-teal hover:bg-white"
             >
               Hear the songs
             </Link>
             <Link
-              href={`/${params.locale}/ghats`}
+              href={`/${locale}/ghats`}
               className="btn border border-teal/30 text-teal hover:bg-teal/[.06]"
             >
               Find a ghat

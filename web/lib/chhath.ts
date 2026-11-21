@@ -89,3 +89,28 @@ export type Ghat = {
 export function getGhats(): Ghat[] {
   return [...(ghats as Ghat[])];
 }
+
+export function formatChhathDateRange(event: Pick<ChhathDates, "nahayKhay" | "ushaArghya" | "year">): string {
+  try {
+    const [y1, m1, d1] = event.nahayKhay.split("-").map(Number);
+    const [y2, m2, d2] = event.ushaArghya.split("-").map(Number);
+    const dt1 = new Date(Date.UTC(y1, m1 - 1, d1));
+    const dt2 = new Date(Date.UTC(y2, m2 - 1, d2));
+    const month1 = dt1.toLocaleDateString("en-US", { month: "short", timeZone: "UTC" });
+    const month2 = dt2.toLocaleDateString("en-US", { month: "short", timeZone: "UTC" });
+    if (month1 === month2) {
+      return `${month1} ${d1}–${d2}, ${event.year}`;
+    }
+    return `${month1} ${d1} – ${month2} ${d2}, ${event.year}`;
+  } catch {
+    return `${event.nahayKhay} – ${event.ushaArghya}`;
+  }
+}
+
+export function formatChhathBeacon(event: Pick<ChhathDates, "type" | "nahayKhay" | "ushaArghya" | "year">): string {
+  const typeCapitalized = event.type
+    ? event.type.charAt(0).toUpperCase() + event.type.slice(1)
+    : "Kartik";
+  return `${typeCapitalized} Chhath Mahaparv • ${formatChhathDateRange(event)} • Global`;
+}
+

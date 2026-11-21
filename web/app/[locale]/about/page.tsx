@@ -3,7 +3,8 @@ import Image from "next/image";
 import SamagriShowcase from "../../../components/SamagriShowcase";
 import { getSamagriCatalog } from "../../../lib/samagri";
 
-export default function About({ params }: { params: { locale: string } }) {
+export default async function About({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
   const samagriItems = getSamagriCatalog();
 
   return (
@@ -199,7 +200,7 @@ export default function About({ params }: { params: { locale: string } }) {
                 Every basket, fruit, and vessel carries deep spiritual and Ayurvedic science.
               </p>
             </div>
-            <Link href={`/${params.locale}/wall#samagri-checklist`} className="btn btn-primary text-xs !py-2 !px-4 self-start sm:self-auto">
+            <Link href={`/${locale}/wall#samagri-checklist`} className="btn btn-primary text-xs !py-2 !px-4 self-start sm:self-auto">
               View Full Wall Checklist →
             </Link>
           </div>
@@ -274,7 +275,7 @@ export default function About({ params }: { params: { locale: string } }) {
               <p className="text-xs text-teal/70 mt-1 leading-relaxed">
                 Add ghats from your city to help fellow devotees find where to gather.
               </p>
-              <Link href={`/${params.locale}/ghats`} className="btn btn-primary text-xs mt-3 inline-flex !py-1.5 !px-3">
+              <Link href={`/${locale}/ghats`} className="btn btn-primary text-xs mt-3 inline-flex !py-1.5 !px-3">
                 Add a Ghat →
               </Link>
             </div>
@@ -285,7 +286,7 @@ export default function About({ params }: { params: { locale: string } }) {
               <p className="text-xs text-teal/70 mt-1 leading-relaxed">
                 Upload your family&apos;s festive memories to showcase diaspora devotion.
               </p>
-              <Link href={`/${params.locale}/wall`} className="btn btn-ghost text-xs mt-3 inline-flex !py-1.5 !px-3">
+              <Link href={`/${locale}/wall`} className="btn btn-ghost text-xs mt-3 inline-flex !py-1.5 !px-3">
                 Visit Wall →
               </Link>
             </div>

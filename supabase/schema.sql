@@ -4,8 +4,9 @@ create table if not exists ghats (
   name text not null check (char_length(name) between 1 and 120),
   city text not null check (char_length(city) between 1 and 80),
   country text not null check (char_length(country) between 1 and 80),
-  lat double precision not null check (lat between -90 and 90),
-  lng double precision not null check (lng between -180 and 180),
+  -- Community proposals may not know coordinates yet; do not force 0,0.
+  lat double precision check (lat is null or (lat between -90 and 90)),
+  lng double precision check (lng is null or (lng between -180 and 180)),
   river_or_pond text check (river_or_pond is null or char_length(river_or_pond) <= 120),
   parking boolean default false,
   lighting boolean default false,
@@ -15,6 +16,11 @@ create table if not exists ghats (
   verified boolean default false,
   created_at timestamptz default now()
 );
+
+-- Idempotent migration for existing projects created before coordinates were
+-- allowed to be unknown.
+alter table ghats alter column lat drop not null;
+alter table ghats alter column lng drop not null;
 
 create table if not exists photos (
   id uuid primary key default gen_random_uuid(),
@@ -41,13 +47,13 @@ create policy "ghats_public_read_verified"
   to anon, authenticated
   using (verified = true);
 
--- Community users (anon or authenticated) may propose new ghats, but never self-verify.
+-- Community submissions go through the Next.js API, which validates input,
+-- enforces proof-of-work/rate limits, and inserts with the server-only
+-- service_role key. Do not grant INSERT to anon/authenticated: the anon key is
+-- public, so such a policy lets anyone bypass every API control via PostgREST.
 drop policy if exists "ghats_auth_insert_unverified" on ghats;
 drop policy if exists "ghats_public_insert_unverified" on ghats;
-create policy "ghats_public_insert_unverified"
-  on ghats for insert
-  to anon, authenticated
-  with check (verified = false);
+revoke insert on table ghats from anon, authenticated;
 
 -- No public update/delete. Moderation happens with service_role key only.
 
@@ -58,34 +64,23 @@ create policy "photos_public_read_moderated"
   to anon, authenticated
   using (moderated = true);
 
--- Community users (anon or authenticated) may upload rows, but never self-moderate.
+-- Photos are also written only by the server API with the service_role key.
 drop policy if exists "photos_auth_insert_unmoderated" on photos;
 drop policy if exists "photos_public_insert_unmoderated" on photos;
-create policy "photos_public_insert_unmoderated"
-  on photos for insert
-  to anon, authenticated
-  with check (moderated = false);
+revoke insert on table photos from anon, authenticated;
 
 -- No public update/delete on photos either.
 
--- Storage bucket: chhath-wall (public read, authenticated write)
--- insert into storage.buckets (id, name, public) values ('chhath-wall','chhath-wall', true);
-
--- Storage policies (run after creating the bucket):
--- public read of wall images:
+-- Storage bucket: chhath-wall.
+-- Do NOT enable a public/anon INSERT policy. Upload through a server route or
+-- Edge Function that validates the decoded image (magic bytes, MIME, pixel
+-- dimensions, byte size), re-encodes it, and writes with the service_role key.
+-- Also set the bucket's file-size limit and allowed MIME types in the Supabase
+-- dashboard; bucket RLS policies cannot reliably enforce MIME type alone.
+--
+-- Public read can be granted once uploads are server-validated:
 -- drop policy if exists "wall_public_read" on storage.objects;
 -- create policy "wall_public_read" on storage.objects for select
 --   to anon, authenticated using (bucket_id = 'chhath-wall');
 --
--- authenticated write, 3 MB cap + image MIME only (defense in depth with
--- the client-side checks in WallClient.tsx):
--- drop policy if exists "wall_public_write_images" on storage.objects;
--- create policy "wall_public_write_images" on storage.objects for insert
---   to anon, authenticated
---   with check (
---     bucket_id = 'chhath-wall'
---     and (octet_length(name) < 512)
---   );
--- NOTE: enforce content-type/size in an Edge Function or via
--- storage size limits — bucket policies alone can't check MIME reliably.
--- No public update/delete on storage.objects.
+-- No public insert/update/delete on storage.objects.

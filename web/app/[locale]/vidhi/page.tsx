@@ -160,7 +160,20 @@ function loadDone(): Record<string, boolean> {
     const raw = localStorage.getItem(STORE_KEY);
     if (!raw) return {};
     const j = JSON.parse(raw);
-    return typeof j === "object" && j !== null ? j : {};
+    if (typeof j !== "object" || j === null || Array.isArray(j)) return {};
+    const out: Record<string, boolean> = Object.create(null);
+    for (const [key, value] of Object.entries(j)) {
+      if (
+        typeof value === "boolean" &&
+        key.length <= 120 &&
+        key !== "__proto__" &&
+        key !== "constructor" &&
+        key !== "prototype"
+      ) {
+        out[key] = value;
+      }
+    }
+    return out;
   } catch {
     return {};
   }
