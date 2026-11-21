@@ -73,11 +73,19 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               Why the first arghya goes to the{" "}
               <em className="text-mustard">setting</em> sun
             </h2>
-            <p className="mt-4 max-w-lg text-sm leading-relaxed text-teal/75 md:text-base">
-              Karna of Anga, Draupadi in the forest, Sita coming home. The
-              stories we carry down to the ghat, with old paintings and
-              photographs from the river.
-            </p>
+            <div className="mt-4 max-w-lg space-y-3 text-sm leading-relaxed text-teal/75 md:text-base">
+              <p>
+                Karna of Anga standing waist-deep in the current with cupped hands,
+                Draupadi praying in exile for the sun&apos;s inexhaustible vessel, and
+                Sita keeping the solemn four-day vrat upon her return to Ayodhya.
+              </p>
+              <p className="text-xs leading-relaxed text-teal/70 md:text-sm">
+                On the ghats of Bihar and Mithila, Chhath requires no temple walls and
+                no priests—only clean river water, woven bamboo soop, and the living
+                memory of stories carried down through generations, preserved with
+                traditional paintings and photographs from the river.
+              </p>
+            </div>
             <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[10px] uppercase tracking-[0.18em] text-teal/45">
               <span>Six stories</span>
               <span aria-hidden="true" className="h-px w-6 bg-teal/25" />
