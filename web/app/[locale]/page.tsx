@@ -66,155 +66,47 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
       {/* Illustrated Gatha teaser */}
       <section aria-labelledby="gatha-teaser" className="band bg-[#FBF3E9]">
-        <div className="shell space-y-10">
-          <div className="grid items-center gap-10 md:grid-cols-2 md:gap-14">
-            <div>
-              <span className="marker">The Gatha • छठ की पावन गाथा</span>
-              <h2 id="gatha-teaser" className="headline mt-4 text-3xl leading-[1.1] md:text-4xl">
-                Why the first arghya goes to the{" "}
-                <em className="text-mustard">setting</em> sun
-              </h2>
-              <p className="mt-4 max-w-lg text-sm leading-relaxed text-teal/75 md:text-base">
-                Karna of Anga, Draupadi in the forest, Sita coming home. The
-                stories we carry down to the ghat, with old paintings and
-                photographs from the river.
-              </p>
-              <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[10px] uppercase tracking-[0.18em] text-teal/45">
-                <span>Six sacred stories</span>
-                <span aria-hidden="true" className="h-px w-6 bg-teal/25" />
-                <span>6 min read</span>
-                <span aria-hidden="true" className="h-px w-6 bg-teal/25" />
-                <span>Oral tradition of Bihar</span>
-              </div>
-              <div className="mt-6 flex flex-wrap items-center gap-4">
-                <Link
-                  href={`/${locale}/gatha`}
-                  className="btn btn-primary text-sm !py-2.5 !px-5"
-                >
-                  Read the Gatha <span aria-hidden="true">→</span>
-                </Link>
-                <Link
-                  href={`/${locale}/gatha#karna`}
-                  className="text-xs font-bold text-teal/75 hover:text-mustard transition underline underline-offset-4"
-                >
-                  Story of King Karna →
-                </Link>
-              </div>
+        <div className="shell grid items-center gap-10 md:grid-cols-2 md:gap-14">
+          <div>
+            <span className="marker">The Gatha</span>
+            <h2 id="gatha-teaser" className="headline mt-4 text-3xl leading-[1.1] md:text-4xl">
+              Why the first arghya goes to the{" "}
+              <em className="text-mustard">setting</em> sun
+            </h2>
+            <p className="mt-4 max-w-lg text-sm leading-relaxed text-teal/75 md:text-base">
+              Karna of Anga, Draupadi in the forest, Sita coming home. The
+              stories we carry down to the ghat, with old paintings and
+              photographs from the river.
+            </p>
+            <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[10px] uppercase tracking-[0.18em] text-teal/45">
+              <span>Six stories</span>
+              <span aria-hidden="true" className="h-px w-6 bg-teal/25" />
+              <span>6 min read</span>
             </div>
-
-            <div className="w-full max-w-md justify-self-center md:justify-self-end space-y-3">
-              <figure className="border border-line bg-white p-2.5 shadow-[12px_12px_0_0_rgba(232,184,75,0.35)] md:p-3">
-                <div className="relative aspect-[4/3] overflow-hidden bg-teal/5">
-                  <Image
-                    src="/images/gatha/surya-mandala.jpg"
-                    alt="A geometric Surya mandala with the sun god at its centre, surrounded by planetary attendants"
-                    fill
-                    sizes="(max-width: 768px) 90vw, 40vw"
-                    className="object-cover"
-                  />
-                </div>
-                <figcaption className="px-1 pb-1 pt-2.5 font-mono text-[10px] leading-relaxed text-teal/55">
-                  A Surya mandala, Rajasthan, c. 18th century. The sun sits at the
-                  centre of the planetary orbits.
-                </figcaption>
-              </figure>
-              <div className="border border-line/60 bg-white/70 p-3 rounded-lg backdrop-blur-sm text-xs text-teal/80 leading-relaxed italic">
-                “न कोई पुरोहित, न कोई बिचौलिया — केवल नदी, डूबता सूरज और हाथ में सूप।”
-                <span className="block not-italic font-sans text-[10px] font-bold text-teal/50 mt-1 uppercase tracking-wide">
-                  — The living river-and-harvest faith of Mithila & Magadh
-                </span>
-              </div>
-            </div>
+            <Link
+              href={`/${locale}/gatha`}
+              className="mt-6 inline-flex items-center gap-2 border-b border-teal/40 pb-1 text-sm font-bold text-teal transition-colors hover:border-mustard hover:text-mustard"
+            >
+              Read the Gatha <span aria-hidden="true">→</span>
+            </Link>
           </div>
 
-          {/* Folklore Plate Grid */}
-          <div className="pt-8 border-t border-teal/15">
-            <div className="flex flex-wrap items-end justify-between gap-3 mb-5">
-              <div>
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-teal/50 font-bold block">
-                  Sacred Lore Highlights • कथा प्रवाह
-                </span>
-                <h3 className="font-serif text-xl sm:text-2xl font-bold text-teal mt-0.5">
-                  Stories carried to the riverbank
-                </h3>
+          <div className="w-full max-w-sm justify-self-center md:justify-self-end">
+            <figure className="border border-line bg-white p-2.5 shadow-[12px_12px_0_0_rgba(232,184,75,0.35)] md:p-3">
+              <div className="relative aspect-square overflow-hidden bg-teal/5">
+                <Image
+                  src="/images/gatha/surya-mandala.jpg"
+                  alt="A geometric Surya mandala with the sun god at its centre, surrounded by planetary attendants"
+                  fill
+                  sizes="(max-width: 768px) 90vw, 40vw"
+                  className="object-cover"
+                />
               </div>
-              <Link
-                href={`/${locale}/gatha`}
-                className="text-xs font-bold text-teal hover:text-mustard transition flex items-center gap-1"
-              >
-                Explore all 6 chapters <span aria-hidden="true">→</span>
-              </Link>
-            </div>
-
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {[
-                {
-                  id: "karna",
-                  num: "01",
-                  tag: "Anga Desh",
-                  title: "Karna of Anga",
-                  desc: "Standing waist-deep in the Ganga at dusk, offering water to his father Surya with open hands.",
-                  img: "/images/gatha/karna-kurukshetra.jpg"
-                },
-                {
-                  id: "draupadi",
-                  num: "02",
-                  tag: "Vanvas",
-                  title: "Draupadi & Akshay Patra",
-                  desc: "Sun worship taught by sage Dhaumya in exile, granting the inexhaustible vessel to feed all.",
-                  img: "/images/gatha/draupadi-pandavas.jpg"
-                },
-                {
-                  id: "sita",
-                  num: "03",
-                  tag: "Ayodhya Return",
-                  title: "Sita on the Sarayu",
-                  desc: "Celebrating victory and return from Lanka with a 4-day solar fast by the holy riverbank.",
-                  img: "/images/gatha/sita-ayodhya.jpg"
-                },
-                {
-                  id: "chhathi-maiya",
-                  num: "04",
-                  tag: "Shashthi Devi",
-                  title: "Chhathi Maiya’s Grace",
-                  desc: "Sister of the Sun and mother of light, protecting children and fulfilling heartfelt vrat vows.",
-                  img: "/images/gatha/chhathi-maiya.jpg"
-                }
-              ].map((story) => (
-                <Link
-                  key={story.id}
-                  href={`/${locale}/gatha#${story.id}`}
-                  className="card !p-0 overflow-hidden flex flex-col group hover:shadow-lg transition-all duration-300 border-line bg-white hover:-translate-y-0.5"
-                >
-                  <div className="relative w-full h-32 overflow-hidden bg-teal/10">
-                    <Image
-                      src={story.img}
-                      alt={story.title}
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute top-2 left-2 bg-teal/90 text-mustard font-mono text-[10px] font-bold px-2 py-0.5 rounded backdrop-blur-sm">
-                      {story.num}
-                    </div>
-                  </div>
-                  <div className="p-3.5 flex flex-col flex-1">
-                    <span className="font-mono text-[10px] uppercase tracking-wider text-mustard font-bold">
-                      {story.tag}
-                    </span>
-                    <h4 className="font-bold text-sm text-teal mt-0.5 group-hover:text-mustard transition-colors">
-                      {story.title}
-                    </h4>
-                    <p className="text-xs text-teal/70 mt-1 leading-relaxed line-clamp-2 flex-1">
-                      {story.desc}
-                    </p>
-                    <span className="mt-3 text-[11px] font-bold text-teal group-hover:text-mustard flex items-center gap-1 transition-colors">
-                      Read story <span aria-hidden="true" className="group-hover:translate-x-1 transition-transform">→</span>
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
+              <figcaption className="px-1 pb-1 pt-2.5 font-mono text-[10px] leading-relaxed text-teal/55">
+                A Surya mandala, Rajasthan, c. 18th century. The sun sits at the
+                centre of the planetary orbits.
+              </figcaption>
+            </figure>
           </div>
         </div>
       </section>
